@@ -12,32 +12,59 @@ class Stack{
         node *rear;
     public:
 
+        void Stack();
         void push(int value);
-        int pop();
+        *node pop();
         int isEmpty();
+        int isLast(*node tNode);
 
 };
+
+void Stack::Stack(){
+    front = NULL;
+    rear = NULL; 
+}
 
 void Stack::push(int value){
     node *tNode = new Node;
     tNode->value = value;
     if (isEmpty()){
+        tNode->next = NULL;
         front = tNode;
         rear = tNode;
     }
     else{
-        node temp = front;
         tNode->next = front;
         front = tNode;
     }
 }
 
-int Stack::pop(){
+*node Stack::pop(){
     node *tNode = front;
     if (!isEmpty()){
         front = front->next;
+        return tNode->value;
     }
     else{
-        //empty
+        return NULL;
     }
 }
+
+int Stack::isEmpty(){
+    if (front == NULL and rear == NULL){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int Stack::isLast(*node tNode){
+    if (tNode->next == NULL){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
