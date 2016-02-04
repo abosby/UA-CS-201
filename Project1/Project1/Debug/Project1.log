@@ -1,0 +1,16 @@
+﻿Build started 2/3/2016 10:59:31 PM.
+     1>Project "F:\Documents\Programming\Cygwin\home\James\CS-201\Project1\Project1\Project1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         F:\Program Files (x86)\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\main.c
+         main.c
+     1>f:\documents\programming\cygwin\home\james\cs-201\project1\main.c(47): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 f:\program files (x86)\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>f:\documents\programming\cygwin\home\james\cs-201\project1\main.c(53): warning C4047: 'function' : 'char *' differs in levels of indirection from 'char'
+     1>f:\documents\programming\cygwin\home\james\cs-201\project1\main.c(53): warning C4024: 'fgets' : different types for formal and actual parameter 1
+     1>f:\documents\programming\cygwin\home\james\cs-201\project1\main.c(54): warning C4047: 'function' : 'char *' differs in levels of indirection from 'char'
+     1>f:\documents\programming\cygwin\home\james\cs-201\project1\main.c(54): warning C4024: 'strtok' : different types for formal and actual parameter 1
+     1>Done Building Project "F:\Documents\Programming\Cygwin\home\James\CS-201\Project1\Project1\Project1.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.03

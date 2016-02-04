@@ -38,26 +38,21 @@ int main(int argc, char **argv)
 	/* Main Program */
 	
 	/*Read in values*/
+	printf("Made it here");
 	FILE *fFile;
-	char ch, word[255];
+	char ch;
+	char word[255];
 	//fFile = fopen(argv[argIndex], "r");
-	fFile = fOpen("test.txt", "r");
+	fFile = fopen("test.txt", "r");
 
 	if (fFile == NULL){
 		printf("Incorrect file\n");
 	}
 
-	while ((ch = fgetc(fFile)) != EOF){
-		if (ch = ' '){
-			//end of token add token to heap
-			printf(word + '\n');
-			memset(word, "", 255);
-		}
-		else{
-			//add to word
-			strcat(word, ch);
-		}
+	while ((fgets(ch, 255, fFile)) != NULL){
+		printf("%c", ch);
 	}
+
 
 
 	return 0;
