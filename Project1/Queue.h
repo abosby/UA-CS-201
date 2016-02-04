@@ -13,21 +13,14 @@ class Queue{
 
 	public:
 
-        void Queue();
 		void enqueue(int value);
 		int dequeue();
         int isEmpty();
 };
 
-void Queue::Queue(){
-    front = NULL;
-    rear = NULL;
-}
-
 void Queue::enqueue(int value){
 	node *tNode = new node;
 	tNode->value = value;
-    tNode->next = NULL;
 	if (isEmpty()){
 		front = tNode;
 		rear = tNode;

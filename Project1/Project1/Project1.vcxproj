@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClInclude Include="..\HeapTree.h" />
     <ClInclude Include="..\Queue.h" />
+    <ClInclude Include="..\Stack.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\test.txt" />
