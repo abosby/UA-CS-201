@@ -1,14 +1,14 @@
-OBJs = main.o
+OBJs = main.c
 
 heapsort: $(OBJs)
 	gcc -Wall -g $(OBJs) -o heapsort
 
-heapsort.o: main.c
-	gcc -Wall -g -c main.c
+#heapsort.o: main.c
+#	gcc -Wall -g -c main.c
 
 #clean:
 #	rm -f *.o
 
 run:
 	echo
-	heapsort -d test.txt
+	./heapsort -d test.txt
