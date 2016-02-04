@@ -38,25 +38,33 @@ int main(int argc, char **argv)
 	/* Main Program */
 	
 	/*Read in values*/
-	FILE *fFile;
-	char ch, word[255];
+	FILE *fFile;;
+	char ch[255];
+	char *last;
 	//fFile = fopen(argv[argIndex], "r");
-	fFile = fOpen("test.txt", "r");
+	fFile = fopen("test.txt", "r");
 
 	if (fFile == NULL){
 		printf("Incorrect file\n");
 	}
 
-	while ((ch = fgetc(fFile)) != EOF){
-		if (ch = ' '){
+	while ((fgets(ch,255,fFile)) != NULL){
+		last = strtok(ch," ");
+		while(last != NULL){
+			printf("%s\n",last);
+			last = strtok(NULL," ");
+		}
+		//if (last == ' '){
 			//end of token add token to heap
-			printf(word + '\n');
-			memset(word, "", 255);
-		}
-		else{
+			//printf ("%ch", ch);
+        		//ch = fgetc(fFile);
+		//	printf(word + '\n');
+			//memset(word, "", 255);
+		//}
+		//else{
 			//add to word
-			strcat(word, ch);
-		}
+		//	strcat(word, ch);
+		//}
 	}
 
 

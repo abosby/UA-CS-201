@@ -13,14 +13,22 @@ class Queue{
 
 	public:
 
+        void Queue();
 		void enqueue(int value);
 		int dequeue();
+        int isEmpty();
 };
+
+void Queue::Queue(){
+    front = NULL;
+    rear = NULL;
+}
 
 void Queue::enqueue(int value){
 	node *tNode = new node;
 	tNode->value = value;
-	if ((front == NULL) && (rear == NULL)){
+    tNode->next = NULL;
+	if (isEmpty()){
 		front = tNode;
 		rear = tNode;
 	}
@@ -44,4 +52,16 @@ int Queue::dequeue(){
 	}
 	return temp;
 }
+
+int Queue::isEmpty(){
+
+    if ((front == NULL) && (rear == NULL)){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
+}
+
 
