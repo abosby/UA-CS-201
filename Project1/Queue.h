@@ -1,67 +1,24 @@
-#include <stdio.h>
+#ifndef Queue
+#define Queue
 
-struct node{
+struct {
 	int value;
-	node *next;
-};
+	struct node *next;
+} node;
 
-class Queue{
+typedef struct queue_object{
 
-	private:
-		node *front;
-		node *rear;
+/*vars*/
+struct node *front;
+struct node *rear;
 
-	public:
+/*methods*/
+void (*enqueue)(int value);
+struct node (*dequeue)();
+int (*isEmpty)();
+void (*printQueue)();
 
-        void Queue();
-		void enqueue(int value);
-		int dequeue();
-        int isEmpty();
-};
+}Queue;
 
-void Queue::Queue(){
-    front = NULL;
-    rear = NULL;
-}
-
-void Queue::enqueue(int value){
-	node *tNode = new node;
-	tNode->value = value;
-    tNode->next = NULL;
-	if (isEmpty()){
-		front = tNode;
-		rear = tNode;
-	}
-	else{
-		rear->next = tNode;
-		rear = tNode;
-	}
-}
-
-int Queue::dequeue(){
-	node *tNode = front;
-	int temp;
-	if (front == rear){
-		temp = front->value;
-		front == NULL;
-		rear == NULL;
-	}
-	else{
-		temp = front->value;
-		front == front->next;
-	}
-	return temp;
-}
-
-int Queue::isEmpty(){
-
-    if ((front == NULL) && (rear == NULL)){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-
-}
-
-
+Queue *newQueue();
+#endif

@@ -1,70 +1,26 @@
-#include <stdio.h>
+#ifndef Stack
+#define Stack
 
-struct node{
-    int value;
-    node *next;
-}
+//struct
+//{
+//    int value;
+//    struct node *next;
+//} node;
 
-class Stack{
+typedef struct stack_type{
 
-    private:
-        node *front;
-        node *rear;
-    public:
+/*vars*/
+struct node *front;
+struct node *rear;
 
-        void Stack();
-        void push(int value);
-        *node pop();
-        int isEmpty();
-        int isLast(*node tNode);
+/*methods*/
+void (*push)(int value);
+struct node (*pop)();
+int (*isEmpty)();
+int (*isLast)(struct node *tNode);
+void (*printStack)();
 
-};
+}Stack;
 
-void Stack::Stack(){
-    front = NULL;
-    rear = NULL; 
-}
-
-void Stack::push(int value){
-    node *tNode = new Node;
-    tNode->value = value;
-    if (isEmpty()){
-        tNode->next = NULL;
-        front = tNode;
-        rear = tNode;
-    }
-    else{
-        tNode->next = front;
-        front = tNode;
-    }
-}
-
-*node Stack::pop(){
-    node *tNode = front;
-    if (!isEmpty()){
-        front = front->next;
-        return tNode->value;
-    }
-    else{
-        return NULL;
-    }
-}
-
-int Stack::isEmpty(){
-    if (front == NULL and rear == NULL){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
-
-int Stack::isLast(*node tNode){
-    if (tNode->next == NULL){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
-
+Stack *newStack();
+#endif

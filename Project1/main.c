@@ -1,3 +1,5 @@
+#include "Stack.h"
+#include "Queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -36,7 +38,12 @@ int main(int argc, char **argv)
 	}
 
 	/* Main Program */
-	
+	Queue *hQueue;
+	Stack *hStack;
+	hQueue = newQueue();
+	Stack hStack = newStack();
+
+
 	/*Read in values*/
 	FILE *fFile;;
 	char ch[255];
@@ -52,6 +59,8 @@ int main(int argc, char **argv)
 		last = strtok(ch," ");
 		while(last != NULL){
 			printf("%s\n",last);
+			hQueue.enqueue(last);	
+			hStack.push(last);
 			last = strtok(NULL," ");
 		}
 		//if (last == ' '){
@@ -66,6 +75,8 @@ int main(int argc, char **argv)
 		//	strcat(word, ch);
 		//}
 	}
+	hQueue.printQueue();
+	hStack.printStack();
 
 
 	return 0;
