@@ -1,4 +1,4 @@
-OBJs = Queue.o Stack.o main.o
+OBJs = Node.o Queue.o Stack.o Heaptree.o main.o
 
 heapsort: $(OBJs)
 	gcc -Wall -g $(OBJs) -o heapsort
@@ -6,15 +6,20 @@ heapsort: $(OBJs)
 heapsort.o: main.c
 	gcc -Wall -g -c main.c
 
-Stack.o: Stack.h
-	gcc -Wall -g -c Stack.h
+Stack.o: Stack.c Stack.h
+	gcc -Wall -g -c Stack.c
 
-Queue.o: Queue.h
-	gcc -Wall -g -c Queue.h
+Queue.o: Queue.c Queue.h
+	gcc -Wall -g -c Queue.c
 
-#clean:
-#	rm -f *.o  
+Node.o: Node.c Node.h
+	gcc -Wall -g -c Node.c
+
+Heaptree.o: Heaptree.c Heaptree.h
+	gcc -Wall -g -c Heaptree.c
+
+clean:
+	rm -f *.o  
 
 run:
-	echo
 	heapsort -d test.txt

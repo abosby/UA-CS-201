@@ -1,95 +1,29 @@
 #include <stdio.h>
 
 struct binaryTreeNode{
+	/*vars*/
 	int value;
-	binaryTreeNode *left, *right, *parent;
+	struct binaryTreeNode *left, *right, *parent;
+
 };
+
+struct binaryTreeNode *newBinaryTreeNode();
 
 struct binaryTree{
-	binaryTreeNode *root;
-};
 
-class HeapTree{
-
-	private:
-		binaryTree heapTree;
-
-	public:
-
-		void insert(int value);
-		int removeTop();
-
-		//Traversals
-		void preOrderTraversal(binaryTreeNode *node);
-		void inOrderTraversal(binaryTreeNode *node);
-		void postOrderTraversal(binaryTreeNode *node);
-		void levelOrderTraversal(binaryTreeNode *node);
+	/*vars*/
+	struct binaryTreeNode *root;
 		
-		//void siftDown(binaryTr);
 };
+	
+void insert(struct binaryTree *,int value);
+int removeTop(struct binaryTree *);
 
-void HeapTree::insert(int value){
+//Traversals
+struct binaryTree *newTree();
+void preOrderTraversal(struct binaryTreeNode *node);
+void inOrderTraversal(struct binaryTreeNode *node);
+void postOrderTraversal(struct binaryTreeNode *node);
+void levelOrderTraversal(struct binaryTreeNode *node);
 
-	binaryTreeNode *node = new binaryTreeNode;
-	node->left = NULL;
-	node->right = NULL;
-	node->value = value;
-}
-
-int HeapTree::removeTop(){
-	//IMPLEMENT
-}
-
-void HeapTree::preOrderTraversal(binaryTreeNode *node){
-
-	if (node){
-		//print node
-		printf("%d ", node->value);
-
-		//traverse left
-		if (node->left){
-			preOrderTraversal(node->left);
-		}
-
-		//traverse right
-		if (node->right){
-			preOrderTraversal(node->right);
-		}
-	}
-}
-
-void HeapTree::inOrderTraversal(binaryTreeNode *node){
-
-	if (node){
-		//traverse left
-		if (node->left){
-			inOrderTraversal(node->left);
-		}
-
-		//print node
-		printf("%d ", node->value);
-
-		//traverse right
-		if (node->right){
-			inOrderTraversal(node->right);
-		}
-	}
-}
-
-void HeapTree::postOrderTraversal(binaryTreeNode *node){
-
-	if (node){
-		//traverse left
-		if (node->left){
-			postOrderTraversal(node->left);
-		}
-
-		//traverse right
-		if (node->right){
-			postOrderTraversal(node->right);
-		}
-
-		//print node
-		printf("%d ", node->value);
-	}
-}
+//void siftDown(binaryTr);

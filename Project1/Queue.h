@@ -1,24 +1,23 @@
-#ifndef Queue
-#define Queue
+#include "Node.h"
+//#ifndef Queue
+//#define Queue
 
-struct {
-	int value;
-	struct node *next;
-} node;
+struct queue{
 
-typedef struct queue_object{
+	/*vars*/
+	struct node *front;
+	struct node *rear;
+	int size;
 
-/*vars*/
-struct node *front;
-struct node *rear;
+};
+
 
 /*methods*/
-void (*enqueue)(int value);
-struct node (*dequeue)();
-int (*isEmpty)();
-void (*printQueue)();
+struct queue *newQueue();
+void enqueue(struct queue *, int value);
+struct node *dequeue(struct queue *);
+int isLastQueueNode(struct node *);
+int isQueueEmpty(struct queue *);
+void printQueue(struct queue *);
 
-}Queue;
-
-Queue *newQueue();
-#endif
+//#endif

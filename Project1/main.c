@@ -1,5 +1,6 @@
 #include "Stack.h"
 #include "Queue.h"
+#include "Node.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -31,24 +32,33 @@ int main(int argc, char **argv)
 		printf("No arguments\n");
 	else
 	{
-		int i;
-		printf("Remaining arguments:\n");
-		for (i = argIndex; i < argc; ++i)
-			printf("    %s\n", argv[i]);
+		
+		printf("Remaining arguments:%d\n", argc);
+		//int i;
+		/*for (i = argIndex; i < argc; ++i){
+			printf("argc is %d\n",argc);
+			printf("argIndex is %d\n",argIndex);
+			printf("i is %d\n",i);
+			printf("argv[i] is %s\n",argv[i]);
+			//printf("    %s\n", argv[i-1]);
+			printf("made it here");
+		}
+		*/
+		
 	}
 
 	/* Main Program */
-	Queue *hQueue;
-	Stack *hStack;
-	hQueue = newQueue();
-	Stack hStack = newStack();
+	struct queue *hQueue = newQueue();
+	struct stack *hStack = newStack();
+	//hQueue = newQueue();
+	//Stack hStack = newStack();
 
 
 	/*Read in values*/
-	FILE *fFile;;
+	FILE *fFile;
 	char ch[255];
 	char *last;
-	//fFile = fopen(argv[argIndex], "r");
+	//fFile = fopen(argv[argc-1], "r");
 	fFile = fopen("test.txt", "r");
 
 	if (fFile == NULL){
@@ -59,8 +69,9 @@ int main(int argc, char **argv)
 		last = strtok(ch," ");
 		while(last != NULL){
 			printf("%s\n",last);
-			hQueue.enqueue(last);	
-			hStack.push(last);
+			//need to account for non ints
+			enqueue(hQueue,atoi(last));	
+			push(hStack,atoi(last));
 			last = strtok(NULL," ");
 		}
 		//if (last == ' '){
@@ -75,8 +86,8 @@ int main(int argc, char **argv)
 		//	strcat(word, ch);
 		//}
 	}
-	hQueue.printQueue();
-	hStack.printStack();
+	printQueue(hQueue);
+	printStack(hStack);
 
 
 	return 0;

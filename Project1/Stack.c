@@ -2,42 +2,55 @@
 #include <stdlib.h>
 #include "Stack.h"
 
-static node *
+struct stack *
 newStack(){
-    front = NULL;
-    rear = NULL;
+    	struct stack *s = malloc(sizeof(struct stack));
+	s->front = newNode();
+	s->rear = newNode();
+	s->size = 0;
+	return s;
 }
 
 void 
-push(int value){
-    node *tNode = new node;
-    tNode->value = value;
-    if (isEmpty()){
-        tNode->next = NULL;
-        front = tNode;
-        rear = tNode;
-    }
-    else{
-        tNode->next = front;
-        front = tNode;
-    }
+push(struct stack *s, int value){
+	struct node *tNode = malloc(sizeof(struct node));
+	tNode->value = value;
+	//printf("Value is: %d\n",value);
+	//printf("tNode->value is: %d\n",tNode->value);
+	if (isStackEmpty(s) == 1){
+		//tNode->next = NULL;
+		s->front = tNode;
+		s->rear = tNode;
+	}
+	else{
+		tNode->next = s->front;
+		s->front = tNode;
+	}
 }
 
-node *
-pop(){
-    node *tNode = front;
-    if (!isEmpty()){
-        front = front->next;
-        return tNode->value;
-    }
-    else{
-        return NULL;
-    }
+struct node *
+pop(struct stack *s){
+    	struct node *tNode = malloc(sizeof(struct node));
+    	if (isStackEmpty(s) == 0){
+		if(s->front == s->rear){
+			tNode = s->front;	
+			s->front = NULL;
+			s->front = NULL;
+		}
+		else{
+			tNode = s->front;
+			s->front = s->front->next;
+		}
+		return tNode;
+    	}
+    	else{
+        	return NULL;
+    	}
 }
 
 int 
-isEmpty(){
-    if (front == NULL and rear == NULL){
+isStackEmpty(struct stack *s){
+    if (s->front == s->rear ){
         return 1;
     }
     else{
@@ -46,7 +59,7 @@ isEmpty(){
 }
 
 int 
-isLast(*node tNode){
+isLastStackNode(struct node *tNode){
     if (tNode->next == NULL){
         return 1;
     }
@@ -56,12 +69,16 @@ isLast(*node tNode){
 }
 
 void 
-printStack(){
-        node *tNode = front;
-        printf("Stack Structure is \n");
-        while (tNode->next != NULL){
-                fprint(tNode->value + "\n");
-                tNode = tNode->next;
-        }
-        fprint(tNode->value + "\n");
+printStack(struct stack *s){
+	if(isStackEmpty(s) == 0){
+		struct node *tNode = malloc(sizeof(struct node));
+		tNode = s->front;
+		printf("Stack Structure is \n");
+		while (isLastStackNode(tNode->next) == 0){
+			printf("%d->",tNode->value);
+			tNode = tNode->next;
+		}
+		printf("%d\n",tNode->value);
+	}	
+	return;
 }

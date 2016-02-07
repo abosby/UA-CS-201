@@ -1,59 +1,91 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Queue.h"
 
-Queue::newQueue(){
-    front = NULL;
-    rear = NULL;
+struct queue *newQueue(){
+	struct queue *q = malloc(sizeof(struct queue));
+	q->front = newNode();
+	q->rear  = newNode();
+	q->size = 0;
+	return q;
 }
-
-void Queue::enqueue(int value){
-        node *tNode = new node;
+void
+enqueue(struct queue *q, int value){
+        struct node *tNode = malloc(sizeof(struct queue));
         tNode->value = value;
-        tNode->next = NULL;
-        if (isEmpty()){
-                front = tNode;
-                rear = tNode;
+	//printf("Value is: %d\n",value);
+	//printf("tNode->value is: %d\n",tNode->value);
+        if (isQueueEmpty(q) == 1){
+		//printf("Queue is empty");
+	
+                q->front = tNode;
+                q->rear = tNode;
         }
         else{
-                rear->next = tNode;
-                rear = tNode;
+                q->rear->next = tNode;
+                q->rear = tNode;
+		//printf("q->rear->next = %d\n",q->rear->next->value);
         }
+	q->size += 1;
+	return;
 }
 
-int Queue::dequeue(){
-        node *tNode = front;
-        int temp;
-        if (front == rear){
-                temp = front->value;
-                front == NULL;
-                rear == NULL;
-        }
-        else{
-                temp = front->value;
-                front == front->next;
-        }
-        return temp;
+struct node * 
+dequeue(struct queue *q){
+        struct node *temp = malloc(sizeof(struct queue));
+	if (isQueueEmpty(q) == 0){
+		if (q->front == q->rear){
+			temp = q->front;
+			q->front = NULL;
+			q->rear = NULL;
+		}
+		else{
+			temp = q->front;
+			q->front = q->front->next;
+		}
+		q->size -= 1;
+		return temp;
+	}
+	else{
+		return NULL;
+	}
 }
 
-int Queue::isEmpty(){
+int 
+isQueueEmpty(struct queue *q){
 
-    if ((front == NULL) && (rear == NULL)){
-        return 1;
-    }
-    else{
-        return 0;
-    }
+	//printf("Checking if empty\n");
+	if (q->size == 0){
+		//printf("Queue is empty\n");
+		return 1;
+	}
+	else{
+		//printf("Queue is not empty\n");
+		return 0;
+	}
 
 }
+int
+isLastQueueNode(struct node *tNode){
+	if(tNode->next == NULL){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
 
-void Queue::printQueue(){
-        if(!isEmpty){
-                node *tNode = front;
+void 
+printQueue(struct queue *q){
+        if(isQueueEmpty(q) == 0){
+                struct node *tNode = malloc(sizeof(struct node));
+		tNode = q->front;
                 printf("Queue Structure is \n");
-                while(tNode->next != NULL){
-                        printf(tNode->value + "\n");
+                while(isLastQueueNode(tNode) == 0){
+                        printf("%d->",tNode->value);
                         tNode = tNode->next;
                 }
-                printf(tNode->value + "\n");
+                printf("%d\n",tNode->value);
         }
+	return;
 }

@@ -1,26 +1,24 @@
-#ifndef Stack
-#define Stack
+#include "Node.h"
+//#ifndef Stack
+//#define Stack
 
-//struct
-//{
-//    int value;
-//    struct node *next;
-//} node;
+struct stack{
 
-typedef struct stack_type{
+	/*vars*/
+	struct node *front;
+	struct node *rear;
+	int size;
 
-/*vars*/
-struct node *front;
-struct node *rear;
+};
+
 
 /*methods*/
-void (*push)(int value);
-struct node (*pop)();
-int (*isEmpty)();
-int (*isLast)(struct node *tNode);
-void (*printStack)();
+struct stack *newStack();
+void push(struct stack *, int value);
+struct node *pop(struct stack *);
+int isStackEmpty(struct stack *);
+int isLastStackNode(struct node *);
+void printStack(struct stack *);
 
-}Stack;
 
-Stack *newStack();
-#endif
+//#endif
