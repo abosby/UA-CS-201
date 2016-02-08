@@ -2,6 +2,7 @@
 #ifndef Queue
 #define Queue
 
+/*Structure for Queue Data Structure*/
 struct queue{
 
 	/*vars*/

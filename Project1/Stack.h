@@ -1,8 +1,9 @@
 #include "Node.h"
 #include "Heaptree.h"
-//#ifndef Stack
-//#define Stack
+#ifndef Stack
+#define Stack
 
+/*Structure for Stack Data Structure*/
 struct stack{
 
 	/*vars*/
@@ -26,4 +27,4 @@ void heapSort(struct stack *, int optionD);
 void siftUp(struct binaryTreeNode *, int optionD);
 
 
-//#endif
+#endif

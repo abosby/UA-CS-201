@@ -3,6 +3,7 @@
 #include "Heaptree.h"
 #include "Stack.h"
 
+/*Constructor for the Stack Data Structure*/
 struct stack *
 newStack(){
     	struct stack *s = malloc(sizeof(struct stack));
@@ -12,6 +13,7 @@ newStack(){
 	return s;
 }
 
+/*'Pushes' a Node structure to the front of the Stack (LIFO)*/
 void 
 push(struct stack *s, struct binaryTreeNode *n){
 	//printf("Value is: %d\n",value);
@@ -33,6 +35,7 @@ push(struct stack *s, struct binaryTreeNode *n){
 	s->size += 1;
 }
 
+/*'Pops' a Node structure from the top of the Stack (LIFO)*/
 struct binaryTreeNode *
 pop(struct stack *s){
     	struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
@@ -56,17 +59,19 @@ pop(struct stack *s){
     	}
 }
 
+/*Helper method to determine if the Stack Structure is Empty*/
 int 
 isStackEmpty(struct stack *s){
 
     	if (s->size == 0){
-		return 1;
+			return 1;
     	}
     	else{
-		return 0;
+			return 0;
     	}
 }
 
+/*Helper method to determine if the Node parameter is the Last Node in the Stack Structure*/
 int 
 isLastStackNode(struct binaryTreeNode *tNode){
     if (tNode->sNext == NULL){
@@ -77,6 +82,7 @@ isLastStackNode(struct binaryTreeNode *tNode){
     }
 }
 
+/*Method that prints the contents of the Stack Structure*/
 void 
 printStack(struct stack *s){
 	if(isStackEmpty(s) == 0){
@@ -93,6 +99,7 @@ printStack(struct stack *s){
 	return;
 }
 
+/*Method that prints the Preorder Traversal of the Heap*/
 void
 printStackPreorderTraversal(struct binaryTreeNode *n){
 	if(n != NULL){
@@ -124,6 +131,11 @@ heapSort(struct stack *s, int optionD){
 		printStackPreorderTraversal(s->root);
 	}	
 }
+
+/*Method that compares the Node parameter 'sifts' it up the
+	tree until it reaches the appropriate position based off
+	of optionD from the Command Line.
+*/
 
 void
 siftUp(struct binaryTreeNode *n, int optionD){

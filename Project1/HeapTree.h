@@ -3,17 +3,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*Structure for Binary Tree Node*/
 struct binaryTreeNode{
+
 	/*vars*/
 	int value;
 	struct binaryTreeNode *left, *right, *parent;
-	struct binaryTreeNode *qNext;
-	struct binaryTreeNode *sNext;
+	struct binaryTreeNode *qNext; //Queue Pointer
+	struct binaryTreeNode *sNext; //Stack Pointer
 
 };
 
 struct binaryTreeNode *newBinaryTreeNode();
 
+/*Structure for Binary Tree*/
 struct binaryTree{
 
 	/*vars*/
@@ -31,5 +34,4 @@ void inOrderTraversal(struct binaryTreeNode *node);
 void postOrderTraversal(struct binaryTreeNode *node);
 void levelOrderTraversal(struct binaryTreeNode *node);
 
-//void siftDown(binaryTr);
 #endif
