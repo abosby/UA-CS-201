@@ -1,12 +1,14 @@
 #include "Node.h"
+#include "Heaptree.h"
 //#ifndef Stack
 //#define Stack
 
 struct stack{
 
 	/*vars*/
-	struct node *front;
-	struct node *rear;
+	struct binaryTreeNode *root;
+	struct binaryTreeNode *front;
+	struct binaryTreeNode *rear;
 	int size;
 
 };
@@ -14,11 +16,14 @@ struct stack{
 
 /*methods*/
 struct stack *newStack();
-void push(struct stack *, int value);
-struct node *pop(struct stack *);
+void push(struct stack *, struct binaryTreeNode *);
+struct binaryTreeNode *pop(struct stack *);
 int isStackEmpty(struct stack *);
-int isLastStackNode(struct node *);
+int isLastStackNode(struct binaryTreeNode *);
 void printStack(struct stack *);
+void printStackPreorderTraversal(struct binaryTreeNode *n);
+void heapSort(struct stack *, int optionD);
+void siftUp(struct binaryTreeNode *, int optionD);
 
 
 //#endif

@@ -9,6 +9,8 @@ newBinaryTreeNode(){
 	n->left = NULL;
 	n->right = NULL;
 	n->parent = NULL;
+	n->qNext = NULL;
+	n->sNext = NULL;
 	return n;
 }
 

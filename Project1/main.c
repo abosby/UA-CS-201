@@ -70,8 +70,11 @@ int main(int argc, char **argv)
 		while(last != NULL){
 			printf("%s\n",last);
 			//need to account for non ints
-			enqueue(hQueue,atoi(last));	
-			push(hStack,atoi(last));
+			struct binaryTreeNode *n;
+			n = newBinaryTreeNode();
+			n->value = atoi(last);
+			enqueue(hQueue,n);	
+			push(hStack,n);
 			last = strtok(NULL," ");
 		}
 		//if (last == ' '){
@@ -86,8 +89,15 @@ int main(int argc, char **argv)
 		//	strcat(word, ch);
 		//}
 	}
+	//Performing Heapsort in (n log(n)) time
+	heapSort(hStack, optionD);
 	printQueue(hQueue);
-	printStack(hStack);
+	//printStack(hStack);
+	printf("The Queue Preorder is:\n");
+	printQueuePreorderTraversal(hQueue->root);
+	//printf("The Stack Preorder is:\n");
+	//printStackPreorderTraversal(hStack->root);
+	printQueueSorted(hQueue);
 
 
 	return 0;

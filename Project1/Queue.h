@@ -1,12 +1,13 @@
-#include "Node.h"
-//#ifndef Queue
-//#define Queue
+#include "Heaptree.h"
+#ifndef Queue
+#define Queue
 
 struct queue{
 
 	/*vars*/
-	struct node *front;
-	struct node *rear;
+	struct binaryTreeNode *root;
+	struct binaryTreeNode *front;
+	struct binaryTreeNode *rear;
 	int size;
 
 };
@@ -14,10 +15,12 @@ struct queue{
 
 /*methods*/
 struct queue *newQueue();
-void enqueue(struct queue *, int value);
-struct node *dequeue(struct queue *);
-int isLastQueueNode(struct node *);
+void enqueue(struct queue *, struct binaryTreeNode *);
+struct binaryTreeNode *dequeue(struct queue *);
+int isLastQueueNode(struct binaryTreeNode *);
 int isQueueEmpty(struct queue *);
 void printQueue(struct queue *);
+void printQueuePreorderTraversal(struct binaryTreeNode *);
+void printQueueSorted(struct queue *);
 
-//#endif
+#endif
