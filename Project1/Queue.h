@@ -1,4 +1,5 @@
 #include "Heaptree.h"
+#include "Stack.h"
 #ifndef Queue
 #define Queue
 
@@ -16,8 +17,9 @@ struct queue{
 
 /*methods*/
 struct queue *newQueue();
-void enqueue(struct queue *, struct binaryTreeNode *);
-struct binaryTreeNode *dequeue(struct queue *);
+void enqueue(struct queue *, struct stack *,struct binaryTreeNode *);
+struct binaryTreeNode *dequeue(struct queue *, struct stack *);
+void dequeueRest(struct queue *, struct stack *);
 int isLastQueueNode(struct binaryTreeNode *);
 int isQueueEmpty(struct queue *);
 void printQueue(struct queue *);

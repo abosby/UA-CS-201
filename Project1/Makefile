@@ -1,4 +1,4 @@
-OBJs =  Queue.o Stack.o Heaptree.o main.o
+OBJs =  Stack.o Queue.c Heaptree.o main.o
 
 heapsort: $(OBJs)
 	gcc -Wall -g $(OBJs) -o heapsort
@@ -9,8 +9,8 @@ heapsort.o: main.c
 Stack.o: Stack.c Stack.h
 	gcc -Wall -g -c Stack.c
 
-Queue.o: Queue.c Queue.h
-	gcc -Wall -g -c Queue.c
+Queue.o: Queue.c Queue.h Stack.h
+	gcc -Wall -g -c  Queue.c
 
 Heaptree.o: Heaptree.c Heaptree.h
 	gcc -Wall -g -c Heaptree.c
@@ -18,5 +18,5 @@ Heaptree.o: Heaptree.c Heaptree.h
 clean:
 	rm -f *.o  
 
-run:
+run:	clean heapsort
 	heapsort -d test.txt

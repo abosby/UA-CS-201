@@ -58,8 +58,8 @@ int main(int argc, char **argv)
 	FILE *fFile;
 	char ch[255];
 	char *last;
-	//fFile = fopen(argv[argc-1], "r");
-	fFile = fopen("test.txt", "r");
+	fFile = fopen(argv[argc-1], "r");
+	//fFile = fopen("test.txt", "r");
 
 	if (fFile == NULL){
 		printf("Incorrect file\n");
@@ -68,13 +68,13 @@ int main(int argc, char **argv)
 	while ((fgets(ch,255,fFile)) != NULL){
 		last = strtok(ch," ");
 		while(last != NULL){
-			printf("%s\n",last);
+			//printf("%s\n",last);
 			//need to account for non ints
 			struct binaryTreeNode *n;
 			n = newBinaryTreeNode();
 			n->value = atoi(last);
-			enqueue(hQueue,n);	
-			push(hStack,n);
+			enqueue(hQueue,hStack,n);	
+			//push(sStack,n);
 			last = strtok(NULL," ");
 		}
 		//if (last == ' '){
@@ -90,14 +90,21 @@ int main(int argc, char **argv)
 		//}
 	}
 	//Performing Heapsort in (n log(n)) time
+	//struct stack *oStack = newStack();
+	//oStack = hStack;
+	dequeueRest(hQueue,hStack);
 	heapSort(hStack, optionD);
-	printQueue(hQueue);
+	printSortedStack(hStack, optionD);
+	//printf("The Stack preorder of the two is:\n");
+	//printStackPreorderTraversal(hStack->root);
+	//printStackPreorderTraversal(oStack->root);
+	//printQueue(hQueue);
 	//printStack(hStack);
-	printf("The Queue Preorder is:\n");
-	printQueuePreorderTraversal(hQueue->root);
+	//printf("The Queue Preorder is:\n");
+	//printQueuePreorderTraversal(hQueue->root);
 	//printf("The Stack Preorder is:\n");
 	//printStackPreorderTraversal(hStack->root);
-	printQueueSorted(hQueue);
+	//printQueueSorted(hQueue);
 
 
 	return 0;

@@ -11,6 +11,7 @@ struct binaryTreeNode{
 	struct binaryTreeNode *left, *right, *parent;
 	struct binaryTreeNode *qNext; //Queue Pointer
 	struct binaryTreeNode *sNext; //Stack Pointer
+	//struct binaryTreeNode *oNext; //Original Stack pointer
 
 };
 

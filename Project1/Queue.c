@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "Heaptree.h"
 #include "Queue.h"
+#include "Stack.h"
 
 /* Constructor for the Queue data structure*/
 struct queue *newQueue(){
@@ -16,7 +17,7 @@ struct queue *newQueue(){
 /*Method that 'adds' the node parameter to the Queue (FIFO)
 	Also builds the Heap Structure in level order.*/
 void
-enqueue(struct queue *q, struct binaryTreeNode *n){
+enqueue(struct queue *q, struct stack *s, struct binaryTreeNode *n){
 	//printf("Value is: %d\n",value);
 	//printf("tNode->value is: %d\n",tNode->value);
 
@@ -32,21 +33,21 @@ enqueue(struct queue *q, struct binaryTreeNode *n){
                 q->rear = n;
 		//printf("q->rear->next = %d\n",q->rear->next->value);
 
-				//'Adds' the Node to the Heap in level order
-				if(q->front->left == NULL){
-					q->front->left = n;	
-					n->parent = q->front;
-				}
-				else if(q->front->right == NULL){
-					q->front->right = n;
-					n->parent = q->front;
-				}
-				else{
-					//struct binaryTreeNode *dequeue(q);		
-					dequeue(q);
-					q->front->left = n;
-					n->parent = q->front;
-				}	
+		//'Adds' the Node to the Heap in level order
+		if(q->front->left == NULL){
+			q->front->left = n;	
+			n->parent = q->front;
+		}
+		else if(q->front->right == NULL){
+			q->front->right = n;
+			n->parent = q->front;
+		}
+		else{
+			//struct binaryTreeNode *dequeue(q);		
+			dequeue(q,s);
+			q->front->left = n;
+			n->parent = q->front;
+		}	
         }
 	
 	q->size += 1;
@@ -55,7 +56,7 @@ enqueue(struct queue *q, struct binaryTreeNode *n){
 
 /*'Removes' the Node that has 'Waited' in the Queue the longest*/
 struct binaryTreeNode * 
-dequeue(struct queue *q){
+dequeue(struct queue *q, struct stack *s){
         struct binaryTreeNode *temp = malloc(sizeof(struct binaryTreeNode));
 	if (isQueueEmpty(q) == 0){
 		if (q->front == q->rear){
@@ -68,10 +69,19 @@ dequeue(struct queue *q){
 			q->front = q->front->qNext;
 		}
 		q->size -= 1;
+		push(s,temp);
 		return temp;
 	}
 	else{
 		return NULL;
+	}
+}
+
+/*Adds the rest of the queue to our stack*/
+void
+dequeueRest(struct queue *q, struct stack *s){
+	while(isQueueEmpty(q) == 0){
+		dequeue(q,s);
 	}
 }
 

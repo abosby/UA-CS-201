@@ -20,11 +20,13 @@ struct stack *newStack();
 void push(struct stack *, struct binaryTreeNode *);
 struct binaryTreeNode *pop(struct stack *);
 int isStackEmpty(struct stack *);
-int isLastStackNode(struct binaryTreeNode *);
+int isLastStackNode(struct binaryTreeNode *, struct stack *);
 void printStack(struct stack *);
 void printStackPreorderTraversal(struct binaryTreeNode *n);
 void heapSort(struct stack *, int optionD);
 void siftUp(struct binaryTreeNode *, int optionD);
+void siftDown(struct binaryTreeNode *, int optionD);
+void printSortedStack(struct stack *, int optionD);
 
 
 #endif
