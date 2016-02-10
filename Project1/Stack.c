@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "Heaptree.h"
 #include "Stack.h"
 
@@ -23,6 +24,7 @@ push(struct stack *s, struct binaryTreeNode *n, int optionD){
 		s->front = n;
 		s->rear = n;
 		s->root = n;
+		s->start = clock();
 		n->sNext = NULL;
 		//printf("The root is: %d\n",s->root->value);
 	}
@@ -34,7 +36,33 @@ push(struct stack *s, struct binaryTreeNode *n, int optionD){
 		//printf("On push | n is: %d\n",n->value);
 	}
 	s->size += 1;
+	/*
+	if(s->size == 1){
+		printf("   n	| time  \n");
+		printf("----------------\n");	
+		printf("1	|%f	\n",0.000);
+	}
+	if(s->size == 10){
+		printf("10	|%lu	\n",(clock()-s->start));
+	}
+	if(s->size == 100){
+		printf("100	|%lu	\n",(clock()-s->start));
+	}
+	if(s->size == 1000){
+		printf("1000	|%lu	\n",(clock()-s->start));
+	}
+	if(s->size == 10000){
+		printf("10000	|%lu	\n",(clock()-s->start));
+	}
+	if(s->size == 100000){
+		printf("100000	|%lu	\n",(clock()-s->start));
+	}
+	*/
+	//if(s->size == 1000000){
+	//	printf("1000000	|%lu	\n",(clock()-s->start));
+	//}
 }
+
 
 /*'Pops' a Node structure from the top of the Stack (LIFO)*/
 struct binaryTreeNode *

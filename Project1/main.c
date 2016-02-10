@@ -5,10 +5,12 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <time.h>
 
 /* options */
 int optionV = 0;
 int optionD = 0;
+clock_t start;
 //int Special = 0;    /* option -s      */
 //int Number = 0;     /* option -n XXXX */
 //char* Name = 0;     /* option -N YYYY */
@@ -50,6 +52,7 @@ int main(int argc, char **argv)
 	/* Main Program */
 	struct queue *hQueue = newQueue();
 	struct stack *hStack = newStack();
+	struct stack *holder = newStack();
 	//hQueue = newQueue();
 	//Stack hStack = newStack();
 
@@ -71,7 +74,7 @@ int main(int argc, char **argv)
 			//printf("%s\n",last);
 			n = newBinaryTreeNode();
 			n->value = atoi(last);
-			enqueue(hQueue,hStack,n,optionD);	
+			push(holder,n,optionD);
 			//push(sStack,n);
 			last = strtok(NULL," ");
 		}
@@ -87,10 +90,15 @@ int main(int argc, char **argv)
 		//	strcat(word, ch);
 		//}
 	}
+	start = clock();
+	while(isStackEmpty(holder)==0){
+		enqueue(hQueue,hStack,pop(holder),optionD);	
+	}
 	//Performing Heapsort in (n log(n)) time
 	//struct stack *oStack = newStack();
 	//oStack = hStack;
 	dequeueRest(hQueue,hStack, optionD);
+	printf("Time is %f\n",(double)(clock()-start)/CLOCKS_PER_SEC);
 	//heapSort(hStack, optionD);
 	printSortedStack(hStack, optionD);
 	//printf("The Stack preorder of the two is:\n");
@@ -104,7 +112,7 @@ int main(int argc, char **argv)
 	//printStackPreorderTraversal(hStack->root);
 	//printQueueSorted(hQueue);
 
-
+	fclose(fFile);
 	return 0;
 
 }

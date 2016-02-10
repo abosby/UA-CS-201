@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "Heaptree.h"
+#include <time.h>
 #ifndef Stack
 #define Stack
 
@@ -11,6 +12,7 @@ struct stack{
 	struct binaryTreeNode *front;
 	struct binaryTreeNode *rear;
 	int size;
+	clock_t start;
 
 };
 
