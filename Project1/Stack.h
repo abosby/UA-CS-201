@@ -17,7 +17,7 @@ struct stack{
 
 /*methods*/
 struct stack *newStack();
-void push(struct stack *, struct binaryTreeNode *);
+void push(struct stack *, struct binaryTreeNode *, int optionD);
 struct binaryTreeNode *pop(struct stack *);
 int isStackEmpty(struct stack *);
 int isLastStackNode(struct binaryTreeNode *, struct stack *);

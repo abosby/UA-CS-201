@@ -15,7 +15,7 @@ newStack(){
 
 /*'Pushes' a Node structure to the front of the Stack (LIFO)*/
 void 
-push(struct stack *s, struct binaryTreeNode *n){
+push(struct stack *s, struct binaryTreeNode *n, int optionD){
 	//printf("Value is: %d\n",value);
 	//printf("tNode->value is: %d\n",tNode->value);
 	if (isStackEmpty(s) == 1){
@@ -29,6 +29,7 @@ push(struct stack *s, struct binaryTreeNode *n){
 	else{
 		n->sNext = s->front;
 		s->front = n;
+		siftUp(s->front, optionD);
 		//printf("On push | n parent is: %d\n",n->parent->value);
 		//printf("On push | n is: %d\n",n->value);
 	}
@@ -85,7 +86,7 @@ isLastStackNode(struct binaryTreeNode *tNode, struct stack *s){
 /*Method that prints the contents of the Stack Structure*/
 void 
 printStack(struct stack *s){
-	printf("While printing stack");
+	//printf("While printing stack");
 	if(isStackEmpty(s) == 0){
 		struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
 		tNode = s->front;
@@ -127,7 +128,8 @@ heapSort(struct stack *s, int optionD){
 	int size = s->size;
 	struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
 	tNode = s->front;
-	for (i = 0; i < size-1; i++){
+	while(tNode != s->root){
+	//for (i = 0; i < size; i++){
 		//printf("\nPopped: %d\n",tNode->value);
 		siftUp(tNode, optionD);
 		tNode = tNode->sNext;
@@ -143,8 +145,7 @@ heapSort(struct stack *s, int optionD){
 void
 siftUp(struct binaryTreeNode *n, int optionD){
 	while(n->parent != NULL){
-		//If optionD is 0 then Max-Ordered Heap
-		//printf("Parent is not null\n");
+		//If optionD is 0 then Max-Ordered Heap //printf("Parent is not null\n");
 		if(optionD == 0){
 			if(n->value > n->parent->value){
 				//printf("Wapping values");
@@ -199,12 +200,15 @@ siftDown(struct binaryTreeNode *n, int optionD){
 					swap = n->right;	
 				}
 			}
-			if(swap != n){
+			if(swap == n){
+				return;
+			}
+			else{
 				int temp;
 				temp = swap->value;	
 				swap->value = n->value;
 				n->value = temp;
-				n = swap;
+				//n = swap;
 				siftDown(swap,optionD);
 			}
 		}
@@ -224,13 +228,15 @@ siftDown(struct binaryTreeNode *n, int optionD){
 					swap = n->right;	
 				}
 			}
-			if(swap->value != n->value){
+			if(swap == n){
+				return;
+			}
+			else{
 				int temp;
 				temp = swap->value;	
 				swap->value = n->value;
 				n->value = temp;
-				//printf("Swapped n-%d ",n->value);
-				//printf("and %d \n",swap->value);
+				//n = swap;
 				siftDown(swap,optionD);
 			}
 		}
@@ -251,8 +257,8 @@ printSortedStack(struct stack *s, int optionD){
 	while(isLastStackNode(s->rear,s) == 0){
 		int temp;
 		printf("%d ",s->root->value);
-		temp = s->rear->value;
-		s->rear->value = s->front->value;
+		temp = s->root->value;
+		s->root->value = s->front->value;
 		s->front->value = temp;
 		//if(s->front->parent->right != NULL){
 	//		s->front->parent->right = NULL;
@@ -271,12 +277,13 @@ printSortedStack(struct stack *s, int optionD){
 		}
 		pop(s);
 		siftDown(s->root, optionD);
+		//siftDown(s->rear, optionD);
 		//printf("\nNew tree is: \n");
 		//printStackPreorderTraversal(s->rear);
 		//printf("\nNew stack is: \n");
 		//printStack(s);
 	}		
-	printf("%d\n",s->root->value);
+	printf("%d\n",s->rear->value);
 	return;
 
 }

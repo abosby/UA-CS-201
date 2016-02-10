@@ -17,7 +17,7 @@ struct queue *newQueue(){
 /*Method that 'adds' the node parameter to the Queue (FIFO)
 	Also builds the Heap Structure in level order.*/
 void
-enqueue(struct queue *q, struct stack *s, struct binaryTreeNode *n){
+enqueue(struct queue *q, struct stack *s, struct binaryTreeNode *n, int optionD){
 	//printf("Value is: %d\n",value);
 	//printf("tNode->value is: %d\n",tNode->value);
 
@@ -44,7 +44,7 @@ enqueue(struct queue *q, struct stack *s, struct binaryTreeNode *n){
 		}
 		else{
 			//struct binaryTreeNode *dequeue(q);		
-			dequeue(q,s);
+			dequeue(q,s, optionD);
 			q->front->left = n;
 			n->parent = q->front;
 		}	
@@ -56,7 +56,7 @@ enqueue(struct queue *q, struct stack *s, struct binaryTreeNode *n){
 
 /*'Removes' the Node that has 'Waited' in the Queue the longest*/
 struct binaryTreeNode * 
-dequeue(struct queue *q, struct stack *s){
+dequeue(struct queue *q, struct stack *s, int optionD){
         struct binaryTreeNode *temp = malloc(sizeof(struct binaryTreeNode));
 	if (isQueueEmpty(q) == 0){
 		if (q->front == q->rear){
@@ -69,7 +69,7 @@ dequeue(struct queue *q, struct stack *s){
 			q->front = q->front->qNext;
 		}
 		q->size -= 1;
-		push(s,temp);
+		push(s,temp, optionD);
 		return temp;
 	}
 	else{
@@ -79,9 +79,9 @@ dequeue(struct queue *q, struct stack *s){
 
 /*Adds the rest of the queue to our stack*/
 void
-dequeueRest(struct queue *q, struct stack *s){
+dequeueRest(struct queue *q, struct stack *s, int optionD){
 	while(isQueueEmpty(q) == 0){
-		dequeue(q,s);
+		dequeue(q,s,optionD);
 	}
 }
 

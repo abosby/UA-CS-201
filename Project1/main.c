@@ -64,16 +64,14 @@ int main(int argc, char **argv)
 	if (fFile == NULL){
 		printf("Incorrect file\n");
 	}
-
+	struct binaryTreeNode *n;
 	while ((fgets(ch,255,fFile)) != NULL){
 		last = strtok(ch," ");
 		while(last != NULL){
 			//printf("%s\n",last);
-			//need to account for non ints
-			struct binaryTreeNode *n;
 			n = newBinaryTreeNode();
 			n->value = atoi(last);
-			enqueue(hQueue,hStack,n);	
+			enqueue(hQueue,hStack,n,optionD);	
 			//push(sStack,n);
 			last = strtok(NULL," ");
 		}
@@ -92,8 +90,8 @@ int main(int argc, char **argv)
 	//Performing Heapsort in (n log(n)) time
 	//struct stack *oStack = newStack();
 	//oStack = hStack;
-	dequeueRest(hQueue,hStack);
-	heapSort(hStack, optionD);
+	dequeueRest(hQueue,hStack, optionD);
+	//heapSort(hStack, optionD);
 	printSortedStack(hStack, optionD);
 	//printf("The Stack preorder of the two is:\n");
 	//printStackPreorderTraversal(hStack->root);

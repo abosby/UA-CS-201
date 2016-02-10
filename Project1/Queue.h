@@ -17,9 +17,9 @@ struct queue{
 
 /*methods*/
 struct queue *newQueue();
-void enqueue(struct queue *, struct stack *,struct binaryTreeNode *);
-struct binaryTreeNode *dequeue(struct queue *, struct stack *);
-void dequeueRest(struct queue *, struct stack *);
+void enqueue(struct queue *, struct stack *,struct binaryTreeNode *, int OptionD);
+struct binaryTreeNode *dequeue(struct queue *, struct stack *, int optionD);
+void dequeueRest(struct queue *, struct stack *, int optionD);
 int isLastQueueNode(struct binaryTreeNode *);
 int isQueueEmpty(struct queue *);
 void printQueue(struct queue *);
