@@ -1,5 +1,6 @@
 #ifndef Heaptree_H_
 #define Heaptree_H_
+#include "Stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,6 +30,8 @@ struct binaryTree{
 void insert(struct binaryTree *,struct binaryTreeNode *);
 int isHeapEmpty(struct binaryTree *);
 void heapify(struct binaryTreeNode *, int optionD);
+void extractTop(struct stack *, int optionD);
+void siftDown(struct binaryTreeNode *, int optionD);
 
 //Traversals
 struct binaryTree *newTree();

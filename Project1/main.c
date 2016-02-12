@@ -27,15 +27,15 @@ int main(int argc, char **argv)
 
 	argIndex = ProcessOptions(argc, argv);
 
-	printf("optionV is %s\n", optionV == 0 ? "false" : "true");
-	printf("optionD is %s\n", optionD == 0 ? "false" : "true");
+	//printf("optionV is %s\n", optionV == 0 ? "false" : "true");
+	//printf("optionD is %s\n", optionD == 0 ? "false" : "true");
 
 	if (argIndex == argc)
 		printf("No arguments\n");
 	else
 	{
 		
-		printf("Remaining arguments:%d\n", argc);
+		//printf("Remaining arguments:%d\n", argc);
 		//int i;
 		/*for (i = argIndex; i < argc; ++i){
 			printf("argc is %d\n",argc);
@@ -90,21 +90,35 @@ int main(int argc, char **argv)
 		//	strcat(word, ch);
 		//}
 	}
-	printStack(holder);
+	//printStack(holder);
 	//printf("pop(holder,optionD)->node is %d\n",pop(holder,optionD)->node->value);
-	printf("Made it here\n");
+	//printf("Made it here\n");
 	start = clock();
 	while(isStackEmpty(holder)==0){
 		enqueue(hQueue,hStack,pop(holder,optionD)->node,optionD);	
+		//printQueue(hQueue);
 	}
+	dequeueRest(hQueue,hStack,optionD);
 	
+	struct stackNode *parse = newStackNode();
+	parse = hStack->front;	
+	while(parse->next != NULL){
+		heapify(parse->node,optionD);
+		parse = parse->next;
+	}
+	heapify(parse->node,optionD);
+	//preOrderTraversal(hStack->rear->node);	
+	while(isStackEmpty(hStack)==0){
+		//preOrderTraversal(hStack->rear->node);
+		extractTop(hStack,optionD);
+	}
 	//Performing Heapsort in (n log(n)) time
 	//struct stack *oStack = newStack();
 	//oStack = hStack;	
 	//printf("The Stack is:\n");
 	//printStack(hStack);	
 		//dequeueRest(hQueue,hStack, optionD);
-		//printf("Time is %f\n",(double)(clock()-start)/CLOCKS_PER_SEC);
+	//printf("Time is %f\n",(double)(clock()-start)/CLOCKS_PER_SEC);
 	//heapSort(hStack, optionD);
 		//printSortedStack(hStack, optionD);
 	//printf("The Stack preorder of the two is:\n");

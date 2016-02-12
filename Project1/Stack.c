@@ -43,8 +43,9 @@ push(struct stack *s, struct binaryTreeNode *n, int optionD){
 		//printf("On push | n parent is: %d\n",n->parent->value);
 		//printf("On push | n is: %d\n",n->value);
 	}
+//		//heapify(n,optionD);
 	s->size += 1;
-	printf("Made it to the end of push\n");
+	//printf("Made it to the end of push\n");
 	return;
 	/*
 	if(s->size == 1){
@@ -92,7 +93,7 @@ pop(struct stack *s, int optionD){
 		//printf("tNode->parent is: %d\n",tNode->parent->value);
 		//printf("tNode is: %d\n",tNode->value);
 		//heapify(tNode->node, optionD);
-		printf("Popping %d\n",tNode->node->value);
+		//printf("Popping %d\n",tNode->node->value);
 		return tNode;
     	}
     	else{
@@ -221,6 +222,7 @@ siftUp(struct binaryTreeNode *n, int optionD){
 /*Method that sifts the node down to the appropriate position
 	runs in O(log n) tim
 */
+/*
 void
 siftDown(struct binaryTreeNode *n, int optionD){
 
@@ -283,7 +285,7 @@ siftDown(struct binaryTreeNode *n, int optionD){
 		return;
 	}
 }
-
+*/
 void
 printSortedStack(struct stack *s, int optionD){
 
