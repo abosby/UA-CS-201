@@ -90,17 +90,23 @@ int main(int argc, char **argv)
 		//	strcat(word, ch);
 		//}
 	}
+	printStack(holder);
+	//printf("pop(holder,optionD)->node is %d\n",pop(holder,optionD)->node->value);
+	printf("Made it here\n");
 	start = clock();
 	while(isStackEmpty(holder)==0){
-		enqueue(hQueue,hStack,pop(holder),optionD);	
+		enqueue(hQueue,hStack,pop(holder,optionD)->node,optionD);	
 	}
+	
 	//Performing Heapsort in (n log(n)) time
 	//struct stack *oStack = newStack();
-	//oStack = hStack;
-	dequeueRest(hQueue,hStack, optionD);
-	printf("Time is %f\n",(double)(clock()-start)/CLOCKS_PER_SEC);
+	//oStack = hStack;	
+	//printf("The Stack is:\n");
+	//printStack(hStack);	
+		//dequeueRest(hQueue,hStack, optionD);
+		//printf("Time is %f\n",(double)(clock()-start)/CLOCKS_PER_SEC);
 	//heapSort(hStack, optionD);
-	printSortedStack(hStack, optionD);
+		//printSortedStack(hStack, optionD);
 	//printf("The Stack preorder of the two is:\n");
 	//printStackPreorderTraversal(hStack->root);
 	//printStackPreorderTraversal(oStack->root);

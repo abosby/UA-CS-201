@@ -8,9 +8,16 @@
 struct stack *
 newStack(){
     	struct stack *s = malloc(sizeof(struct stack));
-	s->front = newBinaryTreeNode();
-	s->rear = newBinaryTreeNode();
+	s->front = newStackNode();
+	s->rear = newStackNode();
 	s->size = 0;
+	return s;
+}
+
+struct stackNode *newStackNode(){
+	struct stackNode *s = malloc(sizeof(struct stackNode));
+	s->node = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -21,21 +28,24 @@ push(struct stack *s, struct binaryTreeNode *n, int optionD){
 	//printf("tNode->value is: %d\n",tNode->value);
 	if (isStackEmpty(s) == 1){
 		//tNode->next = NULL;
-		s->front = n;
-		s->rear = n;
-		s->root = n;
+		s->front->node = n;
+		s->front->next = NULL;
+		s->rear->node = n;
+		s->rear->next = NULL;
 		s->start = clock();
-		n->sNext = NULL;
-		//printf("The root is: %d\n",s->root->value);
 	}
 	else{
-		n->sNext = s->front;
-		s->front = n;
-		siftUp(s->front, optionD);
+		struct stackNode *temp = malloc(sizeof(struct stackNode));
+		temp->next = s->front;
+		temp->node = n;
+		s->front = temp;
+		//siftUp(s->front, optionD);
 		//printf("On push | n parent is: %d\n",n->parent->value);
 		//printf("On push | n is: %d\n",n->value);
 	}
 	s->size += 1;
+	printf("Made it to the end of push\n");
+	return;
 	/*
 	if(s->size == 1){
 		printf("   n	| time  \n");
@@ -65,10 +75,10 @@ push(struct stack *s, struct binaryTreeNode *n, int optionD){
 
 
 /*'Pops' a Node structure from the top of the Stack (LIFO)*/
-struct binaryTreeNode *
-pop(struct stack *s){
+struct stackNode *
+pop(struct stack *s, int optionD){
     	if (isStackEmpty(s) == 0){
-    		struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
+    		struct stackNode *tNode = malloc(sizeof(struct stackNode));
 		if(s->front == s->rear){
 			tNode = s->front;	
 			s->front = NULL;
@@ -76,11 +86,13 @@ pop(struct stack *s){
 		}
 		else{
 			tNode = s->front;
-			s->front = s->front->sNext;
+			s->front = s->front->next;
 		}
 		s->size -= 1;
 		//printf("tNode->parent is: %d\n",tNode->parent->value);
 		//printf("tNode is: %d\n",tNode->value);
+		//heapify(tNode->node, optionD);
+		printf("Popping %d\n",tNode->node->value);
 		return tNode;
     	}
     	else{
@@ -102,7 +114,7 @@ isStackEmpty(struct stack *s){
 
 /*Helper method to determine if the Node parameter is the Last Node in the Stack Structure*/
 int 
-isLastStackNode(struct binaryTreeNode *tNode, struct stack *s){
+isLastStackNode(struct stackNode *tNode, struct stack *s){
     	if ((tNode == s->rear) && (tNode == s->front)){
        		return 1;
     	}
@@ -116,15 +128,15 @@ void
 printStack(struct stack *s){
 	//printf("While printing stack");
 	if(isStackEmpty(s) == 0){
-		struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
+		struct stackNode *tNode = malloc(sizeof(struct stackNode));
 		tNode = s->front;
-		//printf("Stack Structure is \n");
-		//printf("Stack size is %d\n",s->size);
-		while(tNode->sNext != NULL){
-			printf("%d->",tNode->value);
-			tNode = tNode->sNext;
+		printf("Stack Structure is \n");
+		printf("Stack size is %d\n",s->size);
+		while(tNode->next != NULL){
+			printf("%d->",tNode->node->value);
+			tNode = tNode->next;
 		}
-		printf("%d\n",tNode->value);
+		printf("%d\n",tNode->node->value);
 	}	
 	return;
 }
@@ -150,17 +162,17 @@ printStackPreorderTraversal(struct binaryTreeNode *n){
 */
 void
 heapSort(struct stack *s, int optionD){
-	int i;
+	//int i;
 	struct stack *temp;
 	temp = newStack();
-	int size = s->size;
-	struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
+	//int size = s->size;
+	struct stackNode *tNode = malloc(sizeof(struct stackNode));
 	tNode = s->front;
-	while(tNode != s->root){
+	while(isLastStackNode(tNode,s)!= 1){
 	//for (i = 0; i < size; i++){
 		//printf("\nPopped: %d\n",tNode->value);
-		siftUp(tNode, optionD);
-		tNode = tNode->sNext;
+		siftUp(tNode->node, optionD);
+		tNode = tNode->next;
 		//printf("\nNew tree: \n\n");
 		//printStackPreorderTraversal(s->root);
 	}	
@@ -284,10 +296,10 @@ printSortedStack(struct stack *s, int optionD){
 	//while(isStackEmpty(s) != 1){
 	while(isLastStackNode(s->rear,s) == 0){
 		int temp;
-		printf("%d ",s->root->value);
-		temp = s->root->value;
-		s->root->value = s->front->value;
-		s->front->value = temp;
+		printf("%d ",s->rear->node->value);
+		temp = s->rear->node->value;
+		s->rear->node->value = s->front->node->value;
+		s->rear->node->value = temp;
 		//if(s->front->parent->right != NULL){
 	//		s->front->parent->right = NULL;
 	//	}
@@ -297,21 +309,21 @@ printSortedStack(struct stack *s, int optionD){
 		//printf("Made it here");
 		//printf("%d ",s->front->value);
 		//printf("%d ", pop(s)->value);
-		if(s->front->parent->left == s->front){
-			s->front->parent->left = NULL;
+		if(s->rear->node->parent->left == s->front->node){
+			s->front->node->parent->left = NULL;
 		}
 		else{
-			s->front->parent->right = NULL;	
+			s->front->node->parent->right = NULL;	
 		}
-		pop(s);
-		siftDown(s->root, optionD);
+		pop(s,optionD);
+		siftDown(s->front->node, optionD);
 		//siftDown(s->rear, optionD);
 		//printf("\nNew tree is: \n");
 		//printStackPreorderTraversal(s->rear);
 		//printf("\nNew stack is: \n");
 		//printStack(s);
 	}		
-	printf("%d\n",s->rear->value);
+	printf("%d\n",s->rear->node->value);
 	return;
 
 }

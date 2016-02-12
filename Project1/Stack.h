@@ -8,23 +8,28 @@
 struct stack{
 
 	/*vars*/
-	struct binaryTreeNode *root;
-	struct binaryTreeNode *front;
-	struct binaryTreeNode *rear;
+	struct stackNode *front;
+	struct stackNode *rear;
 	int size;
 	clock_t start;
 
 };
 
+struct stackNode{
+	struct binaryTreeNode *node;
+	struct stackNode *next;
+};
+
 
 /*methods*/
 struct stack *newStack();
+struct stackNode *newStackNode();
 void push(struct stack *, struct binaryTreeNode *, int optionD);
-struct binaryTreeNode *pop(struct stack *);
+struct stackNode *pop(struct stack *, int optionD);
 int isStackEmpty(struct stack *);
-int isLastStackNode(struct binaryTreeNode *, struct stack *);
+int isLastStackNode(struct stackNode *, struct stack *);
 void printStack(struct stack *);
-void printStackPreorderTraversal(struct binaryTreeNode *n);
+//void printStackPreorderTraversal(struct binaryTreeNode *n);
 void heapSort(struct stack *, int optionD);
 void siftUp(struct binaryTreeNode *, int optionD);
 void siftDown(struct binaryTreeNode *, int optionD);

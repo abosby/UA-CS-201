@@ -1,4 +1,4 @@
-OBJs =  Timer.o Heaptree.o Stack.o Queue.o main.o
+OBJs =  Heaptree.o Stack.o Queue.o main.o
 
 heapsort: $(OBJs)
 	gcc -Wall -g $(OBJs) -o heapsort
@@ -15,12 +15,9 @@ Queue.o: Queue.c Queue.h Stack.h
 Heaptree.o: Heaptree.c Heaptree.h
 	gcc -Wall -g -c Heaptree.c
 
-Timer.o: Timer.c Timer.h
-	gcc -Wall -g -c Timer.c
-
 clean:
-	rm -f *.o  
-
+	rm -f *.o
+	rm -fr heapsort.dSYM
 run:	clean heapsort
 	heapsort -d test.txt
 

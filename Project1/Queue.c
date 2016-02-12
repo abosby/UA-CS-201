@@ -7,10 +7,16 @@
 /* Constructor for the Queue data structure*/
 struct queue *newQueue(){
 	struct queue *q = malloc(sizeof(struct queue));
-	q->root = newBinaryTreeNode();
-	q->front = newBinaryTreeNode();
-	q->rear  = newBinaryTreeNode();
+	q->front = newQueueNode();
+	q->rear  = newQueueNode();
 	q->size = 0;
+	return q;
+}
+
+struct queueNode *newQueueNode(){
+	struct queueNode *q = malloc(sizeof(struct queueNode));
+	q->node = NULL;
+	q->next = NULL;
 	return q;
 }
 
@@ -22,31 +28,42 @@ enqueue(struct queue *q, struct stack *s, struct binaryTreeNode *n, int optionD)
 	//printf("tNode->value is: %d\n",tNode->value);
 
 		//ENQUEUE
+	printf("Adding %d to the Queue\n",n->value);
         if (isQueueEmpty(q) == 1){
 				//printf("Queue is empty");
-				q->root = n;	
-                q->front = n;
-                q->rear = n;
+		q->front->node = n;
+		q->front->next = NULL;
+		q->rear->node = n;
+		q->rear->next = NULL;
         }
         else{
-                q->rear->qNext = n;
-                q->rear = n;
+		struct queueNode *temp = malloc(sizeof(struct queueNode));
+		temp->next = NULL;
+		temp->node = n;
+                q->rear->next = temp;
+                q->rear = temp;
 		//printf("q->rear->next = %d\n",q->rear->next->value);
 
 		//'Adds' the Node to the Heap in level order
-		if(q->front->left == NULL){
-			q->front->left = n;	
-			n->parent = q->front;
+		if(q->front->node->left == NULL){
+			q->front->node->left = n;	
+			n->parent = q->front->node;
 		}
-		else if(q->front->right == NULL){
-			q->front->right = n;
-			n->parent = q->front;
+		else if(q->front->node->right == NULL){
+			q->front->node->right = n;
+			printf("Made it back here\n");
+			n->parent = q->front->node;
 		}
 		else{
 			//struct binaryTreeNode *dequeue(q);		
+			printf("Dequeueing\n");
 			dequeue(q,s, optionD);
-			q->front->left = n;
-			n->parent = q->front;
+			printf("there is no front");
+			printf("q->front is %d\n",q->front->node->value);
+			printf("q->front->left is %d\n",q->front->node->left->value);
+			q->front->node->left = n;
+			printf("Made it here in the queue\n");
+			n->parent = q->front->node;
 		}	
         }
 	
@@ -60,16 +77,21 @@ dequeue(struct queue *q, struct stack *s, int optionD){
         struct binaryTreeNode *temp = malloc(sizeof(struct binaryTreeNode));
 	if (isQueueEmpty(q) == 0){
 		if (q->front == q->rear){
-			temp = q->front;
-			q->front = NULL;
-			q->rear = NULL;
+			temp = q->front->node;
+			q->front->node = NULL;
+			q->front->next = NULL;
+			q->rear->node = NULL;
+			q->rear->next = NULL;
 		}
 		else{
-			temp = q->front;
-			q->front = q->front->qNext;
+			temp = q->front->node;
+			q->front = q->front->next;
+			printf("Made it here in dequeue\n");
+			//printf("New q->front is %d\n",q->front->node->value);
 		}
 		q->size -= 1;
 		push(s,temp, optionD);
+		printf("Made it here in the queue value: %d\n",temp->value);
 		return temp;
 	}
 	else{
@@ -103,8 +125,8 @@ isQueueEmpty(struct queue *q){
 
 /*Helper method that determines if the Node parameter is the last Node in the Structure*/
 int
-isLastQueueNode(struct binaryTreeNode *tNode){
-	if(tNode->qNext == NULL){
+isLastQueueNode(struct queueNode *tNode){
+	if(tNode->next == NULL){
 		return 1;
 	}
 	else{
@@ -117,14 +139,14 @@ isLastQueueNode(struct binaryTreeNode *tNode){
 void 
 printQueue(struct queue *q){
         if(isQueueEmpty(q) == 0){
-                struct binaryTreeNode *tNode = malloc(sizeof(struct binaryTreeNode));
-				tNode = q->front;
+                struct queueNode *tNode = malloc(sizeof(struct queueNode));
+		tNode = q->front;
                 printf("Queue Structure is \n");
                 while(isLastQueueNode(tNode) == 0){
-                        printf("%d->",tNode->value);
-                        tNode = tNode->qNext;
+                        printf("%d->",tNode->node->value);
+                        tNode = tNode->next;
                 }
-                printf("%d\n",tNode->value);
+                printf("%d\n",tNode->node->value);
         }
 	return;
 }

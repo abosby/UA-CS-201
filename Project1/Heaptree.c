@@ -9,31 +9,79 @@ newBinaryTreeNode(){
 	n->left = NULL;
 	n->right = NULL;
 	n->parent = NULL;
-	n->qNext = NULL;
-	n->sNext = NULL;
 	return n;
 }
 
-struct binaryTree *
-newTree(){
-	struct binaryTree *b = malloc(sizeof(struct binaryTree));
-	b->root = newBinaryTreeNode();
-	return b;
-}
-
 void 
-insert(struct binaryTree *tree, int value){
+insert(struct binaryTree *t,struct binaryTreeNode *n){
 
-        struct binaryTreeNode *node = malloc(sizeof(struct binaryTreeNode));
-        node->left = NULL;
-        node->right = NULL;
-        node->value = value;
+	if(isHeapEmpty(t) == 1){
+		t->root = n;
+		t->size += 1;
+	}
+	else{
+
+	}
+	return;
+
+
 }
 
 int 
-removeTop(struct binaryTree *tree){
-        //IMPLEMENT
-	return 0;
+isHeapEmpty(struct binaryTree *t){
+
+	if(t->size == 0){
+		return 1;
+	}
+	else{
+		return 0;	
+	}
+
+}
+
+void
+heapify(struct binaryTreeNode *n, int optionD){
+
+	struct binaryTreeNode *tNode = newBinaryTreeNode();
+	tNode = n;
+	if(optionD == 1){
+		if(n->left != NULL){
+			if(n->left->value <= tNode->value){
+				tNode = n->left;	
+			}	
+		}		
+		if(n->right != NULL){
+			if(n->right->value <= tNode->value){
+				tNode = n->right;	
+			}	
+		}
+		if(tNode != n){
+			int temp = tNode->value;
+			tNode->value = n->value;
+			n->value = temp;
+			heapify(tNode, optionD);	
+		}
+		return;
+	}
+	else{
+		if(n->left != NULL){
+			if(n->left->value >= tNode->value){
+				tNode = n->left;
+			}
+		}
+		if(n->right != NULL){
+			if(n->right->value >= tNode->value){
+				tNode = n->right;	
+			}	
+		}
+		if(tNode != n){
+			int temp = tNode->value;
+			tNode->value = n->value;
+			n->value = temp;
+			heapify(tNode, optionD);
+		}
+		return;	
+	}
 }
 
 void 
@@ -53,6 +101,7 @@ preOrderTraversal(struct binaryTreeNode *node){
                         preOrderTraversal(node->right);
                 }
         }
+	return;
 }
 
 void 
@@ -72,6 +121,7 @@ inOrderTraversal(struct binaryTreeNode *node){
                         inOrderTraversal(node->right);
                 }
         }
+	return;
 }
 
 void 
@@ -91,4 +141,5 @@ postOrderTraversal(struct binaryTreeNode *node){
                 //print node
                 printf("%d ", node->value);
         }
+	return;
 }
