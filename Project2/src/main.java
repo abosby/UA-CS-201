@@ -50,6 +50,7 @@ public class main {
 			line = sc.nextLine();
 			String[] lWords = line.split(" ");
 			for (int i = 0; i < lWords.length; i++){
+				scrubWord(lWords[i]);
 				System.out.println(lWords[i]);
 			}
 		}
@@ -57,6 +58,16 @@ public class main {
 
 
 
+	}
+
+	private static void scrubWord(String string) {
+		String s = "";
+		char c = 0;
+		for (int i = 0; i < string.length(); i++)
+			c = string.charAt(i);
+			if(Character.isDigit(c)){
+				
+			}
 	}
 
 }
