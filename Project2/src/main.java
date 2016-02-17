@@ -4,11 +4,16 @@ import java.util.Scanner;
 
 public class main {
 
+	static BinarySearchTree BST;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int treeType;
+		treeType = 1;
+		if(treeType == 1){
+			BST = new BinarySearchTree();
+		}
 		//readCorpus(args[1]);
-		readCorpus("inputCorpus.txt");
+		readCorpus("inputCorpus.txt",1);
 		//readCommands(args[2]);
 
 	}
@@ -35,7 +40,12 @@ public class main {
 
 	}
 
-	private static void readCorpus(String corpusFile) {
+	/** Reads in the corpus text file and inserts into the specified tree.
+	 * 
+	 * @param corpusFile The file to be read.
+	 * @param treeType The type of tree to be constructed. 1 for BST, 2 for Red-Black Tree
+	 */
+	private static void readCorpus(String corpusFile, int treeType) {
 		String corpusPath = new File("src/"+corpusFile).getAbsolutePath();
 		//String corpusPath = corpusFile;
 		Scanner sc = null;
@@ -50,24 +60,38 @@ public class main {
 			line = sc.nextLine();
 			String[] lWords = line.split(" ");
 			for (int i = 0; i < lWords.length; i++){
-				scrubWord(lWords[i]);
-				System.out.println(lWords[i]);
+				lWords[i] = scrubWord(lWords[i]);
+				BST.insertNode(lWords[i]);
+				//System.out.println(lWords[i]);
+
 			}
 		}
+		BST.preOrderTraversal(BST.root);
+		BST.levelOrderTraversal(BST.root);
 		sc.close();
 
 
 
 	}
 
-	private static void scrubWord(String string) {
+	/** Returns the 'Scrubbed' String
+	 * 
+	 * @param string String to be scrubbed.
+	 * @return The 'Scrubbed' word that has been reduce to lowercase letters
+	 */
+	private static String scrubWord(String string) {
 		String s = "";
 		char c = 0;
-		for (int i = 0; i < string.length(); i++)
+		for (int i = 0; i < string.length(); i++){
 			c = string.charAt(i);
-			if(Character.isDigit(c)){
-				
+			if((Character.isUpperCase(c))){
+				s = s + Character.toLowerCase(c);
 			}
+			if((Character.isAlphabetic(c)) && (Character.isLowerCase(c))){
+				s = s + c;
+			}
+		}
+		return s;
 	}
 
 }

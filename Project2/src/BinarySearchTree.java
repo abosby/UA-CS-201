@@ -1,32 +1,68 @@
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinarySearchTree {
-	
+
 	//Private
 	BinaryNode root;
-	
-	
+
+
 	/** Constructor for the Binary Search Tree
 	 * 
 	 */
 	public BinarySearchTree(){
 		root = null;
 	}
-	
+
 	public void insertNode(String v){
-		
-		BinaryNode tNode = new BinaryNode(v);
-		//If root is empty
-		if(root == null){
-			root = tNode;
+
+		if(this.root == null){
+			BinaryNode n = new BinaryNode(v);
+			this.root = n;
 		}
-		//Find spot in tree
 		else{
-		
-			
-			
+			this.root.insertNode(v);
 		}
 
-		
+	}
+
+	public void preOrderTraversal(BinaryNode n){
+		//Print Node
+		System.out.println("|" + n.getValue() + "|");
+		//Go Left
+		if(n.getLeft()!= null){
+			preOrderTraversal(n.getLeft());
+		}
+		//Go Right
+		if(n.getRight()!= null){
+			preOrderTraversal(n.getRight());
+		}
+	}
+
+	//Need to implement Queue class
+	public void levelOrderTraversal(BinaryNode n){
+		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
+		int level = 1;
+		n.setLevel(level);
+		queue.add(n);
+		while(!queue.isEmpty()){
+			BinaryNode temp = queue.poll();
+			if(n == temp){
+				System.out.printf("%d: %s \n", temp.getLevel(),temp.getValue());
+			}
+			else{
+				System.out.printf("%s %s\n", temp.getLevel(),temp.getValue());
+			}
+			if(temp.getLeft() != null){
+				temp.getLeft().setLevel(level+1);
+				queue.add(temp.getLeft());
+			}
+			if(temp.getRight() != null){
+				temp.getRight().setLevel(level+1);
+				queue.add(temp.getRight());
+			}
+
+		}
 	}
 
 }
