@@ -6,8 +6,25 @@ public class BinaryNode {
 	private String value;
 	private int frequency;
 	private int level;
+	private BinaryNode parent;
 	private BinaryNode left;
 	private BinaryNode right;
+
+	public int getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+
+	public BinaryNode getParent() {
+		return parent;
+	}
+
+	public void setParent(BinaryNode parent) {
+		this.parent = parent;
+	}
 
 	public void setLevel(int i){
 		this.level = i;
@@ -47,8 +64,9 @@ public class BinaryNode {
 	 */
 	public BinaryNode(String v){
 		this.setValue(v);
-		this.frequency = 1;
+		this.setFrequency(1);
 		this.setLevel(0);
+		this.setParent(null);
 		this.setLeft(null);
 		this.setRight(null);
 	}
@@ -68,7 +86,7 @@ public class BinaryNode {
 
 			// If value is equal , increase frequency
 			if(this.getValue() == v){
-				this.frequency  += 1;
+				this.setFrequency(this.getFrequency() + 1);
 			}
 
 			// If value is less than
@@ -78,6 +96,7 @@ public class BinaryNode {
 				}
 				else{
 					this.setLeft(new BinaryNode(v));
+					this.getLeft().setParent(this);
 				}
 			}
 
@@ -88,6 +107,7 @@ public class BinaryNode {
 				}
 				else{
 					this.setRight(new BinaryNode(v));
+					this.getRight().setParent(this);
 				}
 			}
 			
