@@ -5,13 +5,43 @@ public class BinarySearchTree {
 
 	//Private
 	BinaryNode root;
+	private int nodeCount;
+	private int minHeight;
+	private int maxHeight;
 
+
+	public int getMaxHeight() {
+		return maxHeight;
+	}
+
+	public void setMaxHeight(int maxHeight) {
+		this.maxHeight = maxHeight;
+	}
+
+	public int getMinHeight() {
+		return minHeight;
+	}
+
+	public void setMinHeight(int minHeight) {
+		this.minHeight = minHeight;
+	}
+
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public void setNodeCount(int nodeCount) {
+		this.nodeCount = nodeCount;
+	}
 
 	/** Constructor for the Binary Search Tree
 	 * 
 	 */
 	public BinarySearchTree(){
-		root = null;
+		this.root = null;
+		this.maxHeight = 0;
+		this.minHeight = 0;
+		this.nodeCount = 0;
 	}
 
 	public void insertNode(String v){
@@ -21,9 +51,26 @@ public class BinarySearchTree {
 			this.root = n;
 		}
 		else{
-			this.root.insertNode(v);
+			this.root.insertNode(this,v);
+			this.setNodeCount(this.getNodeCount() + 1);
 		}
 
+	}
+	
+	public void deleteNode(String v){
+		
+		if(this.root == null){
+			System.out.println("The tree is empty and cannot delete");
+		}
+		else{
+			boolean confirmDeletion = this.root.deleteNode(this,v);
+			if(confirmDeletion == true){
+				
+			}
+			else{
+				
+			}
+		}
 	}
 
 	public void preOrderTraversal(BinaryNode n){
@@ -73,20 +120,20 @@ public class BinarySearchTree {
 				
 						//If next is a new level
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
-							System.out.printf("\n%d: %s(%s)%dL", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							System.out.printf("\n%d: =%s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 						}
 						//If next is the same level
 						else{
-							System.out.printf("\n%d: =%s(%s)%dL", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							System.out.printf("\n%d: %s(%s)%dL", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 						}
 					}
 					//If right
 					else{
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
-							System.out.printf("\n%d: %s(%s)%dR", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							System.out.printf("\n%d: =%s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 						}
 						else{
-							System.out.printf("\n%d: =%s(%s)%dR", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							System.out.printf("\n%d: %s(%s)%dR", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 						}
 					}
 				}

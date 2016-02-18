@@ -61,13 +61,18 @@ public class main {
 			String[] lWords = line.split(" ");
 			for (int i = 0; i < lWords.length; i++){
 				lWords[i] = scrubWord(lWords[i]);
-				BST.insertNode(lWords[i]);
+				if (treeType == 1){
+					BST.insertNode(lWords[i]);
+				}
+
 				//System.out.println(lWords[i]);
 
 			}
 		}
-		BST.preOrderTraversal(BST.root);
+		if(treeType == 1){
+		//BST.preOrderTraversal(BST.root);
 		BST.levelOrderTraversal(BST.root);
+		}
 		sc.close();
 
 

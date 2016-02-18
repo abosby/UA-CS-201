@@ -3,12 +3,21 @@
 public class BinaryNode {
 	
 	//Private
+	private BinarySearchTree BST;
 	private String value;
 	private int frequency;
 	private int level;
 	private BinaryNode parent;
 	private BinaryNode left;
 	private BinaryNode right;
+
+	public BinarySearchTree getBST() {
+		return BST;
+	}
+
+	public void setBST(BinarySearchTree bST) {
+		BST = bST;
+	}
 
 	public int getFrequency() {
 		return frequency;
@@ -28,6 +37,12 @@ public class BinaryNode {
 
 	public void setLevel(int i){
 		this.level = i;
+		if (this.isMax()){
+			this.getBST().setMaxHeight(i);
+		}
+		else if(this.isMin()){
+			this.getBST().setMinHeight(i);
+		}
 	}
 	
 	public int getLevel(){
@@ -73,9 +88,10 @@ public class BinaryNode {
 	
 	/** Inserts a string into the Binary Tree under the current node
 	 * 	Adapted insert function from http://vitalflux.com/java-create-binary-search-tree-string-search/
+	 * @param binarySearchTree 
 	 * @param v The value to be inserted
 	 */
-	public void insertNode(String v){
+	public void insertNode(BinarySearchTree binarySearchTree, String v){
 
 		//Check value of Node
 		if(this.value == null){
@@ -92,10 +108,11 @@ public class BinaryNode {
 			// If value is less than
 			else if(this.getValue().compareTo(v)<0){
 				if(this.getLeft() != null){
-					this.getLeft().insertNode(v);
+					this.getLeft().insertNode(binarySearchTree, v);
 				}
 				else{
 					this.setLeft(new BinaryNode(v));
+					this.setBST(binarySearchTree);
 					this.getLeft().setParent(this);
 				}
 			}
@@ -103,10 +120,11 @@ public class BinaryNode {
 			// If value is greater than
 			else if(this.getValue().compareTo(v)>0){
 				if (this.getRight() != null){
-					this.getRight().insertNode(v);
+					this.getRight().insertNode(binarySearchTree, v);
 				}
 				else{
 					this.setRight(new BinaryNode(v));
+					this.setBST(binarySearchTree);
 					this.getRight().setParent(this);
 				}
 			}
@@ -117,6 +135,28 @@ public class BinaryNode {
 
 	//public String determineValue(String v){
 	//	if
-	//}
+	
+	public boolean isMax(){
+		if(this.getLevel() == this.getBST().getMaxHeight()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public boolean isMin(){
+		if(this.getLevel() == this.getBST().getMinHeight()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean deleteNode(BinarySearchTree binarySearchTree, String v) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
