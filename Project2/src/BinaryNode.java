@@ -40,7 +40,7 @@ public class BinaryNode {
 		if (this.isMax()){
 			this.getBST().setMaxHeight(i);
 		}
-		else if(this.isMin()){
+		if(this.isMin()){
 			this.getBST().setMinHeight(i);
 		}
 	}
@@ -77,7 +77,8 @@ public class BinaryNode {
 	 * 
 	 * @param v The value of the node;
 	 */
-	public BinaryNode(String v){
+	public BinaryNode(BinarySearchTree BST, String v){
+		this.setBST(BST);
 		this.setValue(v);
 		this.setFrequency(1);
 		this.setLevel(0);
@@ -111,9 +112,18 @@ public class BinaryNode {
 					this.getLeft().insertNode(binarySearchTree, v);
 				}
 				else{
-					this.setLeft(new BinaryNode(v));
-					this.setBST(binarySearchTree);
+					this.setLeft(new BinaryNode(binarySearchTree,v));
 					this.getLeft().setParent(this);
+					this.getLeft().setLevel(this.getLeft().getParent().getLevel()+1);
+					//If this node is now the max height
+					if(this.getLeft().getLevel() >= this.getBST().getMaxHeight()){
+						this.getBST().setMaxHeight(this.getLeft().getLevel());
+					}
+					//If this node is now the min height
+					if(this.getLeft().getParent() == this.getBST().getMin()){
+						this.getBST().setMinHeight(this.getLeft().getLevel());
+						this.getBST().setMin(this.getLeft());
+					}
 				}
 			}
 
@@ -123,9 +133,18 @@ public class BinaryNode {
 					this.getRight().insertNode(binarySearchTree, v);
 				}
 				else{
-					this.setRight(new BinaryNode(v));
-					this.setBST(binarySearchTree);
+					this.setRight(new BinaryNode(binarySearchTree,v));
 					this.getRight().setParent(this);
+					this.getRight().setLevel(this.getRight().getParent().getLevel()+1);
+					//If this node is now the max height
+					if(this.getRight().getLevel() >= this.getBST().getMaxHeight()){
+						this.getBST().setMaxHeight(this.getRight().getLevel());
+					}
+					//If this node is now the min height
+					if(this.getRight().getParent() == this.getBST().getMin()){
+						this.getBST().setMinHeight(this.getRight().getLevel());
+						this.getBST().setMin(this.getRight());
+					}
 				}
 			}
 			

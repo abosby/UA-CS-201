@@ -5,6 +5,7 @@ public class BinarySearchTree {
 
 	//Private
 	BinaryNode root;
+	BinaryNode min;
 	private int nodeCount;
 	private int minHeight;
 	private int maxHeight;
@@ -47,8 +48,9 @@ public class BinarySearchTree {
 	public void insertNode(String v){
 
 		if(this.root == null){
-			BinaryNode n = new BinaryNode(v);
+			BinaryNode n = new BinaryNode(this,v);
 			this.root = n;
+			this.min = n;
 		}
 		else{
 			this.root.insertNode(this,v);
@@ -148,6 +150,22 @@ public class BinarySearchTree {
 			}
 			level++;
 		}
+	}
+	
+	public void printStatistics(){
+		System.out.println("\n\nStatistics for the Binary Search Tree");
+		System.out.println("=============================================");
+		System.out.printf("Number of the Nodes in the Tree	|%d\n",this.getNodeCount());
+		System.out.printf("Minimum Depth of the Tree	|%d\n",this.getMinHeight());
+		System.out.printf("Maximum Depth of the Tree	|%d\n",this.getMaxHeight());
+	}
+
+	public BinaryNode getMin() {
+		return this.min;
+	}
+	
+	public void setMin(BinaryNode v){
+		this.min = v;
 	}
 
 }

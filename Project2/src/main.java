@@ -72,6 +72,7 @@ public class main {
 		if(treeType == 1){
 		//BST.preOrderTraversal(BST.root);
 		BST.levelOrderTraversal(BST.root);
+		BST.printStatistics();
 		}
 		sc.close();
 
