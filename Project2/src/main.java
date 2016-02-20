@@ -61,7 +61,7 @@ public class main {
 			String[] lWords = line.split(" ");
 			for (int i = 0; i < lWords.length; i++){
 				lWords[i] = scrubWord(lWords[i]);
-				if (treeType == 1){
+				if ((treeType == 1) && (lWords[i] != "")){
 					BST.insertNode(lWords[i]);
 				}
 
@@ -71,7 +71,7 @@ public class main {
 		}
 		if(treeType == 1){
 		//BST.preOrderTraversal(BST.root);
-		BST.levelOrderTraversal(BST.root);
+		BST.printLevelOrderTraversal(BST.root);
 		BST.printStatistics();
 		}
 		sc.close();

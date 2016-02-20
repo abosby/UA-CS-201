@@ -37,12 +37,6 @@ public class BinaryNode {
 
 	public void setLevel(int i){
 		this.level = i;
-		if (this.isMax()){
-			this.getBST().setMaxHeight(i);
-		}
-		if(this.isMin()){
-			this.getBST().setMinHeight(i);
-		}
 	}
 	
 	public int getLevel(){
@@ -114,16 +108,6 @@ public class BinaryNode {
 				else{
 					this.setLeft(new BinaryNode(binarySearchTree,v));
 					this.getLeft().setParent(this);
-					this.getLeft().setLevel(this.getLeft().getParent().getLevel()+1);
-					//If this node is now the max height
-					if(this.getLeft().getLevel() >= this.getBST().getMaxHeight()){
-						this.getBST().setMaxHeight(this.getLeft().getLevel());
-					}
-					//If this node is now the min height
-					if(this.getLeft().getParent() == this.getBST().getMin()){
-						this.getBST().setMinHeight(this.getLeft().getLevel());
-						this.getBST().setMin(this.getLeft());
-					}
 				}
 			}
 
@@ -135,21 +119,73 @@ public class BinaryNode {
 				else{
 					this.setRight(new BinaryNode(binarySearchTree,v));
 					this.getRight().setParent(this);
-					this.getRight().setLevel(this.getRight().getParent().getLevel()+1);
-					//If this node is now the max height
-					if(this.getRight().getLevel() >= this.getBST().getMaxHeight()){
-						this.getBST().setMaxHeight(this.getRight().getLevel());
-					}
-					//If this node is now the min height
-					if(this.getRight().getParent() == this.getBST().getMin()){
-						this.getBST().setMinHeight(this.getRight().getLevel());
-						this.getBST().setMin(this.getRight());
-					}
 				}
 			}
 			
 		}
 
+	}
+
+	public BinaryNode deleteNode(BinarySearchTree binarySearchTree, String v) {
+		if(this.value == null){
+			return null;
+		}
+		else{
+
+			//If value is equal 
+			if(this.getValue() == v){
+
+				//Reduce frequency
+				if(this.getFrequency() != 0){
+					this.setFrequency(this.getFrequency()-1);
+					return this;
+				}
+
+				//Delete node and replace
+				else{
+					//If no children
+					if((this.getLeft() == null) && (this.getRight() == null)){
+						this.setFrequency(this.getFrequency()-1);
+						return this;
+					}
+					//If one child
+					else if((this.getLeft() != null) && (this.getRight() == null)){
+						BinaryNode temp = new BinaryNode(this.getBST(),"");
+						this.setFrequency(this.getRight().getFrequency());
+						this.setLeft(this.getRight().getLeft());
+						this.setRight(this.getRight().getRight());
+						this.setValue(this.getRight().getValue());
+						return temp;
+					}
+
+					else if((this.getLeft() == null) && (this.getRight() != null)){
+						BinaryNode temp = new BinaryNode(this.getBST(),"");
+						this.setFrequency(this.getLeft().getFrequency());
+						this.setLeft(this.getLeft().getLeft());
+						this.setRight(this.getLeft().getRight());
+						this.setValue(this.getLeft().getValue());
+						return temp;
+					}
+
+					//If two children
+					else{
+						
+					}
+					
+				}
+			}
+
+			//If value is less than
+			else if(this.getValue().compareTo(v)<0){
+				
+			}
+
+			//If value is greater than
+			else if(this.getValue().compareTo(v)>0){
+				
+			}
+		}
+		return false;
 	}
 
 	//public String determineValue(String v){
@@ -173,9 +209,6 @@ public class BinaryNode {
 		}
 	}
 
-	public boolean deleteNode(BinarySearchTree binarySearchTree, String v) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 }

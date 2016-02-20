@@ -65,12 +65,12 @@ public class BinarySearchTree {
 			System.out.println("The tree is empty and cannot delete");
 		}
 		else{
-			boolean confirmDeletion = this.root.deleteNode(this,v);
-			if(confirmDeletion == true){
-				
+			BinaryNode confirmDeletion = this.root.deleteNode(this,v);
+			if(confirmDeletion != null){
+				System.out.printf("\nDeleted Node: %d\nNew Node frequency: %d\n",confirmDeletion.getValue(),confirmDeletion.getFrequency());
 			}
 			else{
-				
+				System.out.printf("\nThe Node: %s was not found\n",v);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class BinarySearchTree {
 	}
 
 	//Need to implement Queue class
-	public void levelOrderTraversal(BinaryNode n){
+	public void printLevelOrderTraversal(BinaryNode n){
 		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
 		int level = 1;
 		n.setLevel(level);
@@ -153,11 +153,48 @@ public class BinarySearchTree {
 	}
 	
 	public void printStatistics(){
+		calculateMinMax(this.root);
 		System.out.println("\n\nStatistics for the Binary Search Tree");
 		System.out.println("=============================================");
 		System.out.printf("Number of the Nodes in the Tree	|%d\n",this.getNodeCount());
 		System.out.printf("Minimum Depth of the Tree	|%d\n",this.getMinHeight());
 		System.out.printf("Maximum Depth of the Tree	|%d\n",this.getMaxHeight());
+	}
+
+	private void calculateMinMax(BinaryNode n) {
+		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
+		int level = 1;
+		n.setLevel(level);
+		queue.add(n);
+		BinaryNode temp = null;
+		BinaryNode prev = null;
+		while(!queue.isEmpty()){
+			prev = temp;
+			temp = queue.poll();
+			//If root
+			if((n == temp) &&((temp.getRight() != null) || (temp.getLeft() != null))){
+				this.setMinHeight(temp.getLevel()+1);
+			}
+			else{
+				//If it is the shortest
+				if((temp.getLeft() == null) && (temp.getRight() == null) && (temp.getLevel() < this.getMinHeight())){
+					this.setMinHeight(temp.getLevel());
+				}
+				//If it is the longest
+				if(temp.getLevel() > this.getMaxHeight()){
+					this.setMaxHeight(temp.getLevel());
+				}
+			}
+			if(temp.getLeft() != null){
+				temp.getLeft().setLevel(level+1);
+				queue.add(temp.getLeft());
+			}
+			if(temp.getRight() != null){
+				temp.getRight().setLevel(level+1);
+				queue.add(temp.getRight());
+			}
+			level++;
+		}
 	}
 
 	public BinaryNode getMin() {
