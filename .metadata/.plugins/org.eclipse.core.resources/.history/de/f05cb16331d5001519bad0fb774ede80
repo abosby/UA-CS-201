@@ -1,0 +1,40 @@
+
+public class BinarySearchTree {
+
+	//Private
+	BinaryNode root;
+
+
+	/** Constructor for the Binary Search Tree
+	 * 
+	 */
+	public BinarySearchTree(){
+		root = null;
+	}
+
+	public void insertNode(String v){
+
+		if(this.root == null){
+			BinaryNode n = new BinaryNode(v);
+			this.root = n;
+		}
+		else{
+			this.root.insertNode(v);
+		}
+
+	}
+
+	public void preOrderTraversal(BinaryNode n){
+		//Print Node
+		System.out.println("|" + n.getValue() + "|");
+		//Go Left
+		if(n.getLeft()!= null){
+			preOrderTraversal(n.getLeft());
+		}
+		//Go Right
+		if(n.getRight()!= null){
+			preOrderTraversal(n.getRight());
+		}
+	}
+
+}

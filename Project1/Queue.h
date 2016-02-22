@@ -1,18 +1,17 @@
-#include <stdio.h>
+#include "Heaptree.h"
+#include "Stack.h"
+#ifndef Queue
+#define Queue
 
-struct node{
-	int value;
-	node *next;
-};
+/*Structure for Queue Data Structure*/
+struct queue{
 
-class Queue{
+	/*vars*/
+	struct queueNode *front;
+	struct queueNode *rear;
+	int size;
 
-	private:
-		node *front;
-		node *rear;
-
-	public:
-
+<<<<<<< HEAD
 		void enqueue(int value);
 		int dequeue();
         int isEmpty();
@@ -30,31 +29,30 @@ void Queue::enqueue(int value){
 		rear = tNode;
 	}
 }
+=======
+};
 
-int Queue::dequeue(){
-	node *tNode = front;
-	int temp;
-	if (front == rear){
-		temp = front->value;
-		front == NULL;
-		rear == NULL;
-	}
-	else{
-		temp = front->value;
-		front == front->next;
-	}
-	return temp;
-}
+/*Methods*/
+struct queueNode *newQueueNode();
+void enqueue(struct queue *, struct stack *,struct binaryTreeNode *, int OptionD);
+struct binaryTreeNode *dequeue(struct queue *, struct stack *, int optionD);
+void dequeueRest(struct queue *, struct stack *, int optionD);
+int isQueueEmpty(struct queue *);
+int isLastQueueNode(struct queueNode *);
+void printQueue(struct queue *);
 
-int Queue::isEmpty(){
+>>>>>>> aa3cf8ad2fa2e73c989cfc9afb25d99700e90d21
 
-    if ((front == NULL) && (rear == NULL)){
-        return 1;
-    }
-    else{
-        return 0;
-    }
+/*Structure for the Queue Node Structure
+	This is a Node that holds our Binary Tree Nodes*/
+struct queueNode{
 
-}
+	/*vars*/
+	struct binaryTreeNode *node;
+	struct queueNode *next;
+};
 
+/*methods*/
+struct queue *newQueue();
 
+#endif
