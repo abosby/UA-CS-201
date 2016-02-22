@@ -69,9 +69,16 @@ public class main {
 
 			}
 		}
+		//Interpreter
+		
 		if(treeType == 1){
 		//BST.preOrderTraversal(BST.root);
-		BST.printLevelOrderTraversal(BST.root);
+		BST.printBreadthTraversal(BST.root);
+		BST.printStatistics();
+		BST.deleteNode("the");
+		BST.deleteNode("test");
+		BST.deleteNode("the");
+		BST.printBreadthTraversal(BST.root);
 		BST.printStatistics();
 		}
 		sc.close();

@@ -1,7 +1,7 @@
 
 
 public class BinaryNode {
-	
+
 	//Private
 	private BinarySearchTree BST;
 	private String value;
@@ -38,7 +38,7 @@ public class BinaryNode {
 	public void setLevel(int i){
 		this.level = i;
 	}
-	
+
 	public int getLevel(){
 		return this.level;
 	}
@@ -80,7 +80,7 @@ public class BinaryNode {
 		this.setLeft(null);
 		this.setRight(null);
 	}
-	
+
 	/** Inserts a string into the Binary Tree under the current node
 	 * 	Adapted insert function from http://vitalflux.com/java-create-binary-search-tree-string-search/
 	 * @param binarySearchTree 
@@ -91,37 +91,40 @@ public class BinaryNode {
 		//Check value of Node
 		if(this.value == null){
 			this.setValue(v);
+			this.setLevel(1);
 		}
 
 		else{
 
 			// If value is equal , increase frequency
-			if(this.getValue() == v){
+			if(this.getValue().equals(v)){
 				this.setFrequency(this.getFrequency() + 1);
 			}
 
 			// If value is less than
-			else if(this.getValue().compareTo(v)<0){
+			else if(this.getValue().compareTo(v)>0){
 				if(this.getLeft() != null){
 					this.getLeft().insertNode(binarySearchTree, v);
 				}
 				else{
 					this.setLeft(new BinaryNode(binarySearchTree,v));
+					this.getLeft().setLevel(this.getLevel()+1);
 					this.getLeft().setParent(this);
 				}
 			}
 
 			// If value is greater than
-			else if(this.getValue().compareTo(v)>0){
+			else if(this.getValue().compareTo(v)<0){
 				if (this.getRight() != null){
 					this.getRight().insertNode(binarySearchTree, v);
 				}
 				else{
 					this.setRight(new BinaryNode(binarySearchTree,v));
+					this.getRight().setLevel(this.getLevel()+1);
 					this.getRight().setParent(this);
 				}
 			}
-			
+
 		}
 
 	}
@@ -132,65 +135,97 @@ public class BinaryNode {
 		}
 		else{
 
-			//If value is equal 
-			if(this.getValue() == v){
-
-				//Reduce frequency
-				if(this.getFrequency() != 0){
-					this.setFrequency(this.getFrequency()-1);
-					return this;
-				}
-
-				//Delete node and replace
-				else{
-					//If no children
-					if((this.getLeft() == null) && (this.getRight() == null)){
-						this.setFrequency(this.getFrequency()-1);
-						return this;
-					}
-					//If one child
-					else if((this.getLeft() != null) && (this.getRight() == null)){
-						BinaryNode temp = new BinaryNode(this.getBST(),"");
-						this.setFrequency(this.getRight().getFrequency());
-						this.setLeft(this.getRight().getLeft());
-						this.setRight(this.getRight().getRight());
-						this.setValue(this.getRight().getValue());
-						return temp;
-					}
-
-					else if((this.getLeft() == null) && (this.getRight() != null)){
-						BinaryNode temp = new BinaryNode(this.getBST(),"");
-						this.setFrequency(this.getLeft().getFrequency());
-						this.setLeft(this.getLeft().getLeft());
-						this.setRight(this.getLeft().getRight());
-						this.setValue(this.getLeft().getValue());
-						return temp;
-					}
-
-					//If two children
-					else{
-						
-					}
-					
-				}
-			}
-
 			//If value is less than
-			else if(this.getValue().compareTo(v)<0){
-				
+			if(this.getValue().compareTo(v)>0){
+				if(this.getLeft() != null){
+					return this.getLeft().deleteNode(binarySearchTree, v);
+				}
+				else{
+					return null;
+				}
+
 			}
 
 			//If value is greater than
-			else if(this.getValue().compareTo(v)>0){
-				
+			else if(this.getValue().compareTo(v)<0){
+				if(this.getRight() != null){
+					return this.getRight().deleteNode(binarySearchTree, v);
+				}
+				else{
+					return null;
+				}
+			}
+
+			//If value is equal 
+			else{
+
+				if(this.getFrequency() == 1){
+					//If two children
+					if((this.getRight() != null ) && (this.getLeft() != null)){
+
+						//replace with inorder predecessor then remove the predecessor node
+						if(this.getParent().getRight() == this){
+							BinaryNode temp = new BinaryNode(this.getBST(),this.getValue().toString());
+							this.setFrequency(this.getLeft().getFrequency());
+							this.setValue(this.getLeft().getValue().toString());
+							this.setRight(this.getLeft().getRight());
+							this.setLeft(this.getLeft().getLeft());
+							return temp;
+						}
+						else{
+							BinaryNode temp = new BinaryNode(this.getBST(),this.getValue().toString());
+							this.setFrequency(this.getRight().getFrequency());
+							this.setValue(this.getRight().getValue());
+							this.setLeft(this.getRight().getLeft());
+							this.setRight(this.getRight().getRight());
+							return temp;
+
+						}
+					}
+
+					//If one child
+					else if((this.getLeft() != null) && (this.getRight() == null)){
+
+						BinaryNode temp = new BinaryNode(this.getBST(),this.getValue().toString());
+						this.setFrequency(this.getLeft().getFrequency());
+						this.setValue(this.getLeft().getValue().toString());
+						this.setRight(this.getLeft().getRight());
+						this.setLeft(this.getLeft().getLeft());
+						return temp;						
+					}
+
+					else if((this.getLeft() == null) && (this.getRight() != null)){
+
+						BinaryNode temp = new BinaryNode(this.getBST(),this.getValue().toString());
+						this.setFrequency(this.getRight().getFrequency());
+						this.setValue(this.getRight().getValue().toString());
+						this.setLeft(this.getRight().getLeft());
+						this.setRight(this.getRight().getRight());
+						return temp;
+					}
+					//If no children
+					else{
+						if(this.getParent().getLeft() == this){
+							this.getParent().setLeft(null);
+						}
+						else{
+							this.getParent().setRight(null);
+						}
+						return this;
+					}
+				}
+
+				//Reduce node frequency
+				else {
+					this.setFrequency(this.getFrequency()-1);
+					return this;
+				}
 			}
 		}
-		return false;
 	}
-
 	//public String determineValue(String v){
 	//	if
-	
+
 	public boolean isMax(){
 		if(this.getLevel() == this.getBST().getMaxHeight()){
 			return true;
@@ -199,7 +234,7 @@ public class BinaryNode {
 			return false;
 		}
 	}
-	
+
 	public boolean isMin(){
 		if(this.getLevel() == this.getBST().getMinHeight()){
 			return true;
@@ -209,6 +244,6 @@ public class BinaryNode {
 		}
 	}
 
-	
+
 
 }
