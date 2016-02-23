@@ -82,6 +82,8 @@ public class main {
 		BST.deleteNode("girl");
 		BST.printBreadthTraversal(BST.root);
 		BST.printStatistics();
+		BST.findNode("brown");
+		BST.findNode("girl");
 		}
 		sc.close();
 

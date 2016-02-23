@@ -59,9 +59,9 @@ public class BinarySearchTree {
 		}
 
 	}
-	
+
 	public void deleteNode(String v){
-		
+
 		if(this.root == null){
 			System.out.println("The tree is empty and cannot delete");
 		}
@@ -79,16 +79,26 @@ public class BinarySearchTree {
 
 	private void resetLevels(BinaryNode node) {
 		if(node.getLeft() != null){
-		node.getLeft().setLevel(node.getLevel()+1);
-		resetLevels(node.getLeft());
+			node.getLeft().setLevel(node.getLevel()+1);
+			resetLevels(node.getLeft());
 		}
 		if(node.getRight() != null){
-		node.getRight().setLevel(node.getLevel()+1);
-		resetLevels(node.getRight());
+			node.getRight().setLevel(node.getLevel()+1);
+			resetLevels(node.getRight());
 		}
 		return;
 	}
-	
+
+	public void findNode(String v){
+		if(this.root == null){
+			System.out.println("\nThere is no tree to find frequencies in.\n");
+			return;
+		}
+		else{
+			this.root.findNode(this,v);
+		}
+	}
+
 	public void preOrderTraversal(BinaryNode n){
 		//Print Node
 		System.out.println("|" + n.getValue() + "|");
@@ -129,7 +139,7 @@ public class BinarySearchTree {
 							}
 							else{
 								System.out.printf("%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
-								
+
 							}
 						}
 						else{
@@ -168,7 +178,7 @@ public class BinarySearchTree {
 				else{
 					//If left
 					if(temp.getParent().getLeft() == temp){
-				
+
 						//If next is not a new level
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
@@ -221,7 +231,7 @@ public class BinarySearchTree {
 			level++;
 		}
 	}
-	
+
 	public void printStatistics(){
 		calculateMinMax(this.root);
 		System.out.println("\n\nStatistics for the Binary Search Tree");
@@ -268,7 +278,7 @@ public class BinarySearchTree {
 	public BinaryNode getMin() {
 		return this.min;
 	}
-	
+
 	public void setMin(BinaryNode v){
 		this.min = v;
 	}
