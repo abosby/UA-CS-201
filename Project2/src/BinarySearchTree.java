@@ -49,6 +49,7 @@ public class BinarySearchTree {
 
 		if(this.root == null){
 			BinaryNode n = new BinaryNode(this,v);
+			n.setLevel(1);
 			this.root = n;
 			this.min = n;
 		}
@@ -68,6 +69,7 @@ public class BinarySearchTree {
 			BinaryNode confirmDeletion = this.root.deleteNode(this,v);
 			if(confirmDeletion != null){
 				System.out.printf("\nDeleted Node: %s\nNew Node frequency: %d\n",confirmDeletion.getValue(),confirmDeletion.getFrequency());
+				resetLevels(this.root);
 			}
 			else{
 				System.out.printf("\nThe Node: %s was not found\n",v);
@@ -75,6 +77,18 @@ public class BinarySearchTree {
 		}
 	}
 
+	private void resetLevels(BinaryNode node) {
+		if(node.getLeft() != null){
+		node.getLeft().setLevel(node.getLevel()+1);
+		resetLevels(node.getLeft());
+		}
+		if(node.getRight() != null){
+		node.getRight().setLevel(node.getLevel()+1);
+		resetLevels(node.getRight());
+		}
+		return;
+	}
+	
 	public void preOrderTraversal(BinaryNode n){
 		//Print Node
 		System.out.println("|" + n.getValue() + "|");
@@ -109,21 +123,44 @@ public class BinarySearchTree {
 					//If left
 					if(temp.getParent().getLeft() == temp){
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
-							System.out.printf("%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							//If leaf
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("=%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+								
+							}
 						}
 						else{
-							System.out.printf("%s(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("=%s(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%s(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 					}
 					//If right
 					else{
 						//Next is not a new level
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
-							System.out.printf("%s(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							//If leaf
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("=%s(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%s(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 						//Next is new level
 						else{
-							System.out.printf("%s(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("=%s(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%s(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 					}
 				}
@@ -134,20 +171,43 @@ public class BinarySearchTree {
 				
 						//If next is not a new level
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
-							System.out.printf("%d: =%s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							//If leaf
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("%d: =%s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%d: %s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 						//If next is a new level
 						else{
-							System.out.printf("%d: %s(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							//Is leaf
+							if((temp.getLeft() == null) && (temp.getRight() ==null)){
+								System.out.printf("%d: =%s(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%d: %s(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 					}
 					//If right
 					else{
 						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
-							System.out.printf("%d: =%s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							//If leaf
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("%d: =%s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%d: %s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 						else{
-							System.out.printf("%d: %s(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							if((temp.getLeft() == null) && (temp.getRight() == null)){
+								System.out.printf("%d: =%s(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
+							else{
+								System.out.printf("%d: %s(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+							}
 						}
 					}
 				}

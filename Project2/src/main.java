@@ -79,6 +79,8 @@ public class main {
 		BST.deleteNode("test");
 		BST.deleteNode("the");
 		BST.printBreadthTraversal(BST.root);
+		BST.deleteNode("girl");
+		BST.printBreadthTraversal(BST.root);
 		BST.printStatistics();
 		}
 		sc.close();
