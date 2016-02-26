@@ -4,8 +4,8 @@ import java.util.Queue;
 public class BinarySearchTree {
 
 	//Private
-	BinaryNode root;
-	BinaryNode min;
+	private BinaryNode root;
+	private BinaryNode min;
 	private int nodeCount;
 	private int minHeight;
 	private int maxHeight;
@@ -281,6 +281,14 @@ public class BinarySearchTree {
 
 	public void setMin(BinaryNode v){
 		this.min = v;
+	}
+
+	public BinaryNode getRoot() {
+		return this.root;
+	}
+	
+	public void setRoot(BinaryNode r) {
+		this.root = r;
 	}
 
 }

@@ -73,14 +73,14 @@ public class main {
 		
 		if(treeType == 1){
 		//BST.preOrderTraversal(BST.root);
-		BST.printBreadthTraversal(BST.root);
+		BST.printBreadthTraversal(BST.getRoot());
 		BST.printStatistics();
 		BST.deleteNode("the");
 		BST.deleteNode("test");
 		BST.deleteNode("the");
-		BST.printBreadthTraversal(BST.root);
+		BST.printBreadthTraversal(BST.getRoot());
 		BST.deleteNode("girl");
-		BST.printBreadthTraversal(BST.root);
+		BST.printBreadthTraversal(BST.getRoot());
 		BST.printStatistics();
 		BST.findNode("brown");
 		BST.findNode("girl");

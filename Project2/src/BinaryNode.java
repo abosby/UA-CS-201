@@ -69,7 +69,8 @@ public class BinaryNode {
 
 	/** Constructor for the Binary Node
 	 * 
-	 * @param v The value of the node;
+	 * @param BST The Tree that the Node is a part of
+	 * @param v The value of the new node
 	 */
 	public BinaryNode(BinarySearchTree BST, String v){
 		this.setBST(BST);
