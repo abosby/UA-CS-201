@@ -47,4 +47,15 @@ public class RBTree {
 		this.setMinHeight(0);
 		this.setNodeCount(0);
 	}
+	
+	public void insertNode(String v){
+		if(this.root == null){
+			RBNode n = new RBNode(this,v);
+			n.setLevel(1);
+			this.root = n;
+			this.min = n;
+		}
+		this.root.insertNode(this,v);
+		
+	}
 }
