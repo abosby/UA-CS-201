@@ -5,15 +5,19 @@ import java.util.Scanner;
 public class main {
 
 	static BinarySearchTree BST;
+	static RBTree RBT;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int treeType;
-		treeType = 1;
+		treeType = 2;
 		if(treeType == 1){
 			BST = new BinarySearchTree();
 		}
+		else if(treeType ==2){
+			RBT = new RBTree();
+		}
 		//readCorpus(args[1]);
-		readCorpus("inputCorpus.txt",1);
+		readCorpus("inputCorpus.txt",treeType);
 		//readCommands(args[2]);
 
 	}
@@ -64,29 +68,33 @@ public class main {
 				if ((treeType == 1) && (lWords[i] != "")){
 					BST.insertNode(lWords[i]);
 				}
-
+				else if((treeType ==2) && (lWords[i] != "")){
+					RBT.insertNode(lWords[i]);
+				}
 				//System.out.println(lWords[i]);
 
 			}
 		}
 		//Interpreter
-		
+
 		if(treeType == 1){
-		//BST.preOrderTraversal(BST.root);
-		BST.printBreadthTraversal(BST.getRoot());
-		BST.printStatistics();
-		BST.deleteNode("the");
-		BST.deleteNode("test");
-		BST.deleteNode("the");
-		BST.printBreadthTraversal(BST.getRoot());
-		BST.deleteNode("girl");
-		BST.printBreadthTraversal(BST.getRoot());
-		BST.printStatistics();
-		BST.findNode("brown");
-		BST.findNode("girl");
+			//BST.preOrderTraversal(BST.root);
+			BST.printBreadthTraversal(BST.getRoot());
+			BST.printStatistics();
+			BST.deleteNode("the");
+			BST.deleteNode("test");
+			BST.deleteNode("the");
+			BST.printBreadthTraversal(BST.getRoot());
+			BST.deleteNode("girl");
+			BST.printBreadthTraversal(BST.getRoot());
+			BST.printStatistics();
+			BST.findNode("brown");
+			BST.findNode("girl");
+		}
+		if(treeType == 2){
+			RBT.preOrderTraversal(RBT.getRoot());
 		}
 		sc.close();
-
 
 
 	}

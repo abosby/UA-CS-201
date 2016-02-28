@@ -77,6 +77,7 @@ public class RBNode {
 		this.setRBT(RBT);
 		this.setValue(v);
 		this.setFrequency(1);
+		this.setColor("red");
 		this.setLevel(0);
 		this.setParent(null);
 		this.setLeft(null);
@@ -104,7 +105,7 @@ public class RBNode {
 					this.getLeft().setLevel(this.getLevel()+1);
 					this.getLeft().setParent(this);
 					this.getLeft().setGrandparent(this.getParent());
-					this.getLeft().insertionFixUp();
+					this.insertionFixUp(this.getLeft());
 				}
 			}
 			
@@ -118,15 +119,102 @@ public class RBNode {
 					this.getRight().setLevel(this.getLevel()+1);
 					this.getRight().setParent(this);
 					this.getRight().setGrandparent(this.getParent());
-					this.getRight().insertionFixUp();
+					this.insertionFixUp(this.getRight());
 				}
 			}
 		}
 	}
 
-	private void insertionFixUp() {
-		// TODO Auto-generated method stub
-		
+	private void insertionFixUp(RBNode node) {
+		RBNode x = null;
+		x = node;
+		boolean flag = true;
+		while(flag == true){
+			if(x == this.getRBT().getRoot()){
+				flag = false;
+			}
+			if((x.getParent().getColor().equals("black")) && (flag == true)){ 
+				flag = false;
+			}
+			if((uncle(x).getColor().equals("red")) &&(flag == true)){
+				x.getParent().setColor("black");
+				uncle(x).setColor("black");
+				x.getGrandparent().setColor("red");
+				x = x.getGrandparent();
+			}
+				//uncle is black 
+			else if(flag==true){
+				//if not linear
+				if(!isLinear(x)){
+					RBNode temp = null;
+					temp = x.getParent();
+					rotate(x);
+					x = temp;
+				}
+				x.getParent().setColor("black");
+				x.getGrandparent().setColor("red");
+				rotate(x.getParent());
+			}
+
+		}
+		this.getRBT().getRoot().setColor("black");
+	}
+	
+	private void rotate(RBNode node){
+		RBNode temp = null;
+		temp = node.getParent();
+		//right rotate
+		if(temp.getLeft() == node){
+			node.getLeft().setGrandparent(temp.getParent());
+			node.getRight().setGrandparent(node);
+			node.setGrandparent(temp.getGrandparent());
+			node.setParent(temp.getParent());
+			temp.setLeft(node.getRight());
+			temp.setParent(node);
+			temp.setGrandparent(node.getParent());
+			node.setRight(temp);
+		}
+		//left rotate
+		else{
+			node.getRight().setGrandparent(temp.getParent());
+			node.getLeft().setGrandparent(node);
+			node.setGrandparent(temp.getGrandparent());
+			node.setParent(temp.getParent());
+			temp.setRight(node.getLeft());
+			temp.setParent(node);
+			temp.setGrandparent(node.getParent());
+			node.setLeft(temp);
+		}
+		return;
+	}
+	
+	private boolean isLinear(RBNode x) {
+		if(x.getGrandparent().getLeft() == x.getParent()){
+			if(x.getParent().getLeft() == x){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			if(x.getParent().getRight() ==x){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+
+	private RBNode uncle(RBNode x){
+		if(x.getParent().getLeft() == x){
+			return x.getGrandparent().getRight();
+		}
+		else if(x.getParent().getRight() == x){
+			return x.getGrandparent().getLeft();
+		}
+		return null;
 	}
 	
 }

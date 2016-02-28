@@ -52,10 +52,27 @@ public class RBTree {
 		if(this.root == null){
 			RBNode n = new RBNode(this,v);
 			n.setLevel(1);
+			n.setColor("black");
+			n.setGrandparent(n);
+			n.setParent(n);
 			this.root = n;
 			this.min = n;
 		}
-		this.root.insertNode(this,v);
+		else{
+			this.root.insertNode(this,v);
+		}
 		
+	}
+	
+	public void preOrderTraversal(RBNode n){
+		//Print Node
+		System.out.println("|" + n.getValue() + "|");
+		//Go Left
+		if(n.getLeft()!= null){
+			preOrderTraversal(n.getLeft());
+		}
+		if(n.getRight()!= null){
+			preOrderTraversal(n.getRight());
+		}
 	}
 }
