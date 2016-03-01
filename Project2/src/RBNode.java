@@ -188,6 +188,42 @@ public class RBNode {
 		return;
 	}
 	
+	public void findNode(RBTree binarySearchTree, String v) {
+		
+		//If less
+		if(this.getValue().compareTo(v)>0){
+			if(this.getLeft() != null){
+				this.getLeft().findNode(binarySearchTree, v);
+				return;
+			}
+			else{
+				System.out.printf("\nThe Node '%s' is not found in the tree\n", v);
+				return;
+			}
+		}
+		//If greater
+		else if(this.getValue().compareTo(v)<0){
+			if(this.getRight() != null){
+				this.getLeft().findNode(binarySearchTree, v);
+				return;
+			}
+			else{
+				System.out.printf("\nThe Node '%s' is not found in the tree\n", v);
+				return;
+			}
+		}
+		//If equal
+		else if(this.getValue().equals(v)){
+			System.out.printf("\nFound '%s'\nFrequency:%d\n",this.getValue(),this.getFrequency());
+			return;
+		}
+		//Supposed to be here but isn't
+		else{
+			System.out.printf("\nThe Node '%s' is not found in the tree", v);
+			return;
+		}
+	}
+	
 	private boolean isLinear(RBNode x) {
 		if(x.getGrandparent().getLeft() == x.getParent()){
 			if(x.getParent().getLeft() == x){
