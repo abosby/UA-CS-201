@@ -223,6 +223,39 @@ public class ResturantSpinnerFrame extends JFrame {
 
 	}
 
+	public static void deleteResturant(Resturant restToDelete) {
+		//remove the previous entry
+		PrintWriter csvWriter;
+		try{
+			//Create a delete the old database and write previous data to it
+			File file = new File("F:\\Documents\\Programming\\Mars\\eclipse\\workspace\\ResturantSpinner\\src\\ResturantsDatabase.csv");
+			String tempFile = file.toString();
+			file.delete();
+			file = new File(tempFile);
+			csvWriter = new PrintWriter(new FileWriter(file,true));
+
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			for (Resturant r : resturantList){
+				if(r != restToDelete){
+					bw.write(r.asCSVRecord() + '\n');
+				}
+			}
+			bw.close();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
+		System.out.println("Updated CSV \n");
+
+		//Update All of our lists
+		resturantGroupList = new ArrayList<String>();
+		resturantStyleList = new ArrayList<String>();
+		resturantList = new ArrayList<Resturant>();
+		accumulateResturantGroupList();
+		accumulateResturantStylelist();
+		accumulateResturantList();
+	}
+
 	private static void accumulateResturantStylelist() {
 		// TODO Auto-generated method stub
 		String csvFile = "F:\\Documents\\Programming\\Mars\\eclipse\\workspace\\ResturantSpinner\\src\\ResturantsDatabase.csv";

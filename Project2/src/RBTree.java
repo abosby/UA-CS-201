@@ -64,6 +64,22 @@ public class RBTree {
 		
 	}
 	
+	public void deleteNode(String v){
+		if(this.root == null){
+			
+		}
+		else{
+			RBNode confirmDeletion = this.root.deleteNode(this,v){
+				if(confirmDeletion != null){
+					System.out.printf("\nDelted Node: %s\nNeww Node frequency: %d\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
+				}
+				else{
+					System.out.printf("\nThe Node: %s was not found\n", v);
+				}
+			}
+		}
+	}
+	
 	public void preOrderTraversal(RBNode n){
 		//Print Node
 		System.out.println("|" + n.getValue() + "|");

@@ -64,7 +64,11 @@ public class ResturantSpinnerAdminFrame extends JFrame {
 				f.dispose();
 			}
 		});
-		closeButton.setBounds(188, 365, 89, 23);
+		
+		JButton deleteResturantButton = new JButton("Delete Resturant");
+		deleteResturantButton.setBounds(168, 237, 138, 23);
+		panel.add(deleteResturantButton);
+		closeButton.setBounds(192, 365, 89, 23);
 		panel.add(closeButton);
 	}
 	

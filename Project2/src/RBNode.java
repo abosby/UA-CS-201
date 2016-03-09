@@ -216,5 +216,188 @@ public class RBNode {
 		}
 		return null;
 	}
+
+	public RBNode deleteNode(RBTree rbTree, String v) {
+		if(this.value == null){
+			return null;
+		}
+		else{
+			//If value is less than
+			if(this.getValue().compareTo(v)>0){
+				if(this.getLeft() != null){
+					return this.getLeft().deleteNode(rbTree, v);
+				}
+				else{
+					return null;
+				}
+			}
+			
+			//If value is greater than
+			else if(this.getValue().compareTo(v)<0){
+				if(this.getRight() != null){
+					return this.getRight().deleteNode(rbTree, v);
+				}
+				else{
+					return null;
+				}
+			}
+
+			//If value is equal
+			else{
+				//If there is only one frequency left
+				if(this.getFrequency() == 1){
+					//If two children
+					if((this.getRight() != null) && (this.getLeft() != null)){
+						RBNode temp = new RBNode(this.getRBT(), this.getValue());
+					}
+
+					//If one child
+					else if((this.getRight() != null) && (this.getLeft() == null)){
+						
+					}
+
+					else if((this.getRight() == null) && (this.getLeft() != null)){
+						
+					}
+					//If no child
+					else{
+						//Is left child
+						if(this.getParent().getLeft() == this){
+							this.getParent().setLeft(null);
+						}
+						//Is right child
+						else{
+							this.getParent().setRight(null);
+						}
+					}
+				}
+				//Reduce frequency
+				else{
+					this.setFrequency(this.getFrequency()-1);
+					return this;
+				}
+			}
+		}
+	}
+	
+	void deletionFixUp(RBNode x,RBTree rbt){
+		while(true){
+			if(x == rbt.getRoot()){
+				break;
+			}
+			if(x.getColor().compareTo("red") == 1){
+				break;
+			}
+			if(x.getSibling() != null){
+				if(x.getSibling().getColor().compareTo("red") == 1){
+					x.getParent().setColor("red");
+					x.getSibling().setColor("black");
+					x.getSibling().rotate(x.getParent());
+					// should have black sibling now
+				}
+			}
+			else if(x.getNephew() != null){
+				if(x.getNephew().getColor().compareTo("red") == 1){
+					x.getSibling().setColor(x.getParent().getColor());
+					x.getParent().setColor("black");
+					x.getNephew().setColor("black");
+					x.getSibling().rotate(getParent());
+					x = rbt.getRoot();
+					//subtree and tree are BH Balanced
+				}
+			}
+			//nephew must be black
+			else if(x.getNiece() != null){
+				if(x.getNiece().getColor().compareTo("red") == 1){
+					x.getNiece().setColor("black");
+					x.getSibling().setColor("black");
+					x.rotate(x.getSibling());
+					//should have red nephew now
+				}
+			}
+			//sibling, niece and nephew are black
+			else{
+				x.getSibling().setColor("red");
+				x = x.getParent();
+				//this subtree is BH balanced, but tree is not
+			}
+		}
+		rbt.getRoot().setColor("black");
+	}
+	
+	RBNode getSibling(){
+		if(this.getParent().getLeft() != null){
+			//if left child of parent, return right
+			if(this.getParent().getLeft() == this){
+				if(this.getParent().getRight() != null){
+					return this.getParent().getRight();
+				}
+				else{
+					return null;
+				}
+			}
+			//the right child of parent is 'this'
+			else{
+				return this.getParent().getLeft();
+			}
+		}
+		//There are not two children of the parent
+		else{
+			return null;
+		}
+	}
+	
+	RBNode getNephew(){
+		if(this.getParent().getLeft()!= null){
+			//If left child of parent return right child of sibling if its there
+			if(this.getParent().getLeft() == this){
+				if(this.getSibling() != null){
+					return this.getSibling().getRight();
+				}
+				else{
+					return null;
+				}
+			}
+			//If right child of parent return the left child of sibling if its there
+			else{
+				if(this.getSibling() != null){
+					return this.getSibling().getLeft();
+				}
+				else{
+					return null;
+				}
+			}
+		}
+		else{
+			return null;
+		}
+	}
+	
+	RBNode getNiece(){
+		if(this.getParent().getLeft()!= null){
+			//If left child of parent return the left child of sibling if its there
+			if(this.getParent().getLeft() == this){
+				if(this.getSibling() != null){
+					return this.getSibling().getLeft();
+				}
+				else{
+					return null;
+				}
+			}
+			//If right child of parent return right child of sibling if its there
+			else{
+				if(this.getSibling() != null){
+					return this.getSibling().getRight();
+				}
+				else{
+					return null;
+				}
+			}
+		}
+		else{
+			return null;
+		}
+	}
+	
 	
 }
