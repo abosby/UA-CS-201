@@ -253,11 +253,13 @@ public class RBNode {
 
 					//If one child
 					else if((this.getRight() != null) && (this.getLeft() == null)){
-						
+						this.swapToLeaf();
+						deletionFixUp(this);
 					}
 
 					else if((this.getRight() == null) && (this.getLeft() != null)){
-						
+						this.swapToLeaf();
+						deletionFixUp(this);
 					}
 					//If no child
 					else{
@@ -280,9 +282,22 @@ public class RBNode {
 		}
 	}
 	
-	void deletionFixUp(RBNode x,RBTree rbt){
+	void swapToLeaf(){
+		//If x is left child
+		if(this.getParent().getLeft()==this){
+			//Swap with smallest on x's right side
+			
+		}
+		//If x is right child
+		else{
+			//Swap with largest on x's left side
+			
+		}
+	}
+
+	void deletionFixUp(RBNode x){
 		while(true){
-			if(x == rbt.getRoot()){
+			if(x == x.getRBT().getRoot()){
 				break;
 			}
 			if(x.getColor().compareTo("red") == 1){
