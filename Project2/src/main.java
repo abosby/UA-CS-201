@@ -93,6 +93,7 @@ public class main {
 		}
 		if(treeType == 2){
 			RBT.preOrderTraversal(RBT.getRoot());
+			RBT.printBreadthTraversal(RBT.getRoot());
 		}
 		sc.close();
 

@@ -131,16 +131,18 @@ public class RBNode {
 		boolean flag = true;
 		while(flag == true){
 			if(x == this.getRBT().getRoot()){
-				flag = false;
+				break;
 			}
-			if((x.getParent().getColor().equals("black")) && (flag == true)){ 
-				flag = false;
+			if((x.getParent().getColor().equals("black"))){ 
+				break;
 			}
-			if((uncle(x).getColor().equals("red")) &&(flag == true)){
-				x.getParent().setColor("black");
-				uncle(x).setColor("black");
-				x.getGrandparent().setColor("red");
-				x = x.getGrandparent();
+			if(uncle(x) != null){
+				if(uncle(x).getColor().equals("red")){
+					x.getParent().setColor("black");
+					uncle(x).setColor("black");
+					x.getGrandparent().setColor("red");
+					x = x.getGrandparent();
+				}
 			}
 				//uncle is black 
 			else if(flag==true){
@@ -165,25 +167,35 @@ public class RBNode {
 		temp = node.getParent();
 		//right rotate
 		if(temp.getLeft() == node){
-			node.getLeft().setGrandparent(temp.getParent());
-			node.getRight().setGrandparent(node);
+			if(node.getLeft() != null){
+				node.getLeft().setGrandparent(temp.getParent());
+			}
+			if(node.getRight() != null){
+				node.getRight().setGrandparent(node);
+			}
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
 			temp.setLeft(node.getRight());
 			temp.setParent(node);
 			temp.setGrandparent(node.getParent());
 			node.setRight(temp);
+			node.getRBT().resetRoot(node.getRBT().getRoot());
 		}
 		//left rotate
 		else{
-			node.getRight().setGrandparent(temp.getParent());
-			node.getLeft().setGrandparent(node);
+			if(node.getRight() != null){
+				node.getRight().setGrandparent(temp.getParent());
+			}
+			if(node.getLeft() != null){
+				node.getLeft().setGrandparent(node);
+			}
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
 			temp.setRight(node.getLeft());
 			temp.setParent(node);
 			temp.setGrandparent(node.getParent());
 			node.setLeft(temp);
+			node.getRBT().resetRoot(node.getRBT().getRoot());
 		}
 		return;
 	}
@@ -248,18 +260,25 @@ public class RBNode {
 				if(this.getFrequency() == 1){
 					//If two children
 					if((this.getRight() != null) && (this.getLeft() != null)){
-						RBNode temp = new RBNode(this.getRBT(), this.getValue());
+						RBNode temp = this;
+						this.swapToLeaf(this);
+						deletionFixUp(this);
+						return temp;
 					}
 
 					//If one child
 					else if((this.getRight() != null) && (this.getLeft() == null)){
-						this.swapToLeaf();
+						RBNode temp = this;
+						this.swapToLeaf(this);
 						deletionFixUp(this);
+						return temp;
 					}
 
 					else if((this.getRight() == null) && (this.getLeft() != null)){
-						this.swapToLeaf();
+						RBNode temp = this;
+						this.swapToLeaf(this);
 						deletionFixUp(this);
+						return temp;
 					}
 					//If no child
 					else{
@@ -271,6 +290,7 @@ public class RBNode {
 						else{
 							this.getParent().setRight(null);
 						}
+						return this;
 					}
 				}
 				//Reduce frequency
@@ -282,15 +302,63 @@ public class RBNode {
 		}
 	}
 	
-	void swapToLeaf(){
-		//If x is left child
-		if(this.getParent().getLeft()==this){
-			//Swap with smallest on x's right side
-			
+	void swapToLeaf(RBNode x){
+		if(x == this){
+			//If x is left child
+			if(this.getParent().getLeft()==this){
+				//Swap with smallest on x's right side
+				this.swapToLeaf(x.getLeft());
+			}
+			//If x is right child
+			else{
+				//Swap with largest on x's left side
+				this.swapToLeaf(x.getRight());
+			}
 		}
-		//If x is right child
 		else{
-			//Swap with largest on x's left side
+			//Go as far Right as possible now
+			if(this.getParent().getLeft()==this){
+				if(x.getRight() != null){
+					this.swapToLeaf(x.getRight());
+				}
+				//Swap Values and Delete Leaf Node
+				else{
+					Integer tempInt = x.getFrequency();
+					String tempVal = x.getValue();
+					if(x.getParent().getLeft() == x){
+						x.getParent().setLeft(null);
+					}
+					else{
+						x.getParent().setRight(null);
+					}
+					//x.setFrequency(this.getFrequency());
+					//x.setValue(this.getValue());
+					this.setValue(tempVal);
+					this.setFrequency(tempInt);
+				}
+
+			}
+			//Go as far Left as possible now
+			else{
+				if(x.getLeft() != null){
+					this.swapToLeaf(x.getLeft());
+				}
+				//Swap values
+				else{
+					Integer tempInt = x.getFrequency();
+					String tempVal = x.getValue();
+					if(x.getParent().getLeft() == x){
+						x.getParent().setLeft(null);
+					}
+					else{
+						x.getParent().setRight(null);
+					}
+					//x.setFrequency(this.getFrequency());
+					//x.setValue(this.getValue());
+					this.setValue(tempVal);
+					this.setFrequency(tempInt);
+				}
+			}
 			
 		}
 	}
@@ -317,7 +385,7 @@ public class RBNode {
 					x.getParent().setColor("black");
 					x.getNephew().setColor("black");
 					x.getSibling().rotate(getParent());
-					x = rbt.getRoot();
+					x = this.getRBT().getRoot();
 					//subtree and tree are BH Balanced
 				}
 			}
@@ -337,7 +405,7 @@ public class RBNode {
 				//this subtree is BH balanced, but tree is not
 			}
 		}
-		rbt.getRoot().setColor("black");
+		this.getRBT().getRoot().setColor("black");
 	}
 	
 	RBNode getSibling(){
