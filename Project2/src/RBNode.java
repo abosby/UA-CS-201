@@ -163,15 +163,21 @@ public class RBNode {
 	}
 	
 	private void rotate(RBNode node){
-		RBNode temp = null;
-		temp = node.getParent();
+		RBNode temp = node.getParent();
 		//right rotate
 		if(temp.getLeft() == node){
+			//Grandparent A
 			if(node.getLeft() != null){
 				node.getLeft().setGrandparent(temp.getParent());
 			}
+			//Grandparent B
 			if(node.getRight() != null){
 				node.getRight().setGrandparent(node);
+				node.getRight().setParent(temp);
+			}
+			//Grandparent C
+			if(temp.getRight() != null){
+				temp.getRight().setGrandparent(node);
 			}
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
@@ -183,11 +189,18 @@ public class RBNode {
 		}
 		//left rotate
 		else{
+			//C
 			if(node.getRight() != null){
 				node.getRight().setGrandparent(temp.getParent());
 			}
+			//B
 			if(node.getLeft() != null){
 				node.getLeft().setGrandparent(node);
+				node.getLeft().setParent(temp);
+			}
+			//A
+			if(temp.getLeft() != null){
+				temp.getLeft().setGrandparent(node);
 			}
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
