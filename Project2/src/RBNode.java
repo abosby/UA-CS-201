@@ -145,12 +145,12 @@ public class RBNode {
 				}
 			}
 				//uncle is black 
-			else if(flag==true){
+			else{
 				//if not linear
 				if(!isLinear(x)){
 					RBNode temp = null;
 					temp = x.getParent();
-					rotate(x);
+					rotateToLinear(x);
 					x = temp;
 				}
 				x.getParent().setColor("black");
@@ -162,6 +162,27 @@ public class RBNode {
 		this.getRBT().getRoot().setColor("black");
 	}
 	
+	private void rotateToLinear(RBNode node) {
+		RBNode temp = node.getParent();
+		if(temp.getLeft() == node){
+			temp.getParent().setRight(node);
+			node.setGrandparent(temp.getGrandparent());
+			node.setParent(temp.getParent());
+			temp.setLeft(node.getRight());
+			temp.setGrandparent(node.getParent());
+			temp.setParent(node);
+			node.setRight(temp);
+		}
+		else{
+			temp.getParent().setLeft(node);
+			node.setGrandparent(temp.getGrandparent());
+			node.setParent(temp.getParent());
+			temp.setRight(node.getLeft());
+			temp.setGrandparent(node.getParent());
+			temp.setParent(node);
+			node.setLeft(temp);
+		}
+	}
 	private void rotate(RBNode node){
 		RBNode temp = node.getParent();
 		//right rotate
@@ -172,6 +193,12 @@ public class RBNode {
 			}
 			//Grandparent B
 			if(node.getRight() != null){
+				if(node.getRight().getRight()!= null){
+					node.getRight().getRight().setGrandparent(temp);
+				}
+				if(node.getRight().getLeft()!= null){
+					node.getRight().getLeft().setGrandparent(temp);
+				}
 				node.getRight().setGrandparent(node);
 				node.getRight().setParent(temp);
 			}
@@ -195,6 +222,12 @@ public class RBNode {
 			}
 			//B
 			if(node.getLeft() != null){
+				if(node.getLeft().getLeft()!= null){
+					node.getLeft().getLeft().setGrandparent(temp);
+				}
+				if(node.getLeft().getRight()!= null){
+					node.getLeft().getRight().setGrandparent(temp);
+				}
 				node.getLeft().setGrandparent(node);
 				node.getLeft().setParent(temp);
 			}

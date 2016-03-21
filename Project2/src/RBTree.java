@@ -134,10 +134,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s*(%s*)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%s*(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s(%s*)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -150,10 +150,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("=%s*(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("=%s*(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("=%s(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -164,10 +164,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s*(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%s*(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -185,10 +185,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("=%s*(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("=%s*(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("=%s(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -199,10 +199,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s*(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%s*(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -216,10 +216,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("=%s*(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("=%s*(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("=%s(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -230,10 +230,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s*(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%s*(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%s(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -255,10 +255,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s*(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: =%s*(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -269,10 +269,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s*(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: %s*(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -287,10 +287,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s*(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: =%s*(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -301,10 +301,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s*(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: %s*(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -321,10 +321,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s*(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: =%s*(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -335,10 +335,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s*(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: %s*(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -351,10 +351,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s*(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: =%s*(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: =%s(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -365,10 +365,10 @@ public class RBTree {
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s*(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+								else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
 									System.out.printf("%d: %s*(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
-								if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+								else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
 									System.out.printf("%d: %s(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
 								}
 								else{
@@ -397,6 +397,7 @@ public class RBTree {
 			resetRoot(n.getParent());
 		}
 		else{
+			n.getRBT().setRoot(n);
 			return;
 		}
 	}
