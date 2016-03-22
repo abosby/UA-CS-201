@@ -62,6 +62,7 @@ public class RBTree {
 		}
 		else{
 			this.root.insertNode(this,v);
+			this.resetRoot(this.root);
 			System.out.println();
 			this.preOrderTraversal(this.root);
 		}
@@ -75,10 +76,10 @@ public class RBTree {
 		else{
 			RBNode confirmDeletion = this.root.deleteNode(this,v);
 			if(confirmDeletion != null){
-				System.out.printf("\nDelted Node: %s\nNeww Node frequency: %d\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
+				System.out.printf("Deleted Node: %s\nNew Node frequency: %d\n\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
 			}
 			else{
-				System.out.printf("\nThe Node: %s was not found\n", v);
+				System.out.printf("The Node: %s was not found\n\n", v);
 			}
 		}
 	}

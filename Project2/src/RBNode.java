@@ -1,7 +1,7 @@
 
 public class RBNode {
 
-	
+
 	//Private
 	private RBTree RBT;
 	private String value;
@@ -84,7 +84,7 @@ public class RBNode {
 		this.setRight(null);
 	}
 	public void insertNode(RBTree rbTree, String v) {
-		
+
 		if(this.value == null){
 			this.setValue(v);
 			this.setLevel(1);
@@ -94,7 +94,7 @@ public class RBNode {
 			if(this.getValue().equals(v)){
 				this.setFrequency(this.getFrequency()+1);
 			}
-			
+
 			//If value is less than
 			else if(this.getValue().compareTo(v)>0){
 				if(this.getLeft() != null){
@@ -108,7 +108,7 @@ public class RBNode {
 					this.insertionFixUp(this.getLeft());
 				}
 			}
-			
+
 			//If value is greater than
 			else if(this.getValue().compareTo(v)<0){
 				if(this.getRight() != null){
@@ -143,8 +143,22 @@ public class RBNode {
 					x.getGrandparent().setColor("red");
 					x = x.getGrandparent();
 				}
+				else{
+					//uncle is black 
+					//if not linear
+					if(!isLinear(x)){
+						RBNode temp = null;
+						temp = x.getParent();
+						rotateToLinear(x);
+						x = temp;
+					}
+					x.getParent().setColor("black");
+					x.getGrandparent().setColor("red");
+					rotate(x.getParent());
+					//rotate(x);
+				}
 			}
-				//uncle is black 
+			//uncle is black 
 			else{
 				//if not linear
 				if(!isLinear(x)){
@@ -156,12 +170,14 @@ public class RBNode {
 				x.getParent().setColor("black");
 				x.getGrandparent().setColor("red");
 				rotate(x.getParent());
+				//rotate(x);
 			}
 
 		}
+		this.getRBT().resetRoot(this.getRBT().getRoot());
 		this.getRBT().getRoot().setColor("black");
 	}
-	
+
 	private void rotateToLinear(RBNode node) {
 		RBNode temp = node.getParent();
 		if(temp.getLeft() == node){
@@ -169,6 +185,7 @@ public class RBNode {
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
 			temp.setLeft(node.getRight());
+			temp.getLeft().setParent(temp);
 			temp.setGrandparent(node.getParent());
 			temp.setParent(node);
 			node.setRight(temp);
@@ -178,6 +195,7 @@ public class RBNode {
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
 			temp.setRight(node.getLeft());
+			temp.getRight().setParent(temp);
 			temp.setGrandparent(node.getParent());
 			temp.setParent(node);
 			node.setLeft(temp);
@@ -212,7 +230,15 @@ public class RBNode {
 			temp.setParent(node);
 			temp.setGrandparent(node.getParent());
 			node.setRight(temp);
-			node.getRBT().resetRoot(node.getRBT().getRoot());
+			if(node.getParent() != null){
+				if(node.getParent().getLeft() == temp){
+					node.getParent().setLeft(node);
+				}
+				else{
+					node.getParent().setRight(node);
+				}
+				node.getRBT().resetRoot(node.getRBT().getRoot());
+			}
 		}
 		//left rotate
 		else{
@@ -241,13 +267,21 @@ public class RBNode {
 			temp.setParent(node);
 			temp.setGrandparent(node.getParent());
 			node.setLeft(temp);
+			if(node.getParent() != null){
+				if(node.getParent().getLeft() == temp){
+					node.getParent().setLeft(node);
+				}
+				else{
+					node.getParent().setRight(node);
+				}
+			}
 			node.getRBT().resetRoot(node.getRBT().getRoot());
 		}
 		return;
 	}
-	
+
 	public void findNode(RBTree binarySearchTree, String v) {
-		
+
 		//If less
 		if(this.getValue().compareTo(v)>0){
 			if(this.getLeft() != null){
@@ -281,7 +315,7 @@ public class RBNode {
 			return;
 		}
 	}
-	
+
 	private boolean isLinear(RBNode x) {
 		if(x.getGrandparent().getLeft() == x.getParent()){
 			if(x.getParent().getLeft() == x){
@@ -302,11 +336,22 @@ public class RBNode {
 	}
 
 	private RBNode uncle(RBNode x){
-		if(x.getParent().getLeft() == x){
-			return x.getGrandparent().getRight();
-		}
-		else if(x.getParent().getRight() == x){
-			return x.getGrandparent().getLeft();
+		//if(x.getParent().getLeft() == x){
+		//	return x.getGrandparent().getRight();
+		//}
+		//else if(x.getParent().getRight() == x){
+		//	return x.getGrandparent().getLeft();
+		//}
+		if(x.getGrandparent() != null){
+			if(x.getGrandparent().getLeft() == x.getParent()){
+				return x.getGrandparent().getRight();
+			}
+			else if(x.getGrandparent().getRight() == x.getParent()){
+				return x.getGrandparent().getLeft();
+			}
+			else{
+				return null;
+			}
 		}
 		return null;
 	}
@@ -325,7 +370,7 @@ public class RBNode {
 					return null;
 				}
 			}
-			
+
 			//If value is greater than
 			else if(this.getValue().compareTo(v)<0){
 				if(this.getRight() != null){
@@ -345,6 +390,7 @@ public class RBNode {
 						RBNode temp = this;
 						this.swapToLeaf(this);
 						deletionFixUp(this);
+						temp.setFrequency(temp.getFrequency()-1);
 						return temp;
 					}
 
@@ -353,6 +399,7 @@ public class RBNode {
 						RBNode temp = this;
 						this.swapToLeaf(this);
 						deletionFixUp(this);
+						temp.setFrequency(temp.getFrequency()-1);
 						return temp;
 					}
 
@@ -360,6 +407,7 @@ public class RBNode {
 						RBNode temp = this;
 						this.swapToLeaf(this);
 						deletionFixUp(this);
+						temp.setFrequency(temp.getFrequency()-1);
 						return temp;
 					}
 					//If no child
@@ -372,6 +420,7 @@ public class RBNode {
 						else{
 							this.getParent().setRight(null);
 						}
+						this.setFrequency(this.getFrequency()-1);
 						return this;
 					}
 				}
@@ -383,7 +432,7 @@ public class RBNode {
 			}
 		}
 	}
-	
+
 	void swapToLeaf(RBNode x){
 		if(x == this){
 			//If x is left child
@@ -441,7 +490,7 @@ public class RBNode {
 					this.setFrequency(tempInt);
 				}
 			}
-			
+
 		}
 	}
 
@@ -489,7 +538,7 @@ public class RBNode {
 		}
 		this.getRBT().getRoot().setColor("black");
 	}
-	
+
 	RBNode getSibling(){
 		if(this.getParent().getLeft() != null){
 			//if left child of parent, return right
@@ -511,7 +560,7 @@ public class RBNode {
 			return null;
 		}
 	}
-	
+
 	RBNode getNephew(){
 		if(this.getParent().getLeft()!= null){
 			//If left child of parent return right child of sibling if its there
@@ -537,7 +586,7 @@ public class RBNode {
 			return null;
 		}
 	}
-	
+
 	RBNode getNiece(){
 		if(this.getParent().getLeft()!= null){
 			//If left child of parent return the left child of sibling if its there
@@ -563,6 +612,6 @@ public class RBNode {
 			return null;
 		}
 	}
-	
-	
+
+
 }
