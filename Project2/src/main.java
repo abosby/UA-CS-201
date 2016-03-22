@@ -78,6 +78,7 @@ public class main {
 		//Interpreter
 
 		if(treeType == 1){
+			/**
 			//BST.preOrderTraversal(BST.root);
 			BST.printBreadthTraversal(BST.getRoot());
 			BST.printStatistics();
@@ -90,12 +91,18 @@ public class main {
 			BST.printStatistics();
 			BST.findNode("brown");
 			BST.findNode("girl");
+			*/
 		}
 		if(treeType == 2){
-			RBT.preOrderTraversal(RBT.getRoot());
+			/**RBT.preOrderTraversal(RBT.getRoot());
+			RBT.printStatistics();
 			RBT.deleteNode("the");
 			RBT.deleteNode("the");
 			RBT.printBreadthTraversal(RBT.getRoot());
+			RBT.findNode("brown");
+			RBT.findNode("the");
+			*/
+			readCommands()
 		}
 		sc.close();
 

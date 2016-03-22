@@ -57,6 +57,7 @@ public class RBTree {
 			n.setColor("black");
 			n.setGrandparent(null);
 			n.setParent(null);
+			this.setNodeCount(1);
 			this.root = n;
 			this.min = n;
 		}
@@ -84,6 +85,15 @@ public class RBTree {
 		}
 	}
 
+public void findNode(String v){
+		if(this.root == null){
+			System.out.println("\nThere is no tree to find frequencies in.\n");
+			return;
+		}
+		else{
+			this.root.findNode(this,v);
+		}
+	}
 	public void preOrderTraversal(RBNode n){
 		//Print Node
 		System.out.println("|" + n.getValue() + "|");
@@ -378,6 +388,51 @@ public class RBTree {
 							}
 						}
 					}
+				}
+			}
+			if(temp.getLeft() != null){
+				temp.getLeft().setLevel(temp.getLevel()+1);
+				queue.add(temp.getLeft());
+			}
+			if(temp.getRight() != null){
+				temp.getRight().setLevel(temp.getLevel()+1);
+				queue.add(temp.getRight());
+			}
+			level++;
+		}
+	}
+	
+	public void printStatistics(){
+		calculateMinMax(this.root);
+		System.out.println("\n\nStatistics for the Binary Search Tree");
+		System.out.println("=============================================");
+		System.out.printf("Number of the Nodes in the Tree	|%d\n",this.getNodeCount());
+		System.out.printf("Minimum Depth of the Tree	|%d\n",this.getMinHeight());
+		System.out.printf("Maximum Depth of the Tree	|%d\n",this.getMaxHeight());
+	}
+
+	private void calculateMinMax(RBNode n) {
+		Queue<RBNode> queue= new LinkedList<RBNode>();
+		int level = 1;
+		n.setLevel(level);
+		queue.add(n);
+		RBNode temp = null;
+		RBNode prev = null;
+		while(!queue.isEmpty()){
+			prev = temp;
+			temp = queue.poll();
+			//If root
+			if((n == temp) &&((temp.getRight() != null) || (temp.getLeft() != null))){
+				this.setMinHeight(temp.getLevel()+1);
+			}
+			else{
+				//If it is the shortest
+				if((temp.getLeft() == null) && (temp.getRight() == null) && (temp.getLevel() < this.getMinHeight())){
+					this.setMinHeight(temp.getLevel());
+				}
+				//If it is the longest
+				if(temp.getLevel() > this.getMaxHeight()){
+					this.setMaxHeight(temp.getLevel());
 				}
 			}
 			if(temp.getLeft() != null){

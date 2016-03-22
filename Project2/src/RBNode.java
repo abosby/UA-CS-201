@@ -106,6 +106,7 @@ public class RBNode {
 					this.getLeft().setParent(this);
 					this.getLeft().setGrandparent(this.getParent());
 					this.insertionFixUp(this.getLeft());
+					this.RBT.setNodeCount(this.RBT.getNodeCount()+1);
 				}
 			}
 
@@ -120,6 +121,7 @@ public class RBNode {
 					this.getRight().setParent(this);
 					this.getRight().setGrandparent(this.getParent());
 					this.insertionFixUp(this.getRight());
+					this.RBT.setNodeCount(this.RBT.getNodeCount()+1);
 				}
 			}
 		}
@@ -391,6 +393,7 @@ public class RBNode {
 						this.swapToLeaf(this);
 						deletionFixUp(this);
 						temp.setFrequency(temp.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
 						return temp;
 					}
 
@@ -400,6 +403,7 @@ public class RBNode {
 						this.swapToLeaf(this);
 						deletionFixUp(this);
 						temp.setFrequency(temp.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
 						return temp;
 					}
 
@@ -408,6 +412,7 @@ public class RBNode {
 						this.swapToLeaf(this);
 						deletionFixUp(this);
 						temp.setFrequency(temp.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
 						return temp;
 					}
 					//If no child
@@ -421,6 +426,7 @@ public class RBNode {
 							this.getParent().setRight(null);
 						}
 						this.setFrequency(this.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
 						return this;
 					}
 				}
