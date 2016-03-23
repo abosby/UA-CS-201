@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class main {
@@ -22,10 +24,10 @@ public class main {
 
 	}
 
-	private static void readCommands(String commandFile) {
-		String commandPath = new File(commandFile).getAbsolutePath();
+	private static void readCommands(String commandFile, int treeType) {
+		String commandPath = new File("src/"+commandFile).getAbsolutePath();
 		Scanner sc = null;
-		String line;
+		Queue<String> commandQ = new LinkedList<String>();
 		try {
 			sc = new Scanner(new File (commandPath));
 		} catch (FileNotFoundException e) {
@@ -33,15 +35,79 @@ public class main {
 			e.printStackTrace();
 		}
 		while(sc.hasNextLine()){
-			line = sc.nextLine();
-			String[] lWords = line.split(" ");
-			for (int i = 0; i < lWords.length; i++){
-				System.out.println(lWords[i]);
+			Scanner sc2 = new Scanner(sc.nextLine());
+			while(sc2.hasNext()){
+				commandQ.add(sc2.next());
 			}
 		}
 		sc.close();
 
+		String command1;
+		String command2;
+		if(treeType == 1){
+			while(!commandQ.isEmpty()){
+				command1 = commandQ.poll();
+				if(command1.equals("i")){
+					command2 = scrubWord(commandQ.poll());
+					if(!(command2.equals(""))){
+						BST.insertNode(command2);
+					}
+				}
+				else if(command1.equals("d")){
+					command2 = scrubWord(commandQ.poll());
+					if(!(command2.equals(""))){
+						BST.deleteNode(command2);
+					}
+				}
+				else if(command1.equals("f")){
+					command2 = scrubWord(commandQ.poll());
+					if(!(command2.equals(""))){
+						BST.findNode(command2);
+					}
+				}
+				else if(command1.equals("s")){
+					BST.printBreadthTraversal(BST.getRoot());
+				}
+				else if(command1.equals("r")){
+					BST.printStatistics();
+				}
+				else{
 
+				}
+			}
+		}
+		else if(treeType == 2){
+			while(!commandQ.isEmpty()){
+				command1 = commandQ.poll();
+				if(command1.equals("i")){
+					command2 = scrubWord(commandQ.poll());
+					if(!(command2.equals(""))){
+						RBT.insertNode(command2);
+					}
+				}
+				else if(command1.equals("d")){
+					command2 = scrubWord(commandQ.poll());
+					if(!(command2.equals(""))){
+						RBT.deleteNode(command2);
+					}
+				}
+				else if(command1.equals("f")){
+					command2 = scrubWord(commandQ.poll());
+					if(!(command2.equals(""))){
+						RBT.findNode(command2);
+					}
+				}
+				else if(command1.equals("s")){
+					RBT.printBreadthTraversal(RBT.getRoot());
+				}
+				else if(command1.equals("r")){
+					RBT.printStatistics();
+				}
+				else{
+
+				}
+			}
+		}
 	}
 
 	/** Reads in the corpus text file and inserts into the specified tree.
@@ -91,7 +157,7 @@ public class main {
 			BST.printStatistics();
 			BST.findNode("brown");
 			BST.findNode("girl");
-			*/
+			 */
 		}
 		if(treeType == 2){
 			/**RBT.preOrderTraversal(RBT.getRoot());
@@ -101,8 +167,8 @@ public class main {
 			RBT.printBreadthTraversal(RBT.getRoot());
 			RBT.findNode("brown");
 			RBT.findNode("the");
-			*/
-			readCommands()
+			 */
+			readCommands("inputCommands.txt",treeType);
 		}
 		sc.close();
 
