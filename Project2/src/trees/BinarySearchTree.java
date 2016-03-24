@@ -1,3 +1,4 @@
+package trees;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -10,6 +11,16 @@ public class BinarySearchTree {
 	private int minHeight;
 	private int maxHeight;
 
+
+	/** Constructor for Binary Search Tree Class
+	 * 
+	 */
+	public BinarySearchTree(){
+		this.root = null;
+		this.maxHeight = 0;
+		this.minHeight = 0;
+		this.nodeCount = 0;
+	}
 
 	public int getMaxHeight() {
 		return maxHeight;
@@ -35,96 +46,111 @@ public class BinarySearchTree {
 		this.nodeCount = nodeCount;
 	}
 
-	/** Constructor for the Binary Search Tree
-	 * 
-	 */
-	public BinarySearchTree(){
-		this.root = null;
-		this.maxHeight = 0;
-		this.minHeight = 0;
-		this.nodeCount = 0;
+	public void setMin(BinaryNode v){
+		this.min = v;
 	}
 
-	public void insertNode(String v){
+	public BinaryNode getMin() {
+		return this.min;
+	}
 
+	public BinaryNode getRoot() {
+		return this.root;
+	}
+
+	public void setRoot(BinaryNode r) {
+		this.root = r;
+	}
+
+	/** Inserts a Node into the Binary Search Tree
+	 * 
+	 * @param strNode String value for the new node
+	 */
+	public void insertNode(String strNode){
+
+		//First node as root
 		if(this.root == null){
-			BinaryNode n = new BinaryNode(this,v);
+			BinaryNode n = new BinaryNode(this,strNode);
 			n.setLevel(1);
 			this.root = n;
 			this.min = n;
 		}
+		//Insert into tree
 		else{
-			this.root.insertNode(this,v);
+			this.root.insertNode(this,strNode);
 			this.setNodeCount(this.getNodeCount() + 1);
 		}
 
 	}
 
-	public void deleteNode(String v){
+	/** Deletes a Node from the Binary Search Tree. Decreases the frequency if it is greater than 1
+	 * 
+	 * @param strNode String value for the node to be deleted
+	 */
+	public void deleteNode(String strNode){
 
 		if(this.root == null){
 			System.out.println("The tree is empty and cannot delete");
 		}
 		else{
-			BinaryNode confirmDeletion = this.root.deleteNode(this,v);
+			BinaryNode confirmDeletion = this.root.deleteNode(this,strNode);
 			if(confirmDeletion != null){
 				System.out.printf("\nDeleted Node: %s\nNew Node frequency: %d\n",confirmDeletion.getValue(),confirmDeletion.getFrequency());
 				resetLevels(this.root);
 			}
 			else{
-				System.out.printf("\nThe Node: %s was not found\n",v);
+				System.out.printf("\nThe Node: %s was not found\n",strNode);
 			}
 		}
 	}
 
-	private void resetLevels(BinaryNode node) {
-		if(node.getLeft() != null){
-			node.getLeft().setLevel(node.getLevel()+1);
-			resetLevels(node.getLeft());
-		}
-		if(node.getRight() != null){
-			node.getRight().setLevel(node.getLevel()+1);
-			resetLevels(node.getRight());
-		}
-		return;
-	}
-
-	public void findNode(String v){
+	/** Finds a node in the Binary Search Tree and returns the frequency
+	 * 
+	 * @param strNode String value of the node we are searching for
+	 */
+	public void findNode(String strNode){
 		if(this.root == null){
 			System.out.println("\nThere is no tree to find frequencies in.\n");
 			return;
 		}
 		else{
-			this.root.findNode(this,v);
+			this.root.findNode(this,strNode);
 		}
 	}
 
-	public void preOrderTraversal(BinaryNode n){
+	/** Helper method to print a Pre-Order Traversal
+	 * 
+	 * @param bNode Prints the node and traverses to the left and right child
+	 */
+	public void preOrderTraversal(BinaryNode bNode){
 		//Print Node
-		System.out.println("|" + n.getValue() + "|");
+		System.out.println("|" + bNode.getValue() + "|");
 		//Go Left
-		if(n.getLeft()!= null){
-			preOrderTraversal(n.getLeft());
+		if(bNode.getLeft()!= null){
+			preOrderTraversal(bNode.getLeft());
 		}
 		//Go Right
-		if(n.getRight()!= null){
-			preOrderTraversal(n.getRight());
+		if(bNode.getRight()!= null){
+			preOrderTraversal(bNode.getRight());
 		}
 	}
 
-	//Need to implement Queue class
-	public void printBreadthTraversal(BinaryNode n){
+	/** Prints the Breadth Traversal for the Binary Search Tree, implemented with Queue
+	 * 
+	 * @param bNode Node to Traverse
+	 */
+	public void printBreadthTraversal(BinaryNode bNode){
 		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
 		int level = 1;
-		n.setLevel(level);
-		queue.add(n);
+		bNode.setLevel(level);
+		queue.add(bNode);
 		BinaryNode temp = null;
-		BinaryNode prev = n;
+		BinaryNode prev = bNode;
 		while(!queue.isEmpty()){
 			prev = temp;
 			temp = queue.poll();
 			//If root
-			if(n == temp){
+			if(bNode == temp){
 				System.out.printf("%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
 			}
 			else{
@@ -232,6 +258,9 @@ public class BinarySearchTree {
 		}
 	}
 
+	/** Prints the Statistics for the Binary Search Tree by reporting the number of nodes, Min-Height and Max-Height
+	 * 
+	 */
 	public void printStatistics(){
 		calculateMinMax(this.root);
 		System.out.println("\n\nStatistics for the Binary Search Tree");
@@ -241,18 +270,22 @@ public class BinarySearchTree {
 		System.out.printf("Maximum Depth of the Tree	|%d\n",this.getMaxHeight());
 	}
 
-	private void calculateMinMax(BinaryNode n) {
+	/** Traverses the Binary Search tree to Calculate the Min and Max Height 
+	 * 
+	 * @param bNode Node to begin Traversal at
+	 */
+	private void calculateMinMax(BinaryNode bNode) {
 		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
 		int level = 1;
-		n.setLevel(level);
-		queue.add(n);
+		bNode.setLevel(level);
+		queue.add(bNode);
 		BinaryNode temp = null;
 		BinaryNode prev = null;
 		while(!queue.isEmpty()){
 			prev = temp;
 			temp = queue.poll();
 			//If root
-			if((n == temp) &&((temp.getRight() != null) || (temp.getLeft() != null))){
+			if((bNode == temp) &&((temp.getRight() != null) || (temp.getLeft() != null))){
 				this.setMinHeight(temp.getLevel()+1);
 			}
 			else{
@@ -275,20 +308,20 @@ public class BinarySearchTree {
 		}
 	}
 
-	public BinaryNode getMin() {
-		return this.min;
-	}
-
-	public void setMin(BinaryNode v){
-		this.min = v;
-	}
-
-	public BinaryNode getRoot() {
-		return this.root;
-	}
-	
-	public void setRoot(BinaryNode r) {
-		this.root = r;
+	/** Helper method to reset the node levels in the Binary Search Tree
+	 * 
+	 * @param node Node to Reset Level, proceeds to children
+	 */
+	private void resetLevels(BinaryNode node) {
+		if(node.getLeft() != null){
+			node.getLeft().setLevel(node.getLevel()+1);
+			resetLevels(node.getLeft());
+		}
+		if(node.getRight() != null){
+			node.getRight().setLevel(node.getLevel()+1);
+			resetLevels(node.getRight());
+		}
+		return;
 	}
 
 }

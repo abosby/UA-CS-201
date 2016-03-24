@@ -1,3 +1,4 @@
+package trees;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -77,10 +78,10 @@ public class RBTree {
 		else{
 			RBNode confirmDeletion = this.root.deleteNode(this,v);
 			if(confirmDeletion != null){
-				System.out.printf("Deleted Node: %s\nNew Node frequency: %d\n\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
+				//System.out.printf("Deleted Node: %s\nNew Node frequency: %d\n\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
 			}
 			else{
-				System.out.printf("The Node: %s was not found\n\n", v);
+				System.err.printf("The Node: '%s' was not found\n\n", v);
 			}
 		}
 	}
@@ -91,7 +92,7 @@ public void findNode(String v){
 			return;
 		}
 		else{
-			this.root.findNode(this,v);
+			this.root.findNode(v);
 		}
 	}
 	public void preOrderTraversal(RBNode n){
@@ -408,7 +409,7 @@ public void findNode(String v){
 		System.out.println("=============================================");
 		System.out.printf("Number of the Nodes in the Tree	|%d\n",this.getNodeCount());
 		System.out.printf("Minimum Depth of the Tree	|%d\n",this.getMinHeight());
-		System.out.printf("Maximum Depth of the Tree	|%d\n",this.getMaxHeight());
+		System.out.printf("Maximum Depth of the Tree	|%d\n\n",this.getMaxHeight());
 	}
 
 	private void calculateMinMax(RBNode n) {

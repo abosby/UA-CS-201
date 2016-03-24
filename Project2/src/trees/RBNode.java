@@ -1,3 +1,4 @@
+package trees;
 
 public class RBNode {
 
@@ -180,6 +181,166 @@ public class RBNode {
 		this.getRBT().getRoot().setColor("black");
 	}
 
+	public RBNode deleteNode(RBTree rbTree, String v) {
+		if(this.value == null){
+			return null;
+		}
+		else{
+			//If value is less than
+			if(this.getValue().compareTo(v)>0){
+				if(this.getLeft() != null){
+					return this.getLeft().deleteNode(rbTree, v);
+				}
+				else{
+					return null;
+				}
+			}
+	
+			//If value is greater than
+			else if(this.getValue().compareTo(v)<0){
+				if(this.getRight() != null){
+					return this.getRight().deleteNode(rbTree, v);
+				}
+				else{
+					return null;
+				}
+			}
+	
+			//If value is equal
+			else{
+				//If there is only one frequency left
+				if(this.getFrequency() == 1){
+					//If two children
+					if((this.getRight() != null) && (this.getLeft() != null)){
+						RBNode temp = this;
+						this.swapToLeaf(this);
+						deletionFixUp(this);
+						temp.setFrequency(temp.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
+						return temp;
+					}
+	
+					//If one child
+					else if((this.getRight() != null) && (this.getLeft() == null)){
+						RBNode temp = this;
+						this.swapToLeaf(this);
+						deletionFixUp(this);
+						temp.setFrequency(temp.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
+						return temp;
+					}
+	
+					else if((this.getRight() == null) && (this.getLeft() != null)){
+						RBNode temp = this;
+						this.swapToLeaf(this);
+						deletionFixUp(this);
+						temp.setFrequency(temp.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
+						return temp;
+					}
+					//If no child
+					else{
+						//Is left child
+						if(this.getParent().getLeft() == this){
+							this.getParent().setLeft(null);
+						}
+						//Is right child
+						else{
+							this.getParent().setRight(null);
+						}
+						this.setFrequency(this.getFrequency()-1);
+						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
+						return this;
+					}
+				}
+				//Reduce frequency
+				else{
+					this.setFrequency(this.getFrequency()-1);
+					return this;
+				}
+			}
+		}
+	}
+	void deletionFixUp(RBNode x){
+		while(true){
+			if(x == x.getRBT().getRoot()){
+				break;
+			}
+			if(x.getColor().compareTo("red") == 1){
+				break;
+			}
+			if(x.getSibling() != null){
+				if(x.getSibling().getColor().compareTo("red") == 1){
+					x.getParent().setColor("red");
+					x.getSibling().setColor("black");
+					x.getSibling().rotate(x.getParent());
+					// should have black sibling now
+				}
+			}
+			else if(x.getNephew() != null){
+				if(x.getNephew().getColor().compareTo("red") == 1){
+					x.getSibling().setColor(x.getParent().getColor());
+					x.getParent().setColor("black");
+					x.getNephew().setColor("black");
+					x.getSibling().rotate(getParent());
+					x = this.getRBT().getRoot();
+					//subtree and tree are BH Balanced
+				}
+			}
+			//nephew must be black
+			else if(x.getNiece() != null){
+				if(x.getNiece().getColor().compareTo("red") == 1){
+					x.getNiece().setColor("black");
+					x.getSibling().setColor("black");
+					x.rotate(x.getSibling());
+					//should have red nephew now
+				}
+			}
+			//sibling, niece and nephew are black
+			else{
+				x.getSibling().setColor("red");
+				x = x.getParent();
+				//this subtree is BH balanced, but tree is not
+			}
+		}
+		this.getRBT().getRoot().setColor("black");
+	}
+	public void findNode(String v) {
+	
+		//If less
+		if(this.getValue().compareTo(v)>0){
+			if(this.getLeft() != null){
+				this.getLeft().findNode(v);
+				return;
+			}
+			else{
+				System.out.printf("The Node '%s' is not found in the tree\n\n", v);
+				return;
+			}
+		}
+		//If greater
+		else if(this.getValue().compareTo(v)<0){
+			if(this.getRight() != null){
+				this.getRight().findNode(v);
+				return;
+			}
+			else{
+				System.out.printf("The Node '%s' is not found in the tree\n\n", v);
+				return;
+			}
+		}
+		//If equal
+		else if(this.getValue().equals(v)){
+			System.out.printf("Found '%s' | Frequency:%d \n\n",this.getValue(),this.getFrequency());
+			return;
+		}
+		//Supposed to be here but isn't
+		else{
+			System.out.printf("The Node '%s' is not found in the tree\n\n", v);
+			return;
+		}
+	}
+
 	private void rotateToLinear(RBNode node) {
 		RBNode temp = node.getParent();
 		if(temp.getLeft() == node){
@@ -282,42 +443,6 @@ public class RBNode {
 		return;
 	}
 
-	public void findNode(RBTree binarySearchTree, String v) {
-
-		//If less
-		if(this.getValue().compareTo(v)>0){
-			if(this.getLeft() != null){
-				this.getLeft().findNode(binarySearchTree, v);
-				return;
-			}
-			else{
-				System.out.printf("\nThe Node '%s' is not found in the tree\n", v);
-				return;
-			}
-		}
-		//If greater
-		else if(this.getValue().compareTo(v)<0){
-			if(this.getRight() != null){
-				this.getLeft().findNode(binarySearchTree, v);
-				return;
-			}
-			else{
-				System.out.printf("\nThe Node '%s' is not found in the tree\n", v);
-				return;
-			}
-		}
-		//If equal
-		else if(this.getValue().equals(v)){
-			System.out.printf("\nFound '%s'\nFrequency:%d\n",this.getValue(),this.getFrequency());
-			return;
-		}
-		//Supposed to be here but isn't
-		else{
-			System.out.printf("\nThe Node '%s' is not found in the tree", v);
-			return;
-		}
-	}
-
 	private boolean isLinear(RBNode x) {
 		if(x.getGrandparent().getLeft() == x.getParent()){
 			if(x.getParent().getLeft() == x){
@@ -356,87 +481,6 @@ public class RBNode {
 			}
 		}
 		return null;
-	}
-
-	public RBNode deleteNode(RBTree rbTree, String v) {
-		if(this.value == null){
-			return null;
-		}
-		else{
-			//If value is less than
-			if(this.getValue().compareTo(v)>0){
-				if(this.getLeft() != null){
-					return this.getLeft().deleteNode(rbTree, v);
-				}
-				else{
-					return null;
-				}
-			}
-
-			//If value is greater than
-			else if(this.getValue().compareTo(v)<0){
-				if(this.getRight() != null){
-					return this.getRight().deleteNode(rbTree, v);
-				}
-				else{
-					return null;
-				}
-			}
-
-			//If value is equal
-			else{
-				//If there is only one frequency left
-				if(this.getFrequency() == 1){
-					//If two children
-					if((this.getRight() != null) && (this.getLeft() != null)){
-						RBNode temp = this;
-						this.swapToLeaf(this);
-						deletionFixUp(this);
-						temp.setFrequency(temp.getFrequency()-1);
-						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
-						return temp;
-					}
-
-					//If one child
-					else if((this.getRight() != null) && (this.getLeft() == null)){
-						RBNode temp = this;
-						this.swapToLeaf(this);
-						deletionFixUp(this);
-						temp.setFrequency(temp.getFrequency()-1);
-						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
-						return temp;
-					}
-
-					else if((this.getRight() == null) && (this.getLeft() != null)){
-						RBNode temp = this;
-						this.swapToLeaf(this);
-						deletionFixUp(this);
-						temp.setFrequency(temp.getFrequency()-1);
-						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
-						return temp;
-					}
-					//If no child
-					else{
-						//Is left child
-						if(this.getParent().getLeft() == this){
-							this.getParent().setLeft(null);
-						}
-						//Is right child
-						else{
-							this.getParent().setRight(null);
-						}
-						this.setFrequency(this.getFrequency()-1);
-						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
-						return this;
-					}
-				}
-				//Reduce frequency
-				else{
-					this.setFrequency(this.getFrequency()-1);
-					return this;
-				}
-			}
-		}
 	}
 
 	void swapToLeaf(RBNode x){
@@ -498,51 +542,6 @@ public class RBNode {
 			}
 
 		}
-	}
-
-	void deletionFixUp(RBNode x){
-		while(true){
-			if(x == x.getRBT().getRoot()){
-				break;
-			}
-			if(x.getColor().compareTo("red") == 1){
-				break;
-			}
-			if(x.getSibling() != null){
-				if(x.getSibling().getColor().compareTo("red") == 1){
-					x.getParent().setColor("red");
-					x.getSibling().setColor("black");
-					x.getSibling().rotate(x.getParent());
-					// should have black sibling now
-				}
-			}
-			else if(x.getNephew() != null){
-				if(x.getNephew().getColor().compareTo("red") == 1){
-					x.getSibling().setColor(x.getParent().getColor());
-					x.getParent().setColor("black");
-					x.getNephew().setColor("black");
-					x.getSibling().rotate(getParent());
-					x = this.getRBT().getRoot();
-					//subtree and tree are BH Balanced
-				}
-			}
-			//nephew must be black
-			else if(x.getNiece() != null){
-				if(x.getNiece().getColor().compareTo("red") == 1){
-					x.getNiece().setColor("black");
-					x.getSibling().setColor("black");
-					x.rotate(x.getSibling());
-					//should have red nephew now
-				}
-			}
-			//sibling, niece and nephew are black
-			else{
-				x.getSibling().setColor("red");
-				x = x.getParent();
-				//this subtree is BH balanced, but tree is not
-			}
-		}
-		this.getRBT().getRoot().setColor("black");
 	}
 
 	RBNode getSibling(){

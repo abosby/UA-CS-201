@@ -1,3 +1,4 @@
+d test
 i test
 s
 r

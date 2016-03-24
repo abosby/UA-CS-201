@@ -1,3 +1,4 @@
+package trees;
 
 
 public class BinaryNode {
@@ -10,6 +11,20 @@ public class BinaryNode {
 	private BinaryNode parent;
 	private BinaryNode left;
 	private BinaryNode right;
+	/** Constructor for the Binary Node
+	 * 
+	 * @param BST The Tree that the Node is a part of
+	 * @param v The value of the new node
+	 */
+	public BinaryNode(BinarySearchTree BST, String v){
+		this.setBST(BST);
+		this.setValue(v);
+		this.setFrequency(1);
+		this.setLevel(0);
+		this.setParent(null);
+		this.setLeft(null);
+		this.setRight(null);
+	}
 
 	public BinarySearchTree getBST() {
 		return BST;
@@ -65,21 +80,6 @@ public class BinaryNode {
 
 	public void setValue(String value) {
 		this.value = value;
-	}
-
-	/** Constructor for the Binary Node
-	 * 
-	 * @param BST The Tree that the Node is a part of
-	 * @param v The value of the new node
-	 */
-	public BinaryNode(BinarySearchTree BST, String v){
-		this.setBST(BST);
-		this.setValue(v);
-		this.setFrequency(1);
-		this.setLevel(0);
-		this.setParent(null);
-		this.setLeft(null);
-		this.setRight(null);
 	}
 
 	/** Inserts a string into the Binary Tree under the current node
