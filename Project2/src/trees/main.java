@@ -21,7 +21,8 @@ public class main {
 		}
 		//readCorpus(args[1]);
 		//readCorpus("inputCorpus.txt",treeType);
-		readCorpus("mobyDickText.txt",treeType);
+		//readCorpus("mobyDickText.txt",treeType);
+		readCorpus("smallMobyDick.txt",treeType);
 		//readCommands(args[2]);
 
 	}
