@@ -140,15 +140,15 @@ public class BinarySearchTree {
 	 * @param bNode Node to Traverse
 	 */
 	public void printBreadthTraversal(BinaryNode bNode){
-		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
+		BQueue<BinaryNode> queue= new BQueue<BinaryNode>();
 		int level = 1;
 		bNode.setLevel(level);
-		queue.add(bNode);
+		queue.enqueue(bNode);
 		BinaryNode temp = null;
 		BinaryNode prev = bNode;
-		while(!queue.isEmpty()){
+		while(queue.getSize() != 0){
 			prev = temp;
-			temp = queue.poll();
+			temp = queue.dequeue();
 			//If root
 			if(bNode == temp){
 				System.out.printf("%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
@@ -158,7 +158,7 @@ public class BinarySearchTree {
 				if(prev.getLevel() == temp.getLevel()){
 					//If left
 					if(temp.getParent().getLeft() == temp){
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								System.out.printf("=%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
@@ -180,7 +180,7 @@ public class BinarySearchTree {
 					//If right
 					else{
 						//Next is not a new level
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize()!= 0)  && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								System.out.printf("=%s(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
@@ -206,7 +206,7 @@ public class BinarySearchTree {
 					if(temp.getParent().getLeft() == temp){
 
 						//If next is not a new level
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								System.out.printf("%d: =%s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
@@ -228,7 +228,7 @@ public class BinarySearchTree {
 					}
 					//If right
 					else{
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								System.out.printf("%d: =%s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
@@ -249,10 +249,10 @@ public class BinarySearchTree {
 				}
 			}
 			if(temp.getLeft() != null){
-				queue.add(temp.getLeft());
+				queue.enqueue(temp.getLeft());
 			}
 			if(temp.getRight() != null){
-				queue.add(temp.getRight());
+				queue.enqueue(temp.getRight());
 			}
 			level++;
 		}
@@ -275,15 +275,15 @@ public class BinarySearchTree {
 	 * @param bNode Node to begin Traversal at
 	 */
 	private void calculateMinMax(BinaryNode bNode) {
-		Queue<BinaryNode> queue= new LinkedList<BinaryNode>();
+		BQueue<BinaryNode> queue= new BQueue<BinaryNode>();
 		int level = 1;
 		bNode.setLevel(level);
-		queue.add(bNode);
+		queue.enqueue(bNode);
 		BinaryNode temp = null;
 		BinaryNode prev = null;
-		while(!queue.isEmpty()){
+		while(queue.getSize() != 0){
 			prev = temp;
-			temp = queue.poll();
+			temp = queue.dequeue();
 			//If root
 			if((bNode == temp) &&((temp.getRight() != null) || (temp.getLeft() != null))){
 				this.setMinHeight(temp.getLevel()+1);
@@ -299,10 +299,10 @@ public class BinarySearchTree {
 				}
 			}
 			if(temp.getLeft() != null){
-				queue.add(temp.getLeft());
+				queue.enqueue(temp.getLeft());
 			}
 			if(temp.getRight() != null){
-				queue.add(temp.getRight());
+				queue.enqueue(temp.getRight());
 			}
 			level++;
 		}

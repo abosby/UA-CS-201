@@ -88,7 +88,7 @@ public class RBTree {
 
 public void findNode(String v){
 		if(this.root == null){
-			System.out.println("\nThere is no tree to find frequencies in.\n");
+			System.err.printf("\nThere is no tree to find frequencies in.\n");
 			return;
 		}
 		else{
@@ -108,15 +108,15 @@ public void findNode(String v){
 	}
 
 	public void printBreadthTraversal(RBNode n){
-		Queue<RBNode> queue= new LinkedList<RBNode>();
+		BQueue<RBNode> queue= new BQueue<RBNode>();
 		int level = 1;
 		n.setLevel(level);
-		queue.add(n);
+		queue.enqueue(n);
 		RBNode temp = null;
 		RBNode prev = n;
-		while(!queue.isEmpty()){
+		while(queue.getSize() != 0){
 			prev = temp;
-			temp = queue.poll();
+			temp = queue.dequeue();
 			//If root
 			if(n == temp){
 				System.out.printf("%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
@@ -126,7 +126,7 @@ public void findNode(String v){
 				if(prev.getLevel() == temp.getLevel()){
 					//If left
 					if(temp.getParent().getLeft() == temp){
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
@@ -191,7 +191,7 @@ public void findNode(String v){
 					//If right
 					else{
 						//Next is not a new level
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
@@ -261,7 +261,7 @@ public void findNode(String v){
 					if(temp.getParent().getLeft() == temp){
 
 						//If next is not a new level
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
@@ -327,7 +327,7 @@ public void findNode(String v){
 					}
 					//If right
 					else{
-						if((queue.isEmpty() == false) && (queue.peek().getLevel() == temp.getLevel())){
+						if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
 							//If leaf
 							if((temp.getLeft() == null) && (temp.getRight() == null)){
 								if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
@@ -393,11 +393,11 @@ public void findNode(String v){
 			}
 			if(temp.getLeft() != null){
 				temp.getLeft().setLevel(temp.getLevel()+1);
-				queue.add(temp.getLeft());
+				queue.enqueue(temp.getLeft());
 			}
 			if(temp.getRight() != null){
 				temp.getRight().setLevel(temp.getLevel()+1);
-				queue.add(temp.getRight());
+				queue.enqueue(temp.getRight());
 			}
 			level++;
 		}
@@ -405,7 +405,7 @@ public void findNode(String v){
 	
 	public void printStatistics(){
 		calculateMinMax(this.root);
-		System.out.println("\n\nStatistics for the Binary Search Tree");
+		System.out.println("\n\nStatistics for the Red-Black Tree");
 		System.out.println("=============================================");
 		System.out.printf("Number of the Nodes in the Tree	|%d\n",this.getNodeCount());
 		System.out.printf("Minimum Depth of the Tree	|%d\n",this.getMinHeight());
@@ -413,23 +413,25 @@ public void findNode(String v){
 	}
 
 	private void calculateMinMax(RBNode n) {
-		Queue<RBNode> queue= new LinkedList<RBNode>();
+		BQueue<RBNode> queue= new BQueue<RBNode>();
 		int level = 1;
+		boolean trigger = false;
 		n.setLevel(level);
-		queue.add(n);
+		queue.enqueue(n);
 		RBNode temp = null;
 		RBNode prev = null;
-		while(!queue.isEmpty()){
+		while(queue.getSize() != 0){
 			prev = temp;
-			temp = queue.poll();
+			temp = queue.dequeue();
 			//If root
 			if((n == temp) &&((temp.getRight() != null) || (temp.getLeft() != null))){
-				this.setMinHeight(temp.getLevel()+1);
+				//this.setMinHeight(temp.getLevel()+1);
 			}
 			else{
 				//If it is the shortest
-				if((temp.getLeft() == null) && (temp.getRight() == null) && (temp.getLevel() < this.getMinHeight())){
+				if(((temp.getLeft() == null) && (temp.getRight() == null)) && (trigger == false)){
 					this.setMinHeight(temp.getLevel());
+					trigger = true;
 				}
 				//If it is the longest
 				if(temp.getLevel() > this.getMaxHeight()){
@@ -438,11 +440,11 @@ public void findNode(String v){
 			}
 			if(temp.getLeft() != null){
 				temp.getLeft().setLevel(temp.getLevel()+1);
-				queue.add(temp.getLeft());
+				queue.enqueue(temp.getLeft());
 			}
 			if(temp.getRight() != null){
 				temp.getRight().setLevel(temp.getLevel()+1);
-				queue.add(temp.getRight());
+				queue.enqueue(temp.getRight());
 			}
 			level++;
 		}

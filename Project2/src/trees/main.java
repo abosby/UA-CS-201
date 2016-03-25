@@ -21,8 +21,8 @@ public class main {
 		}
 		//readCorpus(args[1]);
 		//readCorpus("inputCorpus.txt",treeType);
-		//readCorpus("mobyDickText.txt",treeType);
-		readCorpus("smallMobyDick.txt",treeType);
+		readCorpus("mobyDickText.txt",treeType);
+		//readCorpus("smallMobyDick.txt",treeType);
 		//readCommands(args[2]);
 
 	}
@@ -171,6 +171,7 @@ public class main {
 			RBT.findNode("brown");
 			RBT.findNode("the");
 			 */
+			//RBT.printBreadthTraversal(RBT.getRoot());
 			readCommands("inputCommands.txt",treeType);
 		}
 		sc.close();
