@@ -227,24 +227,6 @@ public class BinaryNode {
 	//public String determineValue(String v){
 	//	if
 
-	public boolean isMax(){
-		if(this.getLevel() == this.getBST().getMaxHeight()){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	public boolean isMin(){
-		if(this.getLevel() == this.getBST().getMinHeight()){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
 	public void findNode(BinarySearchTree binarySearchTree, String v) {
 		
 		//If less
@@ -261,7 +243,7 @@ public class BinaryNode {
 		//If greater
 		else if(this.getValue().compareTo(v)<0){
 			if(this.getRight() != null){
-				this.getLeft().findNode(binarySearchTree, v);
+				this.getRight().findNode(binarySearchTree, v);
 				return;
 			}
 			else{
@@ -278,6 +260,24 @@ public class BinaryNode {
 		else{
 			System.out.printf("\nThe Node '%s' is not found in the tree", v);
 			return;
+		}
+	}
+
+	public boolean isMax(){
+		if(this.getLevel() == this.getBST().getMaxHeight()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean isMin(){
+		if(this.getLevel() == this.getBST().getMinHeight()){
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 

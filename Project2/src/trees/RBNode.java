@@ -84,7 +84,7 @@ public class RBNode {
 		this.setLeft(null);
 		this.setRight(null);
 	}
-	public void insertNode(RBTree rbTree, String v) {
+	public void insertNode(String v) {
 
 		if(this.value == null){
 			this.setValue(v);
@@ -99,10 +99,10 @@ public class RBNode {
 			//If value is less than
 			else if(this.getValue().compareTo(v)>0){
 				if(this.getLeft() != null){
-					this.getLeft().insertNode(rbTree, v);
+					this.getLeft().insertNode(v);
 				}
 				else{
-					this.setLeft(new RBNode(rbTree,v));
+					this.setLeft(new RBNode(this.getRBT(),v));
 					this.getLeft().setLevel(this.getLevel()+1);
 					this.getLeft().setParent(this);
 					this.getLeft().setGrandparent(this.getParent());
@@ -114,10 +114,10 @@ public class RBNode {
 			//If value is greater than
 			else if(this.getValue().compareTo(v)<0){
 				if(this.getRight() != null){
-					this.getRight().insertNode(rbTree, v);
+					this.getRight().insertNode(v);
 				}
 				else{
-					this.setRight(new RBNode(rbTree,v));
+					this.setRight(new RBNode(this.getRBT(),v));
 					this.getRight().setLevel(this.getLevel()+1);
 					this.getRight().setParent(this);
 					this.getRight().setGrandparent(this.getParent());
@@ -348,7 +348,9 @@ public class RBNode {
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
 			temp.setLeft(node.getRight());
-			temp.getLeft().setParent(temp);
+			if(temp.getLeft()!=null){
+				temp.getLeft().setParent(temp);
+			}
 			temp.setGrandparent(node.getParent());
 			temp.setParent(node);
 			node.setRight(temp);
@@ -358,7 +360,9 @@ public class RBNode {
 			node.setGrandparent(temp.getGrandparent());
 			node.setParent(temp.getParent());
 			temp.setRight(node.getLeft());
-			temp.getRight().setParent(temp);
+			if(temp.getRight()!= null){
+				temp.getRight().setParent(temp);
+			}
 			temp.setGrandparent(node.getParent());
 			temp.setParent(node);
 			node.setLeft(temp);

@@ -20,7 +20,8 @@ public class main {
 			RBT = new RBTree();
 		}
 		//readCorpus(args[1]);
-		readCorpus("inputCorpus.txt",treeType);
+		//readCorpus("inputCorpus.txt",treeType);
+		readCorpus("mobyDickText.txt",treeType);
 		//readCommands(args[2]);
 
 	}
