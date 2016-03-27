@@ -1,0 +1,36 @@
+package rbtchecker;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class RBTChecker {
+	
+
+
+	}
+
+	TNode readTree(String fileName){
+		TNode root = null;
+		
+		Scanner sc= null;
+		String line;
+		try{
+			sc = new Scanner(new File(fileName));
+		}catch(FileNotFoundException e){
+			System.out.println("File not found to check");
+			e.printStackTrace();
+		}
+
+		root = textToNode(t);
+		root.parent = root;
+		if(root.side != 'X'){
+			System.err.printf("root node did not have X designator: %c\n",root.side);
+		}
+		char t = read;
+		while(){
+			TNode tn = new TNode();
+			if(t)
+		}
+	}
+}

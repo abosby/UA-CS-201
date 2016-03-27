@@ -1,0 +1,11 @@
+package trees;
+
+public class QueueNode {
+	private String value;
+	private QueueNode next;
+	private QueueNode prev;
+
+	public QueueNode(String v){
+		this.value = v;
+	}
+}

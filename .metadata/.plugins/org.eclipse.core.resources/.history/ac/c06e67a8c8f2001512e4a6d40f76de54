@@ -1,0 +1,19 @@
+package trees;
+
+public class QueueNode {
+	private String value;
+	private QueueNode next;
+
+	public QueueNode(String v){
+		this.value = v;
+	}
+	
+	public void insertNext(QueueNode n){
+		this.next = n;
+	}
+	
+	public QueueNode deleteNode(){
+		
+	}
+
+}
