@@ -92,7 +92,7 @@ public class RBTree {
 
 	public void findNode(String v){
 		if(this.root == null){
-			System.err.printf("\nThere is no tree to find frequencies in.\n");
+			System.out.printf("\n Find Result: 0\n\n");
 			return;
 		}
 		else{

@@ -23,8 +23,8 @@ public class main {
 		//readCorpus(args[1]);
 		//readCorpus("inputCorpus.txt",treeType);
 		//readCorpus("mobyDickText.txt",treeType);
-		readCorpus("mediumMobyDick.txt",treeType);
-		//readCorpus("corpusPA",treeType);
+		//readCorpus("mediumMobyDick.txt",treeType);
+		readCorpus("corpusPA",treeType);
 		//readCorpus("smallMobyDick.txt",treeType);
 		//readCommands(args[2]);
 

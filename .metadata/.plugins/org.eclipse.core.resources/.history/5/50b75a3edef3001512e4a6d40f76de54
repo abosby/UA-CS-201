@@ -312,7 +312,7 @@ public class RBNode {
 				return;
 			}
 			else{
-				System.out.printf("\n Find Result: 0\n\n");
+				System.err.printf("\nThe Node '%s' is not found in the tree\n\n", v);
 				return;
 			}
 		}
@@ -323,7 +323,7 @@ public class RBNode {
 				return;
 			}
 			else{
-				System.out.printf("\n Find Result: 0\n\n");
+				System.out.printf("The Node '%s' is not found in the tree\n\n", v);
 				return;
 			}
 		}
@@ -334,7 +334,7 @@ public class RBNode {
 		}
 		//Supposed to be here but isn't
 		else{
-			System.out.printf("\n Find Result: 0\n\n");
+			System.out.printf("The Node '%s' is not found in the tree\n\n", v);
 			return;
 		}
 	}
@@ -376,7 +376,7 @@ public class RBNode {
 					temp.getRight().getLeft().setGrandparent(temp);
 				}
 				if(temp.getRight().getRight()!=null){
-					temp.getRight().getRight().setGrandparent(temp);
+					temp.getRight().getLeft().setGrandparent(temp);
 				}
 				temp.getRight().setParent(temp);
 				temp.getRight().setGrandparent(node);
