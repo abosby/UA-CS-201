@@ -1,4 +1,7 @@
 package trees;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -63,9 +66,10 @@ public class RBTree {
 			this.min = n;
 		}
 		else{
-			this.root.insertNode(v);
+			this.root.insertNode(this.root,v);
 			this.resetRoot(this.root);
 			System.out.println();
+			this.printBreadthTraversal(this.root);
 			//this.preOrderTraversal(this.root);
 		}
 
@@ -86,7 +90,7 @@ public class RBTree {
 		}
 	}
 
-public void findNode(String v){
+	public void findNode(String v){
 		if(this.root == null){
 			System.err.printf("\nThere is no tree to find frequencies in.\n");
 			return;
@@ -402,7 +406,7 @@ public void findNode(String v){
 			level++;
 		}
 	}
-	
+
 	public void printStatistics(){
 		calculateMinMax(this.root);
 		System.out.println("\n\nStatistics for the Red-Black Tree");
@@ -458,6 +462,316 @@ public void findNode(String v){
 		else{
 			n.getRBT().setRoot(n);
 			return;
+		}
+	}
+	public void outputBreadthTraversal(RBNode n){
+
+		PrintWriter writer;
+		String curDir = System.getProperty("user.dir");
+		try {
+			writer = new PrintWriter(curDir + "output.txt","UTF-8");
+
+
+			BQueue<RBNode> queue= new BQueue<RBNode>();
+			int level = 1;
+			n.setLevel(level);
+			queue.enqueue(n);
+			RBNode temp = null;
+			RBNode prev = n;
+			while(queue.getSize() != 0){
+				prev = temp;
+				temp = queue.dequeue();
+				//If root
+				if(n == temp){
+					writer.printf("%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
+				}
+				else{
+					//If same level
+					if(prev.getLevel() == temp.getLevel()){
+						//If left
+						if(temp.getParent().getLeft() == temp){
+							if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
+								//If leaf
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("=%s*(%s*)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("=%s*(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&temp.getParent().getColor().equals("red")){
+										writer.printf("=%s(%s*)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("=%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s*(%s*)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%s*(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s(%s*)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%s(%s)%dL ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+							else{
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("=%s*(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("=%s*(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("=%s(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("=%s(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s*(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%s*(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s(%s*)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%s(%s)%dL\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+						}
+						//If right
+						else{
+							//Next is not a new level
+							if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
+								//If leaf
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("=%s*(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("=%s*(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("=%s(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("=%s(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s*(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%s*(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s(%s*)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%s(%s)%dR ",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+							//Next is new level
+							else{
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("=%s*(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("=%s*(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("=%s(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("=%s(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s*(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%s*(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%s(%s*)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%s(%s)%dR\n",temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+						}
+					}
+					//If new level
+					else{
+						//If left
+						if(temp.getParent().getLeft() == temp){
+
+							//If next is not a new level
+							if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
+								//If leaf
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s*(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: =%s*(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: =%s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s*(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: %s*(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s(%s*)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: %s(%s)%dL ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+							//If next is a new level
+							else{
+								//Is leaf
+								if((temp.getLeft() == null) && (temp.getRight() ==null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s*(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: =%s*(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: =%s(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s*(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: %s*(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s(%s*)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: %s(%s)%dL\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+						}
+						//If right
+						else{
+							if((queue.getSize() != 0) && (queue.peek().getLevel() == temp.getLevel())){
+								//If leaf
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s*(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: =%s*(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: =%s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s*(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: %s*(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s(%s*)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: %s(%s)%dR ", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+							else{
+								if((temp.getLeft() == null) && (temp.getRight() == null)){
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s*(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: =%s*(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: =%s(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: =%s(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+								else{
+									if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s*(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("red")&&(temp.getParent().getColor().equals("black"))){
+										writer.printf("%d: %s*(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else if(temp.getColor().equals("black")&&(temp.getParent().getColor().equals("red"))){
+										writer.printf("%d: %s(%s*)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+									else{
+										writer.printf("%d: %s(%s)%dR\n", temp.getLevel(),temp.getValue(), temp.getParent().getValue(),temp.getFrequency());
+									}
+								}
+							}
+						}
+					}
+				}
+				if(temp.getLeft() != null){
+					temp.getLeft().setLevel(temp.getLevel()+1);
+					queue.enqueue(temp.getLeft());
+				}
+				if(temp.getRight() != null){
+					temp.getRight().setLevel(temp.getLevel()+1);
+					queue.enqueue(temp.getRight());
+				}
+				level++;
+			}	
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

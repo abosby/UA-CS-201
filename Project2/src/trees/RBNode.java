@@ -84,45 +84,45 @@ public class RBNode {
 		this.setLeft(null);
 		this.setRight(null);
 	}
-	public void insertNode(String v) {
+	public void insertNode(RBNode node, String v) {
 
-		if(this.value == null){
-			this.setValue(v);
-			this.setLevel(1);
-		}
-		else{
-			//If value is equal, increase frequency
-			if(this.getValue().equals(v)){
-				this.setFrequency(this.getFrequency()+1);
+		while(true){
+			if((node.value == null) && (node.getRBT().getRoot() == null)){
+				node.setValue(v);
+				node.setLevel(1);
 			}
-
-			//If value is less than
-			else if(this.getValue().compareTo(v)>0){
-				if(this.getLeft() != null){
-					this.getLeft().insertNode(v);
+			else{
+				if(node.getValue().equals(v)){
+					node.setFrequency(node.getFrequency()+1);
+					break;
 				}
-				else{
-					this.setLeft(new RBNode(this.getRBT(),v));
-					this.getLeft().setLevel(this.getLevel()+1);
-					this.getLeft().setParent(this);
-					this.getLeft().setGrandparent(this.getParent());
-					this.insertionFixUp(this.getLeft());
-					this.RBT.setNodeCount(this.RBT.getNodeCount()+1);
+				else if(node.getValue().compareTo(v)>0){
+					if(node.getLeft() != null){
+						node = node.left;
+					}
+					else{
+						node.setLeft(new RBNode(node.getRBT(),v));
+						node.getLeft().setLevel(node.getLevel()+1);
+						node.getLeft().setParent(node);
+						node.getLeft().setGrandparent(node.getParent());
+						node.insertionFixUp(node.getLeft());
+						node.RBT.setNodeCount(node.RBT.getNodeCount()+1);
+						break;
+					}
 				}
-			}
-
-			//If value is greater than
-			else if(this.getValue().compareTo(v)<0){
-				if(this.getRight() != null){
-					this.getRight().insertNode(v);
-				}
-				else{
-					this.setRight(new RBNode(this.getRBT(),v));
-					this.getRight().setLevel(this.getLevel()+1);
-					this.getRight().setParent(this);
-					this.getRight().setGrandparent(this.getParent());
-					this.insertionFixUp(this.getRight());
-					this.RBT.setNodeCount(this.RBT.getNodeCount()+1);
+				else if(node.getValue().compareTo(v)<0){
+					if(node.getRight() != null){
+						node = node.right;
+					}
+					else{
+						node.setRight(new RBNode(node.getRBT(),v));
+						node.getRight().setLevel(node.getLevel()+1);
+						node.getRight().setParent(node);
+						node.getRight().setGrandparent(node.getParent());
+						node.insertionFixUp(node.getRight());
+						node.RBT.setNodeCount(node.RBT.getNodeCount()+1);
+						break;
+					}
 				}
 			}
 		}
@@ -195,7 +195,7 @@ public class RBNode {
 					return null;
 				}
 			}
-	
+
 			//If value is greater than
 			else if(this.getValue().compareTo(v)<0){
 				if(this.getRight() != null){
@@ -205,7 +205,7 @@ public class RBNode {
 					return null;
 				}
 			}
-	
+
 			//If value is equal
 			else{
 				//If there is only one frequency left
@@ -219,7 +219,7 @@ public class RBNode {
 						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
 						return temp;
 					}
-	
+
 					//If one child
 					else if((this.getRight() != null) && (this.getLeft() == null)){
 						RBNode temp = this;
@@ -229,7 +229,7 @@ public class RBNode {
 						this.RBT.setNodeCount(this.RBT.getNodeCount()-1);
 						return temp;
 					}
-	
+
 					else if((this.getRight() == null) && (this.getLeft() != null)){
 						RBNode temp = this;
 						this.swapToLeaf(this);
@@ -306,7 +306,7 @@ public class RBNode {
 		this.getRBT().getRoot().setColor("black");
 	}
 	public void findNode(String v) {
-	
+
 		//If less
 		if(this.getValue().compareTo(v)>0){
 			if(this.getLeft() != null){
@@ -448,6 +448,13 @@ public class RBNode {
 	}
 
 	private boolean isLinear(RBNode x) {
+		if(x.getParent() == null){
+			return false;
+		}
+		if(x.getGrandparent() == null){
+			return false;
+		}
+
 		if(x.getGrandparent().getLeft() == x.getParent()){
 			if(x.getParent().getLeft() == x){
 				return true;
@@ -456,8 +463,30 @@ public class RBNode {
 				return false;
 			}
 		}
+		else if(x.getGrandparent().getRight() == x.getParent()){
+			if(x.getParent().getRight() == x){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
 		else{
-			if(x.getParent().getRight() ==x){
+			return false;
+		}
+	}
+	
+	private boolean needsToRotate(RBNode x){
+		if(x.getParent().getLeft() == x){
+			if(x.getGrandparent().getRight() == x.getParent()){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			if(x.getGrandparent().getLeft() == x.getParent()){
 				return true;
 			}
 			else{
@@ -466,161 +495,161 @@ public class RBNode {
 		}
 	}
 
-	private RBNode uncle(RBNode x){
-		//if(x.getParent().getLeft() == x){
-		//	return x.getGrandparent().getRight();
-		//}
-		//else if(x.getParent().getRight() == x){
-		//	return x.getGrandparent().getLeft();
-		//}
-		if(x.getGrandparent() != null){
-			if(x.getGrandparent().getLeft() == x.getParent()){
-				return x.getGrandparent().getRight();
+private RBNode uncle(RBNode x){
+	//if(x.getParent().getLeft() == x){
+	//	return x.getGrandparent().getRight();
+	//}
+	//else if(x.getParent().getRight() == x){
+	//	return x.getGrandparent().getLeft();
+	//}
+	if(x.getGrandparent() != null){
+		if(x.getGrandparent().getLeft() == x.getParent()){
+			return x.getGrandparent().getRight();
+		}
+		else if(x.getGrandparent().getRight() == x.getParent()){
+			return x.getGrandparent().getLeft();
+		}
+		else{
+			return null;
+		}
+	}
+	return null;
+}
+
+void swapToLeaf(RBNode x){
+	if(x == this){
+		//If x is left child
+		if(this.getParent().getLeft()==this){
+			//Swap with smallest on x's right side
+			this.swapToLeaf(x.getLeft());
+		}
+		//If x is right child
+		else{
+			//Swap with largest on x's left side
+			this.swapToLeaf(x.getRight());
+		}
+	}
+	else{
+		//Go as far Right as possible now
+		if(this.getParent().getLeft()==this){
+			if(x.getRight() != null){
+				this.swapToLeaf(x.getRight());
 			}
-			else if(x.getGrandparent().getRight() == x.getParent()){
-				return x.getGrandparent().getLeft();
+			//Swap Values and Delete Leaf Node
+			else{
+				Integer tempInt = x.getFrequency();
+				String tempVal = x.getValue();
+				if(x.getParent().getLeft() == x){
+					x.getParent().setLeft(null);
+				}
+				else{
+					x.getParent().setRight(null);
+				}
+				//x.setFrequency(this.getFrequency());
+				//x.setValue(this.getValue());
+				this.setValue(tempVal);
+				this.setFrequency(tempInt);
+			}
+
+		}
+		//Go as far Left as possible now
+		else{
+			if(x.getLeft() != null){
+				this.swapToLeaf(x.getLeft());
+			}
+			//Swap values
+			else{
+				Integer tempInt = x.getFrequency();
+				String tempVal = x.getValue();
+				if(x.getParent().getLeft() == x){
+					x.getParent().setLeft(null);
+				}
+				else{
+					x.getParent().setRight(null);
+				}
+				//x.setFrequency(this.getFrequency());
+				//x.setValue(this.getValue());
+				this.setValue(tempVal);
+				this.setFrequency(tempInt);
+			}
+		}
+
+	}
+}
+
+RBNode getSibling(){
+	if(this.getParent().getLeft() != null){
+		//if left child of parent, return right
+		if(this.getParent().getLeft() == this){
+			if(this.getParent().getRight() != null){
+				return this.getParent().getRight();
 			}
 			else{
 				return null;
 			}
 		}
+		//the right child of parent is 'this'
+		else{
+			return this.getParent().getLeft();
+		}
+	}
+	//There are not two children of the parent
+	else{
 		return null;
 	}
+}
 
-	void swapToLeaf(RBNode x){
-		if(x == this){
-			//If x is left child
-			if(this.getParent().getLeft()==this){
-				//Swap with smallest on x's right side
-				this.swapToLeaf(x.getLeft());
+RBNode getNephew(){
+	if(this.getParent().getLeft()!= null){
+		//If left child of parent return right child of sibling if its there
+		if(this.getParent().getLeft() == this){
+			if(this.getSibling() != null){
+				return this.getSibling().getRight();
 			}
-			//If x is right child
 			else{
-				//Swap with largest on x's left side
-				this.swapToLeaf(x.getRight());
+				return null;
 			}
 		}
+		//If right child of parent return the left child of sibling if its there
 		else{
-			//Go as far Right as possible now
-			if(this.getParent().getLeft()==this){
-				if(x.getRight() != null){
-					this.swapToLeaf(x.getRight());
-				}
-				//Swap Values and Delete Leaf Node
-				else{
-					Integer tempInt = x.getFrequency();
-					String tempVal = x.getValue();
-					if(x.getParent().getLeft() == x){
-						x.getParent().setLeft(null);
-					}
-					else{
-						x.getParent().setRight(null);
-					}
-					//x.setFrequency(this.getFrequency());
-					//x.setValue(this.getValue());
-					this.setValue(tempVal);
-					this.setFrequency(tempInt);
-				}
-
+			if(this.getSibling() != null){
+				return this.getSibling().getLeft();
 			}
-			//Go as far Left as possible now
 			else{
-				if(x.getLeft() != null){
-					this.swapToLeaf(x.getLeft());
-				}
-				//Swap values
-				else{
-					Integer tempInt = x.getFrequency();
-					String tempVal = x.getValue();
-					if(x.getParent().getLeft() == x){
-						x.getParent().setLeft(null);
-					}
-					else{
-						x.getParent().setRight(null);
-					}
-					//x.setFrequency(this.getFrequency());
-					//x.setValue(this.getValue());
-					this.setValue(tempVal);
-					this.setFrequency(tempInt);
-				}
+				return null;
 			}
-
 		}
 	}
+	else{
+		return null;
+	}
+}
 
-	RBNode getSibling(){
-		if(this.getParent().getLeft() != null){
-			//if left child of parent, return right
-			if(this.getParent().getLeft() == this){
-				if(this.getParent().getRight() != null){
-					return this.getParent().getRight();
-				}
-				else{
-					return null;
-				}
+RBNode getNiece(){
+	if(this.getParent().getLeft()!= null){
+		//If left child of parent return the left child of sibling if its there
+		if(this.getParent().getLeft() == this){
+			if(this.getSibling() != null){
+				return this.getSibling().getLeft();
 			}
-			//the right child of parent is 'this'
 			else{
-				return this.getParent().getLeft();
+				return null;
 			}
 		}
-		//There are not two children of the parent
+		//If right child of parent return right child of sibling if its there
 		else{
-			return null;
+			if(this.getSibling() != null){
+				return this.getSibling().getRight();
+			}
+			else{
+				return null;
+			}
 		}
 	}
-
-	RBNode getNephew(){
-		if(this.getParent().getLeft()!= null){
-			//If left child of parent return right child of sibling if its there
-			if(this.getParent().getLeft() == this){
-				if(this.getSibling() != null){
-					return this.getSibling().getRight();
-				}
-				else{
-					return null;
-				}
-			}
-			//If right child of parent return the left child of sibling if its there
-			else{
-				if(this.getSibling() != null){
-					return this.getSibling().getLeft();
-				}
-				else{
-					return null;
-				}
-			}
-		}
-		else{
-			return null;
-		}
+	else{
+		return null;
 	}
-
-	RBNode getNiece(){
-		if(this.getParent().getLeft()!= null){
-			//If left child of parent return the left child of sibling if its there
-			if(this.getParent().getLeft() == this){
-				if(this.getSibling() != null){
-					return this.getSibling().getLeft();
-				}
-				else{
-					return null;
-				}
-			}
-			//If right child of parent return right child of sibling if its there
-			else{
-				if(this.getSibling() != null){
-					return this.getSibling().getRight();
-				}
-				else{
-					return null;
-				}
-			}
-		}
-		else{
-			return null;
-		}
-	}
+}
 
 
 }

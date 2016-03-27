@@ -1,6 +1,7 @@
 package trees;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -21,7 +22,9 @@ public class main {
 		}
 		//readCorpus(args[1]);
 		//readCorpus("inputCorpus.txt",treeType);
-		readCorpus("mobyDickText.txt",treeType);
+		//readCorpus("mobyDickText.txt",treeType);
+		//readCorpus("mediumMobyDick.txt",treeType);
+		readCorpus("corpusPA",treeType);
 		//readCorpus("smallMobyDick.txt",treeType);
 		//readCommands(args[2]);
 
@@ -106,6 +109,9 @@ public class main {
 				else if(command1.equals("r")){
 					RBT.printStatistics();
 				}
+				else if(command1.equals("o")){
+					RBT.outputBreadthTraversal(RBT.getRoot());
+				}
 				else{
 
 				}
@@ -172,7 +178,9 @@ public class main {
 			RBT.findNode("the");
 			 */
 			//RBT.printBreadthTraversal(RBT.getRoot());
-			readCommands("inputCommands.txt",treeType);
+			//readCommands("inputCommands.txt",treeType);
+			RBT.outputBreadthTraversal(RBT.getRoot());
+			readCommands("commandsPA",treeType);
 		}
 		sc.close();
 
@@ -189,10 +197,10 @@ public class main {
 		char c = 0;
 		for (int i = 0; i < string.length(); i++){
 			c = string.charAt(i);
-			if((Character.isUpperCase(c))){
+			if( (Character.isUpperCase(c)) && (Character.isLetter(c)) ){
 				s = s + Character.toLowerCase(c);
 			}
-			if((Character.isAlphabetic(c)) && (Character.isLowerCase(c))){
+			else if((Character.isLetter(c)) && (Character.isLowerCase(c))){
 				s = s + c;
 			}
 		}
