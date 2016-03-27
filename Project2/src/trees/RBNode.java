@@ -376,7 +376,7 @@ public class RBNode {
 					temp.getRight().getLeft().setGrandparent(temp);
 				}
 				if(temp.getRight().getRight()!=null){
-					temp.getRight().getLeft().setGrandparent(temp);
+					temp.getRight().getRight().setGrandparent(temp);
 				}
 				temp.getRight().setParent(temp);
 				temp.getRight().setGrandparent(node);
