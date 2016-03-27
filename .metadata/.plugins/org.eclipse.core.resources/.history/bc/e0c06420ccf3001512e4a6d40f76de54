@@ -90,7 +90,6 @@ public class RBNode {
 			if((node.value == null) && (node.getRBT().getRoot() == null)){
 				node.setValue(v);
 				node.setLevel(1);
-				node.RBT.setNodeCount(node.RBT.getNodeCount()+1);
 			}
 			else{
 				if(node.getValue().equals(v)){
@@ -130,47 +129,50 @@ public class RBNode {
 	}
 
 	private void insertionFixUp(RBNode node) {
-		while(true){
-			if(node == this.getRBT().getRoot()){
+		RBNode x = null;
+		x = node;
+		boolean flag = true;
+		while(flag == true){
+			if(x == this.getRBT().getRoot()){
 				break;
 			}
-			if((node.getParent().getColor().equals("black"))){ 
+			if((x.getParent().getColor().equals("black"))){ 
 				break;
 			}
-			if(uncle(node) != null){
-				if(uncle(node).getColor().equals("red")){
-					node.getParent().setColor("black");
-					uncle(node).setColor("black");
-					node.getGrandparent().setColor("red");
-					node = node.getGrandparent();
+			if(uncle(x) != null){
+				if(uncle(x).getColor().equals("red")){
+					x.getParent().setColor("black");
+					uncle(x).setColor("black");
+					x.getGrandparent().setColor("red");
+					x = x.getGrandparent();
 				}
 				else{
 					//uncle is black 
 					//if not linear
-					if(needsToRotateLinear(node)){
+					if(!isLinear(x)){
 						RBNode temp = null;
-						temp = node.getParent();
-						rotateToLinear(node);
-						node = temp;
+						temp = x.getParent();
+						rotateToLinear(x);
+						x = temp;
 					}
-					node.getParent().setColor("black");
-					node.getGrandparent().setColor("red");
-					rotate(node.getParent());
+					x.getParent().setColor("black");
+					x.getGrandparent().setColor("red");
+					rotate(x.getParent());
 					//rotate(x);
 				}
 			}
 			//uncle is black 
 			else{
 				//if not linear
-				if(needsToRotateLinear(node)){
+				if(!isLinear(x)){
 					RBNode temp = null;
-					temp = node.getParent();
-					rotateToLinear(node);
-					node = temp;
+					temp = x.getParent();
+					rotateToLinear(x);
+					x = temp;
 				}
-				node.getParent().setColor("black");
-				node.getGrandparent().setColor("red");
-				rotate(node.getParent());
+				x.getParent().setColor("black");
+				x.getGrandparent().setColor("red");
+				rotate(x.getParent());
 				//rotate(x);
 			}
 
@@ -312,7 +314,7 @@ public class RBNode {
 				return;
 			}
 			else{
-				System.err.printf("\nThe Node '%s' is not found in the tree\n\n", v);
+				System.out.printf("The Node '%s' is not found in the tree\n\n", v);
 				return;
 			}
 		}
@@ -347,24 +349,11 @@ public class RBNode {
 			node.setParent(temp.getParent());
 			temp.setLeft(node.getRight());
 			if(temp.getLeft()!=null){
-				if(temp.getLeft().getLeft()!=null){
-					temp.getLeft().getLeft().setGrandparent(temp);
-				}
-				if(temp.getLeft().getRight()!=null){
-					temp.getLeft().getRight().setGrandparent(temp);
-				}
 				temp.getLeft().setParent(temp);
-				temp.getLeft().setGrandparent(node);
 			}
 			temp.setGrandparent(node.getParent());
 			temp.setParent(node);
-			if(temp.getRight()!=null){
-				temp.getRight().setGrandparent(node);
-			}
 			node.setRight(temp);
-			if(node.getLeft()!=null){
-				node.getLeft().setGrandparent(node.getGrandparent());
-			}
 		}
 		else{
 			temp.getParent().setLeft(node);
@@ -372,24 +361,11 @@ public class RBNode {
 			node.setParent(temp.getParent());
 			temp.setRight(node.getLeft());
 			if(temp.getRight()!= null){
-				if(temp.getRight().getLeft()!=null){
-					temp.getRight().getLeft().setGrandparent(temp);
-				}
-				if(temp.getRight().getRight()!=null){
-					temp.getRight().getLeft().setGrandparent(temp);
-				}
 				temp.getRight().setParent(temp);
-				temp.getRight().setGrandparent(node);
 			}
 			temp.setGrandparent(node.getParent());
 			temp.setParent(node);
-			if(temp.getLeft()!=null){
-				temp.getLeft().setGrandparent(node);
-			}
 			node.setLeft(temp);
-			if(node.getRight()!= null){
-				node.getRight().setGrandparent(node.getParent());
-			}
 		}
 	}
 	private void rotate(RBNode node){
@@ -500,7 +476,7 @@ public class RBNode {
 		}
 	}
 	
-	private boolean needsToRotateLinear(RBNode x){
+	private boolean needsToRotate(RBNode x){
 		if(x.getParent().getLeft() == x){
 			if(x.getGrandparent().getRight() == x.getParent()){
 				return true;

@@ -177,11 +177,10 @@ public class main {
 			RBT.findNode("brown");
 			RBT.findNode("the");
 			 */
-			RBT.printBreadthTraversal(RBT.getRoot());
-			System.out.println();
-			readCommands("inputCommands.txt",treeType);
+			//RBT.printBreadthTraversal(RBT.getRoot());
+			//readCommands("inputCommands.txt",treeType);
 			RBT.outputBreadthTraversal(RBT.getRoot());
-			//readCommands("commandsPA",treeType);
+			readCommands("commandsPA",treeType);
 		}
 		sc.close();
 

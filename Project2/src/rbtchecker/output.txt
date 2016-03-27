@@ -1,9 +1,7 @@
-1: of(of)2X
-2: gutenberg*(of)3L the*(of)4R
-3: chapter(gutenberg*)8L line(gutenberg*)1R stubb(the*)1L less(the*)1R
-4: and(chapter)1L dart(chapter)1R in*(line)7L whales*(line)1R stars*(stubb)1L teeth*(stubb)1R whales(less)1L gam*(less)1R
-5: =a*(and)1L =brit*(and)1R =crotch*(dart*)1L =going*(dart)1R =hark(in*)1L =kills(in*)1R mountains(whales*)1L =wood(whales*)1R scenes*(stars*)1L =stone(stars*)1R stubbs(teeth*)1L whaling(teeth*)1R =true*(whales*)1L pictures(gam*)1L gutenberg*(of)3L
-6: =whale*(mountains)1R pictures(scenes*)1L sheetiron(scenes*)1R =supper*(stubbs)1R =test*(whaling*)1L =of*(pictures*)1L chapter(gutenberg*)8L line(gutenberg*)1R
-7: =paint*(pictures)1L =squid*(sheetiron)1R and(chapter)1L dart(chapter)1R in*(line)7L whales*(line)1R
-8: =a*(and)1L =brit*(and)1R =crotch*(dart*)1L =going*(dart)1R =hark(in*)1L =kills(in*)1R mountains(whales*)1L =wood(whales*)1R
-9: =whale*(mountains)1R
+1: happiness(happiness)2X
+2: comparison(happiness)1L overcompensations(happiness)1R
+3: always(comparison)1L fight(comparison)1R looks*(overcompensations)1L squalid*(overcompensations)1R
+4: actual(always)1L as*(always)1R course*(fight)1L glamour*(fight)1R instability(looks*)1L nearly(looks*)1R so(squalid*)1L the(squalid*)3R
+5: =a*(actual)3L =against*(actual)1R =and(as*)2L being(as*)1R =contented(course*)1L fatal(course*)1R =for(glamour*)1L good(glamour*)1R in(instability)1L isnt(instability)1R misery(nearly)1L of*(nearly)5R picturesqueness*(so)1L =spectacular(so)1R struggle*(the)1L =with(the)2R
+6: =by*(being)1R =doubt*(fatal*)1L =grand*(good)1R =has*(in*)1L =is*(isnt*)1L =misfortune*(misery)1R none(of*)2L =or(of*)2R overthrow(picturesqueness*)1L =pretty(picturesqueness*)1R =stability(struggle*)1L temptation(struggle*)1R
+7: =never*(none)1L =passion*(overthrow)1R =test*(temptation)1R
