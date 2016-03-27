@@ -69,7 +69,7 @@ public class RBTree {
 			this.root.insertNode(this.root,v);
 			this.resetRoot(this.root);
 			System.out.println();
-			this.printBreadthTraversal(this.root);
+			//this.printBreadthTraversal(this.root);
 			//this.preOrderTraversal(this.root);
 		}
 
@@ -85,7 +85,7 @@ public class RBTree {
 				//System.out.printf("Deleted Node: %s\nNew Node frequency: %d\n\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
 			}
 			else{
-				System.err.printf("The Node: '%s' was not found\n\n", v);
+				System.err.printf("\nThe Node: '%s' was not found to delete\n\n", v);
 			}
 		}
 	}
@@ -469,7 +469,7 @@ public class RBTree {
 		PrintWriter writer;
 		String curDir = System.getProperty("user.dir");
 		try {
-			writer = new PrintWriter(curDir + "output.txt","UTF-8");
+			writer = new PrintWriter(curDir + "/src/rbtchecker/output.txt","UTF-8");
 
 
 			BQueue<RBNode> queue= new BQueue<RBNode>();

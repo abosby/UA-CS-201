@@ -314,7 +314,7 @@ public class RBNode {
 				return;
 			}
 			else{
-				System.out.printf("The Node '%s' is not found in the tree\n\n", v);
+				System.err.printf("\nThe Node '%s' is not found in the tree\n\n", v);
 				return;
 			}
 		}
