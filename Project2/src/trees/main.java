@@ -194,6 +194,7 @@ public class main {
 	 * @return The 'Scrubbed' word that has been reduce to lowercase letters
 	 */
 	private static String scrubWord(String string) {
+		string = string.replaceAll("[^\\p{ASCII}]", "");
 		String s = "";
 		char c = 0;
 		for (int i = 0; i < string.length(); i++){
