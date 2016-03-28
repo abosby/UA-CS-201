@@ -103,7 +103,38 @@ checkBalance(tnode *t)
 void
 checkOrder(tnode *t)
     {
-    Fatal("checkOrder has not been implemented.\n");
+		if (t != NULL) {
+			if (t->side == 'X') {
+				if (t->left != NULL) {
+					checkOrder(t->left);
+				}
+				if (t->right != NULL) {
+					checkOrder(t->right);
+				}
+			}
+			else if (t->side == 'L') {
+				if (strcmp(t->name, t->parent->name) > 0) {
+					Fatal("Node %s 'L' is out of order with its parent %s", t->name, t->parent->name);
+				}
+				if (t->left != NULL) {
+					checkOrder(t->left);
+				}
+				if (t->right != NULL) {
+					checkOrder(t->right);
+				}
+			}
+			else if (t->side == 'R') {
+				if (strcmp(t->name, t->parent->name) < 0) {
+					Fatal("Node %s 'R' is out of order with its parent %s", t->name, t->parent->name);
+				}
+				if (t->left != NULL) {
+					checkOrder(t->left);
+				}
+				if (t->right != NULL) {
+					checkOrder(t->right);
+				}
+			}
+		}
     }
 
 

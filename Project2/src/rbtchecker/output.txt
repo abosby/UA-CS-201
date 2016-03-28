@@ -1,6 +1,6 @@
-1: gutenberg(gutenberg)3X
-2: cost(gutenberg)1L reuse*(gutenberg)1R
-3: by*(cost)316L etymology*(cost)2R of(reuse*)2005L this(reuse*)388R
+1: cost(cost)1X
+2: gutenberg(gcost)3L reuse*(cost)1R
+3: by*(gutenberg)316L etymology*(gutenberg)2R of(reuse*)2005L this(reuse*)388R
 4: author(by*)5L coffin(by*)11R dick(etymology*)16L flags(etymology*)1R license*(of)2L pictures*(of)7R shore*(this)15L virgin*(this)3R
 5: all*(author)477L biographical*(author)2R chapter*(coffin)194L conceal(coffin)2R daniel*(dick)2L dying*(dick)3R falconers*(flags)1L friend*(flags)14R in(license*)1265L melville(license*)3R pale(pictures*)7L project(pictures*)6R schools(shore*)1L start(shore*)6R under(virgin*)28L websters(virgin*)2R
 6: affidavit(all*)1L are(all*)158R batteringram(biographical*)1L brain(biographical*)6R carpetbag(chapter*)4L clearing(chapter*)3R commonwealth*(conceal)1L consideration*(conceal)5R crew(daniel*)23L degrees(daniel*)1R doubloon(dying*)1L embellished(dying*)1R extracts(falconers*)6L fedallah(falconers*)1R for(friend*)496L give(friend*)25R his*(in)827L january*(in)1R lowering*(melville)3L mountains*(melville)6R others(pale)12L pausing(pale)5R polar*(project)4L raimond*(project)1R rosebud(schools)1L set(schools)27R so*(start)278L supplied*(start)6R townhos*(under)1L use(under)6R wallen(websters)1L with(websters)558R
