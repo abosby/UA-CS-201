@@ -1,0 +1,16 @@
+
+The Node: test was not found
+1: the(the)2X
+2: quick(the)1L
+3: brown(quick)1L =test(quick)1R
+4: =and(brown)1L fox(brown)1R
+5: =dog(fox)1L jumped(fox)1R
+6: girl(jumped)1L over(jumped)1R
+7: =her(girl)1R =lazy(over)2L
+
+
+Statistics for the Binary Search Tree
+=============================================
+Number of the Nodes in the Tree	|13
+Minimum Depth of the Tree	|2
+Maximum Depth of the Tree	|7
