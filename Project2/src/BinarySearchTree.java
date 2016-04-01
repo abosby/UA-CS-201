@@ -258,12 +258,12 @@ public class BinarySearchTree {
 			}
 			//If equal
 			else if(this.getValue().equals(v)){
-				System.out.printf("\nFind Result:%d\n",this.getFrequency());
+				System.out.printf("\nFind Result: %d\n",this.getFrequency());
 				return;
 			}
 			//Supposed to be here but isn't
 			else{
-				System.out.printf("\nFind Result: 0");
+				System.out.printf("\nFind Result: 0\n");
 				return;
 			}
 		}
@@ -539,6 +539,7 @@ public class BinarySearchTree {
 			}
 			level++;
 		}
+		System.out.println();
 	}
 
 	/** Prints the Statistics for the Binary Search Tree by reporting the number of nodes, Min-Height and Max-Height
@@ -546,7 +547,7 @@ public class BinarySearchTree {
 	 */
 	public void printStatistics(){
 		calculateMinMax(this.root);
-		System.out.println("\n\nStatistics for the Binary Search Tree");
+		System.out.println("\nStatistics for the Binary Search Tree");
 		System.out.println("=============================================");
 		System.out.printf("Number of the Nodes in the Tree	|%d\n",this.getNodeCount());
 		System.out.printf("Minimum Depth of the Tree	|%d\n",this.getMinHeight());

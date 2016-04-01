@@ -318,7 +318,7 @@ public class RBTree {
 					return;
 				}
 				else{
-					System.out.printf("\n Find Result: 0\n\n");
+					System.out.printf("\n Find Result: 0\n");
 					return;
 				}
 			}
@@ -329,18 +329,18 @@ public class RBTree {
 					return;
 				}
 				else{
-					System.out.printf("\n Find Result: 0\n\n");
+					System.out.printf("\n Find Result: 0\n");
 					return;
 				}
 			}
 			//If equal
 			else if(this.getValue().equals(v)){
-				System.out.printf("Find Result: %d \n\n",this.getFrequency());
+				System.out.printf("\nFind Result: %d \n",this.getFrequency());
 				return;
 			}
 			//Supposed to be here but isn't
 			else{
-				System.out.printf("\n Find Result: 0\n\n");
+				System.out.printf("\n Find Result: 0\n");
 				return;
 			}
 		}
@@ -755,14 +755,14 @@ public class RBTree {
 				//System.out.printf("Deleted Node: %s\nNew Node frequency: %d\n\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
 			}
 			else{
-				System.err.printf("\nThe Node: '%s' was not found to delete\n\n", v);
+				//System.err.printf("\nThe Node: '%s' was not found to delete\n\n", v);
 			}
 		}
 	}
 
 	public void findNode(String v){
 		if(this.root == null){
-			System.out.printf("\n Find Result: 0\n\n");
+			System.out.printf("\n Find Result: 0\n");
 			return;
 		}
 		else{
@@ -793,7 +793,7 @@ public class RBTree {
 			temp = queue.dequeue();
 			//If root
 			if(n == temp){
-				System.out.printf("\n\n%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
+				System.out.printf("\n%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
 			}
 			else{
 				//If same level
@@ -1075,6 +1075,7 @@ public class RBTree {
 			}
 			level++;
 		}
+		System.out.println();
 	}
 
 	public void printStatistics(){

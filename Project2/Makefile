@@ -19,16 +19,14 @@ test:
 
 stresstest:
 	@echo testing big moby dick test file BST
-	java -classpath classfiles/ Trees -1 inputFiles/mobyDickText.txt inputFiles/inputCommands.txt > outputFile3.txt
+	java -classpath classfiles/ Trees -1 inputFiles/mobyDickText.txt inputFiles/inputCommands.txt
 	@echo testing big lod test file RBT
-	java -classpath classfiles/ Trees -2 inputFiles/lod-1.txt inputFiles/inputCommands.txt > outputFile4.txt
+	java -classpath classfiles/ Trees -2 inputFiles/lod-1.txt inputFiles/inputCommands.txt
 
 mediumtest:
 	@echo testing mediaum BST
-	java -classpath classfiles/ Trees -2 inputFiles/mediumMobyDick.txt inputFiles/commands.txt > outputFile3.txt
+	java -classpath classfiles/ Trees -2 inputFiles/mediumMobyDick.txt inputFiles/commands.txt
 	
-
-run: 
 
 clean:
 	rm -f classfiles/*

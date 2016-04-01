@@ -110,9 +110,9 @@ public class Trees{
 				else if(command1.equals("r")){
 					RBT.printStatistics();
 				}
-				else if(command1.equals("o")){
-					RBT.outputBreadthTraversal(RBT.getRoot());
-				}
+				//else if(command1.equals("o")){
+				//	RBT.outputBreadthTraversal(RBT.getRoot());
+				//}
 				else{
 
 				}
