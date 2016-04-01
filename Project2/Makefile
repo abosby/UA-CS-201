@@ -4,18 +4,30 @@ JFLAGS = -d classfiles -sourcepath src
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
-SOURCES= src/BQueue.java src/BinarySearchTree.java src/RBTree.java src/main.java
+SOURCES= src/BQueue.java src/BinarySearchTree.java src/RBTree.java src/Trees.java
 CLASSES= classfiles/BQueue.class classfiles/BinarySearchTree.class classfiles/RBTree.class classfiles/main.class
 
-default: clean classes
+top: classes
 
 classes: $(SOURCES:.java=.class)
 
-test: clean classes
+test:
 	@echo testing simple BST
-	java -classpath classfiles/ main -1 inputFiles/inputCorpus.txt inputFiles/inputCommands.txt > outputFile1.txt
+	java -classpath classfiles/ Trees -1 inputFiles/inputCorpus.txt inputFiles/inputCommands.txt
 	@echo testing red-black tree
-	java -classpath classfiles/ main -2 inputFiles/inputCorpus.txt inputFiles/inputCommands.txt > outputFile2.txt
+	java -classpath classfiles/ Trees -2 inputFiles/inputCorpus.txt inputFiles/inputCommands.txt
+
+stresstest:
+	@echo testing big moby dick test file BST
+	java -classpath classfiles/ Trees -1 inputFiles/mobyDickText.txt inputFiles/inputCommands.txt > outputFile3.txt
+	@echo testing big lod test file RBT
+	java -classpath classfiles/ Trees -2 inputFiles/lod-1.txt inputFiles/commands.txt > outputFile4.txt
+
+mediumtest:
+	@echo testing mediaum BST
+	java -classpath classfiles/ Trees -2 inputFiles/mediumMobyDick.txt inputFiles/commands.txt > outputFile3.txt
+	
+
 run: 
 
 clean:

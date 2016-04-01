@@ -744,7 +744,7 @@ public class RBTree {
 		else{
 			this.root.insertNode(this.root,v);
 			this.resetRoot(this.root);
-			System.out.println();
+			//System.out.println();
 			//this.printBreadthTraversal(this.root);
 			//this.preOrderTraversal(this.root);
 		}
