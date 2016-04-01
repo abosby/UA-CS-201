@@ -46,3 +46,27 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#Eclipse Files
+.metadata
+bin/
+tmp
+*.tmp
+*.back
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Eclipse Core
+.project
+
+#External Tool Builders
+.externalToolBuilders/
+
+#Locally stored "Eclipse Launch Configs"
+*.launch
+
+

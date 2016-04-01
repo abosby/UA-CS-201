@@ -13,15 +13,15 @@ classes: $(SOURCES:.java=.class)
 
 test:
 	@echo testing simple BST
-	java -classpath classfiles/ Trees -1 inputFiles/inputCorpus.txt inputFiles/inputCommands.txt
+	java -classpath classfiles/ Trees -1 inputCorpus.txt inputCommands.txt
 	@echo testing red-black tree
-	java -classpath classfiles/ Trees -2 inputFiles/inputCorpus.txt inputFiles/inputCommands.txt
+	java -classpath classfiles/ Trees -2 inputCorpus.txt inputCommands.txt
 
 stresstest:
 	@echo testing big moby dick test file BST
 	java -classpath classfiles/ Trees -1 inputFiles/mobyDickText.txt inputFiles/inputCommands.txt > outputFile3.txt
 	@echo testing big lod test file RBT
-	java -classpath classfiles/ Trees -2 inputFiles/lod-1.txt inputFiles/commands.txt > outputFile4.txt
+	java -classpath classfiles/ Trees -2 inputFiles/lod-1.txt inputFiles/inputCommands.txt > outputFile4.txt
 
 mediumtest:
 	@echo testing mediaum BST
