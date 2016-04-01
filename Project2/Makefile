@@ -31,5 +31,5 @@ mediumtest:
 run: 
 
 clean:
-	rm -f /classfiles/* .class
+	rm -f classfiles/*
 

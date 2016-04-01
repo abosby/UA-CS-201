@@ -113,6 +113,7 @@ public class BinarySearchTree {
 						this.setLeft(new BinaryNode(binarySearchTree,v));
 						this.getLeft().setLevel(this.getLevel()+1);
 						this.getLeft().setParent(this);
+						this.getBST().setNodeCount(this.getBST().getNodeCount() +1);
 					}
 				}
 
@@ -125,6 +126,7 @@ public class BinarySearchTree {
 						this.setRight(new BinaryNode(binarySearchTree,v));
 						this.getRight().setLevel(this.getLevel()+1);
 						this.getRight().setParent(this);
+						this.getBST().setNodeCount(this.getBST().getNodeCount() +1);
 					}
 				}
 
@@ -220,7 +222,8 @@ public class BinarySearchTree {
 
 					//Reduce node frequency
 					else {
-						this.setFrequency(this.getFrequency()-1);
+						int temp = this.getFrequency();
+						this.setFrequency(temp-1);
 						return this;
 					}
 				}
@@ -238,7 +241,7 @@ public class BinarySearchTree {
 					return;
 				}
 				else{
-					System.out.printf("\nThe Node '%s' is not found in the tree\n", v);
+					System.out.printf("\nFind Result: 0\n");
 					return;
 				}
 			}
@@ -249,18 +252,18 @@ public class BinarySearchTree {
 					return;
 				}
 				else{
-					System.out.printf("\nThe Node '%s' is not found in the tree\n", v);
+					System.out.printf("\nFind Result: 0\n", v);
 					return;
 				}
 			}
 			//If equal
 			else if(this.getValue().equals(v)){
-				System.out.printf("\nFound '%s'\nFrequency:%d\n",this.getValue(),this.getFrequency());
+				System.out.printf("\nFind Result:%d\n",this.getFrequency());
 				return;
 			}
 			//Supposed to be here but isn't
 			else{
-				System.out.printf("\nThe Node '%s' is not found in the tree", v);
+				System.out.printf("\nFind Result: 0");
 				return;
 			}
 		}
@@ -354,11 +357,11 @@ public class BinarySearchTree {
 			n.setLevel(1);
 			this.root = n;
 			this.min = n;
+			this.setNodeCount(1);
 		}
 		//Insert into tree
 		else{
 			this.root.insertNode(this,strNode);
-			this.setNodeCount(this.getNodeCount() + 1);
 		}
 
 	}
@@ -370,16 +373,16 @@ public class BinarySearchTree {
 	public void deleteNode(String strNode){
 
 		if(this.root == null){
-			System.out.println("The tree is empty and cannot delete");
+			//System.out.println("The tree is empty and cannot delete");
 		}
 		else{
 			BinaryNode confirmDeletion = this.root.deleteNode(this,strNode);
 			if(confirmDeletion != null){
-				System.out.printf("\nDeleted Node: %s\nNew Node frequency: %d\n",confirmDeletion.getValue(),confirmDeletion.getFrequency());
+				//System.out.printf("\nDeleted Node: %s\nNew Node frequency: %d\n",confirmDeletion.getValue(),confirmDeletion.getFrequency());
 				resetLevels(this.root);
 			}
 			else{
-				System.out.printf("\nThe Node: %s was not found\n",strNode);
+				//System.out.printf("\nThe Node: %s was not found. Frequency: 0\n",strNode);
 			}
 		}
 	}
@@ -390,7 +393,7 @@ public class BinarySearchTree {
 	 */
 	public void findNode(String strNode){
 		if(this.root == null){
-			System.out.println("\nThere is no tree to find frequencies in.\n");
+			System.out.println("\nFind Result: 0\n");
 			return;
 		}
 		else{
@@ -431,7 +434,7 @@ public class BinarySearchTree {
 			temp = queue.dequeue();
 			//If root
 			if(bNode == temp){
-				System.out.printf("%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
+				System.out.printf("\n%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
 			}
 			else{
 				//If same level
@@ -557,6 +560,7 @@ public class BinarySearchTree {
 	private void calculateMinMax(BinaryNode bNode) {
 		BQueue<BinaryNode> queue= new BQueue<BinaryNode>();
 		int level = 1;
+		boolean trigger = false;
 		bNode.setLevel(level);
 		queue.enqueue(bNode);
 		BinaryNode temp = null;
@@ -570,8 +574,9 @@ public class BinarySearchTree {
 			}
 			else{
 				//If it is the shortest
-				if((temp.getLeft() == null) && (temp.getRight() == null) && (temp.getLevel() < this.getMinHeight())){
+				if((temp.getLeft() == null) && (temp.getRight() == null) && (trigger == false)){
 					this.setMinHeight(temp.getLevel());
+					trigger = true;
 				}
 				//If it is the longest
 				if(temp.getLevel() > this.getMaxHeight()){

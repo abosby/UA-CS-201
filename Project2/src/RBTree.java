@@ -335,7 +335,7 @@ public class RBTree {
 			}
 			//If equal
 			else if(this.getValue().equals(v)){
-				System.out.printf("Found '%s' | Frequency:%d \n\n",this.getValue(),this.getFrequency());
+				System.out.printf("Find Result: %d \n\n",this.getFrequency());
 				return;
 			}
 			//Supposed to be here but isn't
@@ -526,12 +526,6 @@ public class RBTree {
 		}
 
 		private RBNode uncle(RBNode x){
-			//if(x.getParent().getLeft() == x){
-			//	return x.getGrandparent().getRight();
-			//}
-			//else if(x.getParent().getRight() == x){
-			//	return x.getGrandparent().getLeft();
-			//}
 			if(x.getGrandparent() != null){
 				if(x.getGrandparent().getLeft() == x.getParent()){
 					return x.getGrandparent().getRight();
@@ -799,7 +793,7 @@ public class RBTree {
 			temp = queue.dequeue();
 			//If root
 			if(n == temp){
-				System.out.printf("%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
+				System.out.printf("\n\n%d: %s(%s)%dX\n", temp.getLevel(),temp.getValue(), temp.getValue(), temp.getFrequency());
 			}
 			else{
 				//If same level
