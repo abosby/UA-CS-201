@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Kruscal {
 
-	static DoublyLinkedList<Edge> DList = new DoublyLinkedList<Edge>();
+	static Forrest FList = new Forrest();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int weightArg = 0;
@@ -39,15 +39,16 @@ public class Kruscal {
 			String weight= descriptionQueue.dequeue();
 			if(weight.equals(";")){
 				Edge e = new Edge(vertex1, vertex2);
-				DList.addItem(e);
+				FList.insertEdge(e);
 			}
 			else{
 				Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
-				DList.addItem(e);
+				FList.insertEdge(e);
 				String semiColon = descriptionQueue.dequeue();
 			}
 		}
 		
-		DList.printList();
+		FList.printForrest();
 	}
+	
 }

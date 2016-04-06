@@ -1,7 +1,5 @@
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-public class DoublyLinkedList<Item> implements Iterable<Item>{
+public class DoublyLinkedList{
 
 	private ArrayNode front;
 	private ArrayNode back;
@@ -10,21 +8,20 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 	private class ArrayNode{
 
 		//Variables
-		private Item value;
+		private Edge value;
 		private ArrayNode next;
 		private ArrayNode prev;
 
 		//Constructor
-		private ArrayNode(Item v){
+		private ArrayNode(Edge v){
 			this.setValue(v);
 		}
 
-		//Methods
-		public Item getValue() {
+		public Edge getValue() {
 			return value;
 		}
 
-		public void setValue(Item value) {
+		public void setValue(Edge value) {
 			this.value = value;
 		}
 
@@ -45,6 +42,24 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 		}
 
 	}
+	
+	private class Pair{
+		private ArrayNode one;
+		private ArrayNode two;
+		
+		public Pair(ArrayNode first, ArrayNode second){
+			this.one = first;
+			this.two = second;
+		}
+		
+		public ArrayNode getOne(){
+			return this.one;
+		}
+		
+		public ArrayNode getTwo(){
+			return this.two;
+		}
+	}
 
 	//Constructor
 	public DoublyLinkedList(){
@@ -60,7 +75,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 		return (this.size == 0);
 	}
 
-	public void addItem(Item v){
+	public void addItem(Edge v){
 		ArrayNode newNode = new ArrayNode(v);
 		if(this.size == 0){
 			this.front = newNode;
@@ -75,7 +90,8 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 			this.size++;
 		}
 	}
-	public Item removeItem(){
+
+	public Edge removeItem(){
 		if(size == 0){
 			System.out.println("Remove: The Doubly Linked-List is empty");
 			return null;
@@ -96,8 +112,22 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 			return temp.getValue();
 		}
 	}
-	
-	public Item peek(){
+
+	public boolean contains(Edge x){
+		ArrayNode temp = front;
+		while(temp != back){
+			if(temp.value == x){
+				return true;
+			}
+			temp = temp.getNext();
+		}
+		if(back.value == x){
+			return true;
+		}
+		return false;
+	}
+
+	public Edge peek(){
 		if(size == 0){
 			System.out.println("Peek: The Doubly Linked-List is empty");
 			return null;
@@ -105,28 +135,6 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 		else{
 			return front.getValue();
 		}
-	}
-
-	@Override
-	public Iterator<Item> iterator() {
-		return new ListIterator();
-	}
-
-	private class ListIterator implements Iterator<Item>{
-		private ArrayNode cur = front;
-
-		@Override
-		public boolean hasNext() {
-			return (front.getNext() != null);
-		}
-
-		@Override
-		public Item next() {
-			return front.getNext().value;
-		}
-
-
-
 	}
 
 	public void printList() {
@@ -141,5 +149,49 @@ public class DoublyLinkedList<Item> implements Iterable<Item>{
 		else{
 			System.out.println("PrintList: The Doubly Linked-List is empty");
 		}
+	}
+
+	// Inspired by C-Based code from
+	// http://www.geeksforgeeks.org/merge-sort-for-linked-list/ 
+	public ArrayNode mergeSort(ArrayNode f){
+		ArrayNode head = f;
+		ArrayNode a;
+		ArrayNode b;
+
+		if((head == null) || (head.getNext() == null){
+			return null;
+		}
+	
+		Pair aPair;
+		aPair = splitList(head);
+	}
+	private Pair splitList(ArrayNode head) {
+		ArrayNode front;
+		ArrayNode back;
+		ArrayNode fast;
+		ArrayNode slow;
+		
+		//length < 2
+		if((head == null) || (head.getNext() == null)){
+			front = head;
+			back = null;
+		}
+		else{
+			slow = head;
+			fast = head.getNext();
+			
+			while(fast != null){
+				fast = fast.getNext();
+				if(fast != null){
+					slow = slow.getNext();
+					fast = fast.getNext();
+				}
+			}
+			
+			front = head;
+			back = slow.getNext();
+			slow.setNext(null);
+		}
+		return new Pair(front, back);
 	}
 }

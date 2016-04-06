@@ -5,31 +5,6 @@ public class Edge {
 	private Vertex vertex2;
 	private int weight;
 	private Edge parent;
-	
-	private class Vertex{
-		
-		//Variables
-		private String value;
-
-		public String getValue() {
-			return value;
-		}
-
-		public void setValue(String value) {
-			this.value = value;
-		}
-		
-		//Constructor
-		public Vertex(String v){
-			this.setValue(v);
-		}
-		
-		@Override
-		public String toString(){
-			return this.getValue();
-		}
-		
-	}
 
 	public Edge getParent() {
 		return parent;
