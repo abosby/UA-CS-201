@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Kruscal {
@@ -9,7 +8,7 @@ public class Kruscal {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int weightArg = 0;
-		String fileArg = "testGraph.txt";
+		String fileArg = "smallGraph.txt";
 		
 		readGraphFromFile(weightArg,fileArg);
 
@@ -48,6 +47,8 @@ public class Kruscal {
 			}
 		}
 		
+		FList.printForrest();
+		FList.EList.mergeSort(FList.EList.getFront());
 		FList.printForrest();
 	}
 	

@@ -1,3 +1,4 @@
+import com.sun.corba.se.impl.orbutil.graph.Node;
 
 public class DoublyLinkedList{
 
@@ -70,6 +71,14 @@ public class DoublyLinkedList{
 	public int getSize(){
 		return this.size;
 	}
+	
+	public ArrayNode getFront(){
+		return front;
+	}
+	
+	public ArrayNode getBack(){
+		return back;
+	}
 
 	public boolean isEmpty(){
 		return (this.size == 0);
@@ -78,13 +87,15 @@ public class DoublyLinkedList{
 	public void addItem(Edge v){
 		ArrayNode newNode = new ArrayNode(v);
 		if(this.size == 0){
+			newNode.setPrev(null);
+			newNode.setNext(null);
 			this.front = newNode;
 			this.back = newNode;
 			this.size++;
 		}
 		else{
-			newNode.setPrev(this.back);
-			newNode.setNext(this.front);
+			newNode.setPrev(this.getBack());
+			newNode.setNext(null);
 			this.back.setNext(newNode);
 			this.back = newNode;
 			this.size++;
@@ -141,7 +152,7 @@ public class DoublyLinkedList{
 		if(front != null){
 			ArrayNode temp = front;
 			while(temp != back){
-				System.out.printf(temp.getValue().toString() + "->");
+				System.out.printf(temp.getValue().toString() + "<-->");
 				temp = temp.getNext();
 			}
 			System.out.printf(temp.getValue().toString()+"\n");
@@ -152,46 +163,59 @@ public class DoublyLinkedList{
 	}
 
 	// Inspired by C-Based code from
-	// http://www.geeksforgeeks.org/merge-sort-for-linked-list/ 
-	public ArrayNode mergeSort(ArrayNode f){
-		ArrayNode head = f;
-		ArrayNode a;
-		ArrayNode b;
+	// http://www.geeksforgeeks.org/merge-sort-for-doubly-linked-list/ 
+	public ArrayNode mergeSort(ArrayNode node){
 
-		if((head == null) || (head.getNext() == null){
-			return null;
+		if(node == null || node.next == null){
+			return node;
 		}
-	
-		Pair aPair;
-		aPair = splitList(head);
+
+		ArrayNode second = splitList(node);
+		node = mergeSort(node);
+		second = mergeSort(second);
+		ArrayNode result = merge(node,second);
+		resetBackNode();
+		return result;
 	}
-	private Pair splitList(ArrayNode head) {
-		ArrayNode front;
-		ArrayNode back;
-		ArrayNode fast;
-		ArrayNode slow;
-		
-		//length < 2
-		if((head == null) || (head.getNext() == null)){
-			front = head;
-			back = null;
+
+	private void resetBackNode() {
+		ArrayNode temp = front;
+		while(temp.getNext() != null){
+			temp = temp.getNext();
+		}
+		back = temp;
+	}
+	private ArrayNode merge(ArrayNode one, ArrayNode two) {
+		if(one == null){
+			return two;
+		}
+		else if(two == null){
+			return one;
+		}
+
+		if(one.getValue().getWeight() < two.getValue().getWeight()){
+			one.next = merge(one.next, two);
+			one.next.prev = one;
+			one.prev = null;
+			return one;
 		}
 		else{
-			slow = head;
-			fast = head.getNext();
-			
-			while(fast != null){
-				fast = fast.getNext();
-				if(fast != null){
-					slow = slow.getNext();
-					fast = fast.getNext();
-				}
-			}
-			
-			front = head;
-			back = slow.getNext();
-			slow.setNext(null);
+			two.next = merge(one, two.next);
+			two.next.prev = two;
+			two.prev = null;
+			return two;
 		}
-		return new Pair(front, back);
+	}
+
+	private ArrayNode splitList(ArrayNode head) {
+		ArrayNode fast = head;
+		ArrayNode slow = head;
+		while((fast.next != null) && (fast.next.next != null)){
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+		ArrayNode temp = slow.next;
+		slow.next = null;
+		return temp;
 	}
 }
