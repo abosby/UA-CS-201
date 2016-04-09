@@ -1,10 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Kruscal {
 
-	static Forrest FList = new Forrest();
+	static DoublyLinkedList EList = new DoublyLinkedList();
+	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
+	static Forrest FList;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int weightArg = 0;
@@ -36,20 +40,36 @@ public class Kruscal {
 			String vertex1 = descriptionQueue.dequeue();
 			String vertex2 = descriptionQueue.dequeue();
 			String weight= descriptionQueue.dequeue();
+			if(!VerticesList.contains(Integer.valueOf(vertex1))){
+				VerticesList.add(Integer.valueOf(vertex1));
+			}
+			if(!VerticesList.contains(Integer.valueOf(vertex2))){
+				VerticesList.add(Integer.valueOf(vertex2));
+			}
 			if(weight.equals(";")){
 				Edge e = new Edge(vertex1, vertex2);
-				FList.insertEdge(e);
+				EList.addItem(e);
 			}
 			else{
 				Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
-				FList.insertEdge(e);
+				EList.addItem(e);
+				@SuppressWarnings("unused")
 				String semiColon = descriptionQueue.dequeue();
 			}
 		}
 		
+		Collections.sort(VerticesList);
+		FList = new Forrest(VerticesList);
+		EList.printList();
+		EList.mergeSort(EList.getFront());
+		EList.printList();
 		FList.printForrest();
-		FList.EList.mergeSort(FList.EList.getFront());
-		FList.printForrest();
+		createNewTree(EList,FList);
 	}
+
+	private static void createNewTree(DoublyLinkedList eList2, Forrest fList2) {
+		
+	}
+
 	
 }

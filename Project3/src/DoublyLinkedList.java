@@ -1,20 +1,19 @@
-import com.sun.corba.se.impl.orbutil.graph.Node;
 
 public class DoublyLinkedList{
 
-	private ArrayNode front;
-	private ArrayNode back;
+	private DoublyLinkedListNode front;
+	private DoublyLinkedListNode back;
 	private int size;
 
-	private class ArrayNode{
+	private class DoublyLinkedListNode{
 
 		//Variables
 		private Edge value;
-		private ArrayNode next;
-		private ArrayNode prev;
+		private DoublyLinkedListNode next;
+		private DoublyLinkedListNode prev;
 
 		//Constructor
-		private ArrayNode(Edge v){
+		private DoublyLinkedListNode(Edge v){
 			this.setValue(v);
 		}
 
@@ -26,42 +25,24 @@ public class DoublyLinkedList{
 			this.value = value;
 		}
 
-		public ArrayNode getNext() {
+		public DoublyLinkedListNode getNext() {
 			return next;
 		}
 
-		public void setNext(ArrayNode next) {
+		public void setNext(DoublyLinkedListNode next) {
 			this.next = next;
 		}
 
-		public ArrayNode getPrev() {
+		public DoublyLinkedListNode getPrev() {
 			return prev;
 		}
 
-		public void setPrev(ArrayNode prev) {
+		public void setPrev(DoublyLinkedListNode prev) {
 			this.prev = prev;
 		}
 
 	}
 	
-	private class Pair{
-		private ArrayNode one;
-		private ArrayNode two;
-		
-		public Pair(ArrayNode first, ArrayNode second){
-			this.one = first;
-			this.two = second;
-		}
-		
-		public ArrayNode getOne(){
-			return this.one;
-		}
-		
-		public ArrayNode getTwo(){
-			return this.two;
-		}
-	}
-
 	//Constructor
 	public DoublyLinkedList(){
 		this.front = null;
@@ -72,11 +53,11 @@ public class DoublyLinkedList{
 		return this.size;
 	}
 	
-	public ArrayNode getFront(){
+	public DoublyLinkedListNode getFront(){
 		return front;
 	}
 	
-	public ArrayNode getBack(){
+	public DoublyLinkedListNode getBack(){
 		return back;
 	}
 
@@ -85,7 +66,7 @@ public class DoublyLinkedList{
 	}
 
 	public void addItem(Edge v){
-		ArrayNode newNode = new ArrayNode(v);
+		DoublyLinkedListNode newNode = new DoublyLinkedListNode(v);
 		if(this.size == 0){
 			newNode.setPrev(null);
 			newNode.setNext(null);
@@ -108,7 +89,7 @@ public class DoublyLinkedList{
 			return null;
 		}
 		else if(size == 1){
-			ArrayNode temp = front;
+			DoublyLinkedListNode temp = front;
 			front = null;
 			back = null;
 			size--;
@@ -116,7 +97,7 @@ public class DoublyLinkedList{
 		}
 
 		else{
-			ArrayNode temp = back;
+			DoublyLinkedListNode temp = back;
 			back = back.getPrev();
 			back.setNext(front);
 			size--;
@@ -125,7 +106,7 @@ public class DoublyLinkedList{
 	}
 
 	public boolean contains(Edge x){
-		ArrayNode temp = front;
+		DoublyLinkedListNode temp = front;
 		while(temp != back){
 			if(temp.value == x){
 				return true;
@@ -150,7 +131,7 @@ public class DoublyLinkedList{
 
 	public void printList() {
 		if(front != null){
-			ArrayNode temp = front;
+			DoublyLinkedListNode temp = front;
 			while(temp != back){
 				System.out.printf(temp.getValue().toString() + "<-->");
 				temp = temp.getNext();
@@ -164,28 +145,28 @@ public class DoublyLinkedList{
 
 	// Inspired by C-Based code from
 	// http://www.geeksforgeeks.org/merge-sort-for-doubly-linked-list/ 
-	public ArrayNode mergeSort(ArrayNode node){
+	public DoublyLinkedListNode mergeSort(DoublyLinkedListNode node){
 
 		if(node == null || node.next == null){
 			return node;
 		}
 
-		ArrayNode second = splitList(node);
+		DoublyLinkedListNode second = splitList(node);
 		node = mergeSort(node);
 		second = mergeSort(second);
-		ArrayNode result = merge(node,second);
+		DoublyLinkedListNode result = merge(node,second);
 		resetBackNode();
 		return result;
 	}
 
 	private void resetBackNode() {
-		ArrayNode temp = front;
+		DoublyLinkedListNode temp = front;
 		while(temp.getNext() != null){
 			temp = temp.getNext();
 		}
 		back = temp;
 	}
-	private ArrayNode merge(ArrayNode one, ArrayNode two) {
+	private DoublyLinkedListNode merge(DoublyLinkedListNode one, DoublyLinkedListNode two) {
 		if(one == null){
 			return two;
 		}
@@ -193,7 +174,7 @@ public class DoublyLinkedList{
 			return one;
 		}
 
-		if(one.getValue().getWeight() < two.getValue().getWeight()){
+		if(one.getValue().getWeight() <= two.getValue().getWeight()){
 			one.next = merge(one.next, two);
 			one.next.prev = one;
 			one.prev = null;
@@ -207,14 +188,14 @@ public class DoublyLinkedList{
 		}
 	}
 
-	private ArrayNode splitList(ArrayNode head) {
-		ArrayNode fast = head;
-		ArrayNode slow = head;
+	private DoublyLinkedListNode splitList(DoublyLinkedListNode head) {
+		DoublyLinkedListNode fast = head;
+		DoublyLinkedListNode slow = head;
 		while((fast.next != null) && (fast.next.next != null)){
 			fast = fast.next.next;
 			slow = slow.next;
 		}
-		ArrayNode temp = slow.next;
+		DoublyLinkedListNode temp = slow.next;
 		slow.next = null;
 		return temp;
 	}

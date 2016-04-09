@@ -1,17 +1,22 @@
+import java.util.ArrayList;
+
 public class Forrest {	
 	
-	DoublyLinkedList EList;
+	ArrayList<SinglyLinkedList> VList= new ArrayList<SinglyLinkedList>();
 	
-	public Forrest(){
-		EList = new DoublyLinkedList();
+	public Forrest(ArrayList<Integer> iList){
+		while(!iList.isEmpty()){
+			SinglyLinkedList temp = new SinglyLinkedList(iList.remove(0));
+			VList.add(temp);
+		}
 	}
 	
-	public void insertEdge(Edge e){
-		EList.addItem(e);
-	}
-
 	public void printForrest() {
-		EList.printList();
+		for(int i = 0; i < VList.size();i++){
+			System.out.print("(" + VList.get(i).getLabel()+")");
+			VList.get(i).printList();
+			
+		}
 	}
 	
 }
