@@ -1,25 +1,25 @@
 public class Vertex{
 
 	//Variables
-	private String value;
+	private int value;
 	private Vertex parent;
 
-	public String getValue() {
+	public int getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 
 	//Constructor
-	public Vertex(String v){
+	public Vertex(int v){
 		this.setValue(v);
 	}
 
 	@Override
 	public String toString(){
-		return this.getValue();
+		return Integer.toString(this.getValue());
 	}
 
 	public Vertex getParent() {

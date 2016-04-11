@@ -97,9 +97,8 @@ public class DoublyLinkedList{
 		}
 
 		else{
-			DoublyLinkedListNode temp = back;
-			back = back.getPrev();
-			back.setNext(front);
+			DoublyLinkedListNode temp = front;
+			front = front.getNext();
 			size--;
 			return temp.getValue();
 		}

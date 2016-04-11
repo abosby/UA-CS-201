@@ -8,10 +8,11 @@ public class Kruscal {
 
 	static DoublyLinkedList EList = new DoublyLinkedList();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
-	static Forrest FList;
+	static DisjointSet FList = new DisjointSet();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int weightArg = 0;
+		int rootArg = 0;
 		String fileArg = "smallGraph.txt";
 		
 		readGraphFromFile(weightArg,fileArg);
@@ -58,18 +59,30 @@ public class Kruscal {
 			}
 		}
 		
+		processKruskal();
+	}
+
+	private static void processKruskal() {
 		Collections.sort(VerticesList);
-		FList = new Forrest(VerticesList);
+
 		EList.printList();
 		EList.mergeSort(EList.getFront());
 		EList.printList();
-		FList.printForrest();
-		createNewTree(EList,FList);
+		//Make Set for each vertices
+		for(int i = 0; i < VerticesList.size(); i++){
+			Vertex temp = new Vertex(VerticesList.get(i));
+			FList.makeSet(temp);
+		}
+		while(EList.getSize() != 0){
+			Edge temp = EList.removeItem();
+			DisjointSet.Node vert1 = FList.getNode(temp.getVertex1());
+			DisjointSet.Node vert2 = FList.getNode(temp.getVertex2());
+			if(FList.findSet(vert1) != FList.findSet(vert2)){
+				FList.union(vert1,vert2);
+			}
+		}
+		FList.printDisjointSet();
+		FList.printDisjointTree();
 	}
 
-	private static void createNewTree(DoublyLinkedList eList2, Forrest fList2) {
-		
-	}
-
-	
 }

@@ -39,16 +39,16 @@ public class Edge {
 	}
 	
 	public Edge(String v1, String v2){
-		Vertex vertex1 = new Vertex(v1);
-		Vertex vertex2 = new Vertex(v2);
+		Vertex vertex1 = new Vertex(Integer.parseInt(v1));
+		Vertex vertex2 = new Vertex(Integer.parseInt(v2));
 		this.setVertex1(vertex1);
 		this.setVertex2(vertex2);
 		this.weight = 0;
 	}
 
 	public Edge(String v1, String v2, int weight){
-		Vertex vertex1 = new Vertex(v1);
-		Vertex vertex2 = new Vertex(v2);
+		Vertex vertex1 = new Vertex(Integer.parseInt(v1));
+		Vertex vertex2 = new Vertex(Integer.parseInt(v2));
 		this.setVertex1(vertex1);
 		this.setVertex2(vertex2);
 		this.setWeight(weight);
