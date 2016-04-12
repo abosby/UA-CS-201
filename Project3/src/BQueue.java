@@ -80,6 +80,7 @@ public class BQueue<Item> implements Iterable<Item>{
 		}
 	}
 	
+	
 	public Item peek(){
 		if (this.size ==0){
 			return null;

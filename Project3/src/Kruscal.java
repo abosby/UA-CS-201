@@ -9,10 +9,12 @@ public class Kruscal {
 	static DoublyLinkedList EList = new DoublyLinkedList();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
+	static int weightArg;
+	static int rootArg;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int weightArg = 0;
-		int rootArg = 0;
+		weightArg = 0;
+		rootArg = 0;
 		String fileArg = "smallGraph.txt";
 		
 		readGraphFromFile(weightArg,fileArg);
@@ -82,7 +84,7 @@ public class Kruscal {
 			}
 		}
 		FList.printDisjointSet();
-		FList.printDisjointTree();
+		FList.printDisjointTree(rootArg,EList);
 	}
 
 }

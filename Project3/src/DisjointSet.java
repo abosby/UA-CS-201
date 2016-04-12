@@ -8,11 +8,14 @@ public class DisjointSet {
 		private int rank;
 		private Vertex value;
 		private Node parent;
+		private int level;
 		private Node next;
 		private Node prev;
+		private Node child;
 		
 		public Node(Vertex v){
 			value = v;
+			level = 0;
 		}
 	}
 	
@@ -90,21 +93,44 @@ public class DisjointSet {
 		}
 		System.out.printf(temp.value.toString()+"\n");
 	}
-	
-	public void printDisjointTree(){
-		Node temp = front;
-		while(temp != null){
-			System.out.printf("("+temp.value.toString()+")");
-			Vertex tempV = temp.value;
-			while(tempV.getParent() != tempV){
-				System.out.printf(tempV.getValue() +"-->");
-				tempV = tempV.getParent();
+
+	public void printDisjointTree(int root, DoublyLinkedList eList){
+		BQueue<Node> queue = new BQueue<Node>();
+		DoublyLinkedList dList = new DoublyLinkedList();
+		int level = 1;
+		Node nRoot = front;
+		//Find Root
+		while(nRoot.value.getValue()!= root){
+			nRoot = nRoot.next;
+		}
+		Node temp = null;
+		Node prev = nRoot;
+		queue.enqueue(nRoot);
+		System.out.printf("0: %d\n",root);
+		int v = size;
+		while(v != 0){
+			prev = temp;
+			temp = queue.dequeue();
+			Node tNode = front;
+			while(tNode != null){
+				//If temp is the parent
+				if(tNode.parent == temp){
+					tNode.level = temp.level++;
+					queue.enqueue(tNode);
+					v--;
+				}
+				//If temp is the child
+				else if(temp.parent == tNode){
+					tNode.level = temp.level++;
+					tNode.child = temp;
+					queue.enqueue(tNode);
+				}
+				tNode = tNode.next;
 			}
-			System.out.printf("\n");
-			temp = temp.next;
+			while(queue.getSize() != 0){
+			}
 		}
 	}
-	
 	
 	
 }

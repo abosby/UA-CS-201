@@ -127,6 +127,20 @@ public class DoublyLinkedList{
 			return front.getValue();
 		}
 	}
+	
+	public Edge getEdge(Vertex v1, Vertex v2){
+		if(size ==0){
+			System.out.println("GetEdge: The Doubly Linked-List is empty");
+			return null;
+		}
+		else{
+			DoublyLinkedListNode temp = front;
+			while( (temp.getValue().getVertex1() != v1) && (temp.getValue().getVertex2() != v2) ){
+				temp = temp.next;
+			}
+			return temp.getValue();
+		}
+	}
 
 	public void printList() {
 		if(front != null){
