@@ -9,6 +9,7 @@ public class Kruscal {
 	static DoublyLinkedList EList = new DoublyLinkedList();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
+	static RedBlackTree ETree = new RedBlackTree();
 	static int weightArg;
 	static int rootArg;
 	public static void main(String[] args) {
@@ -52,15 +53,17 @@ public class Kruscal {
 			if(weight.equals(";")){
 				Edge e = new Edge(vertex1, vertex2);
 				EList.addItem(e);
+				ETree.insertNode(e);
 			}
 			else{
 				Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
 				EList.addItem(e);
+				ETree.insertNode(e);
 				@SuppressWarnings("unused")
 				String semiColon = descriptionQueue.dequeue();
 			}
 		}
-		
+		ETree.printBreadthTraversal(ETree.root);
 		processKruskal();
 	}
 
