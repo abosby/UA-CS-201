@@ -16,7 +16,7 @@ public class Kruscal {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		String fileArg = "smallGraph.txt";
+		String fileArg = "testGraph.txt";
 		
 		readGraphFromFile(weightArg,fileArg);
 
@@ -78,8 +78,10 @@ public class Kruscal {
 			Vertex temp = new Vertex(VerticesList.get(i));
 			FList.makeSet(temp);
 		}
+		DoublyLinkedList tempEdges = new DoublyLinkedList();
 		while(EList.getSize() != 0){
 			Edge temp = EList.removeItem();
+			tempEdges.addItem(temp);
 			DisjointSet.Node vert1 = FList.getNode(temp.getVertex1());
 			DisjointSet.Node vert2 = FList.getNode(temp.getVertex2());
 			if(FList.findSet(vert1) != FList.findSet(vert2)){
@@ -87,7 +89,7 @@ public class Kruscal {
 			}
 		}
 		FList.printDisjointSet();
-		FList.printDisjointTree(rootArg,EList);
+		FList.printDisjointTree(rootArg,tempEdges);
 	}
 
 }

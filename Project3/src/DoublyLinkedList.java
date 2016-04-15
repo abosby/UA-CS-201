@@ -83,6 +83,40 @@ public class DoublyLinkedList{
 		}
 	}
 
+	public Edge removeEdge(Vertex v1, Vertex v2) {
+		if(size ==0){
+			System.out.println("RemoveEdge: The Doubly Linked-List is empty");
+			return null;
+		}
+		else{
+			DoublyLinkedListNode temp = front;
+			while(temp != null){
+				if((temp.getValue().getVertex1().getValue() == v1.getValue()) && (temp.getValue().getVertex2().getValue() == v2.getValue()) ){
+					DoublyLinkedListNode temp2 = temp.next;
+					if(temp.prev != null){
+						temp.prev.next = temp2;
+					}
+					if(temp.next != null){
+						temp.next.prev = temp.prev;
+					}
+					return temp.getValue();
+				}
+				else if((temp.getValue().getVertex1().getValue() == v2.getValue()) && (temp.getValue().getVertex2().getValue() == v1.getValue())){
+					DoublyLinkedListNode temp2 = temp.next;
+					if(temp.prev != null){
+						temp.prev.next = temp2;
+					}
+					if(temp.next != null){
+						temp.next.prev = temp.prev;
+					}
+					return temp.getValue();
+				}
+				temp = temp.next;
+			}
+			return null;
+		}
+	}
+
 	public Edge removeItem(){
 		if(size == 0){
 			System.out.println("Remove: The Doubly Linked-List is empty");
@@ -135,10 +169,16 @@ public class DoublyLinkedList{
 		}
 		else{
 			DoublyLinkedListNode temp = front;
-			while( (temp.getValue().getVertex1() != v1) && (temp.getValue().getVertex2() != v2) ){
+			while(temp != null){
+				if((temp.getValue().getVertex1().getValue() == v1.getValue()) && (temp.getValue().getVertex2().getValue() == v2.getValue()) ){
+					return temp.getValue();
+				}
+				else if((temp.getValue().getVertex1().getValue() == v2.getValue()) && (temp.getValue().getVertex2().getValue() == v1.getValue())){
+					return temp.getValue();
+				}
 				temp = temp.next;
 			}
-			return temp.getValue();
+			return null;
 		}
 	}
 
@@ -168,7 +208,8 @@ public class DoublyLinkedList{
 		node = mergeSort(node);
 		second = mergeSort(second);
 		DoublyLinkedListNode result = merge(node,second);
-		resetBackNode();
+		//resetBackNode();
+		resetFrontNode();
 		return result;
 	}
 
@@ -178,6 +219,14 @@ public class DoublyLinkedList{
 			temp = temp.getNext();
 		}
 		back = temp;
+	}
+	
+	private void resetFrontNode(){
+		DoublyLinkedListNode temp = back;
+		while(temp.getPrev() != null){
+			temp = temp.getPrev();
+		}
+		front = temp;
 	}
 	private DoublyLinkedListNode merge(DoublyLinkedListNode one, DoublyLinkedListNode two) {
 		if(one == null){
