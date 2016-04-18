@@ -100,7 +100,7 @@ public class RedBlackTree {
 		private RedBlackNode getLeft() {
 			return this.left;
 		}
-		
+
 		private RedBlackNode getRight() {
 			return this.right;
 		}
@@ -128,7 +128,7 @@ public class RedBlackTree {
 				this.parent.parent = node;
 			}
 		}
-		*/
+		 */
 
 		private RedBlackNode(RedBlackTree rbt, Edge e){
 			parent = null;
@@ -312,21 +312,40 @@ public class RedBlackTree {
 						}
 						//Go Left
 						else if(node.value.getVertex2().getValue() > e.getVertex2().getValue()){
-
+							if(node.left != null){
+								node = node.left;
+							}
+							else{
+								return null;
+							}
 						}
 						else if(node.value.getVertex2().getValue() < e.getVertex2().getValue()){
-
+							if(node.right != null){
+								node = node.right;
+							}
+							else{
+								return null;
+							}
 						}
 
 					}
 					//Go Left
 					else if(node.value.getVertex1().getValue() > e.getVertex1().getValue()){
-
-
+						if(node.left != null){
+							node = node.left;
+						}
+						else{
+							return null;
+						}
 					}
 					//Go Right
 					else if(node.value.getVertex1().getValue() < e.getVertex1().getValue()){
-
+						if(node.right != null){
+							node = node.right;
+						}
+						else{
+							return null;
+						}
 					}
 				}
 			}
@@ -347,6 +366,45 @@ public class RedBlackTree {
 						node.getSibling().rotate(node.parent);
 						//should have black sibling now
 					}
+					else if(node.getNephew() != null){
+						if(node.getNephew().color.equals("red")){
+							node.getSibling().color = node.parent.color;
+							node.parent.color = "black";
+							node.getNephew().color = "black";
+							node.getSibling().rotate(node.parent);
+							node = this.RBT.root;	
+						}
+						
+						//nephew must be black
+						else if(node.getNiece() != null){
+							if(node.getNiece().color.equals("red")){
+								node.getNiece().color = "black";
+								node.getSibling().color = "black";
+								node.rotate(node.getSibling());
+								//should have red nephew now
+							}
+						}
+					}
+					//nephew must be black
+					else if(node.getNiece() != null){
+						if(node.getNiece().color.equals("red")){
+							node.getNiece().color = "black";
+							node.getSibling().color = "black";
+							node.rotate(node.getSibling());
+							//should have red nephew now
+						}
+						
+						//sibling niece and nephew are black
+						else{
+							node.getSibling().color = "red";
+							node = node.parent;
+						}
+					}
+					//sibling niece and nephew are black
+					else{
+						node.getSibling().color = "red";
+						node = node.parent;
+					}
 				}
 				else if(node.getNephew() != null){
 					if(node.getNephew().color.equals("red")){
@@ -355,6 +413,15 @@ public class RedBlackTree {
 						node.getNephew().color = "black";
 						node.getSibling().rotate(node.parent);
 						node = this.RBT.root;	
+					}
+					//nephew must be black
+					else if(node.getNiece() != null){
+						if(node.getNiece().color.equals("red")){
+							node.getNiece().color = "black";
+							node.getSibling().color = "black";
+							node.rotate(node.getSibling());
+							//should have red nephew now
+						}
 					}
 				}
 				//nephew must be black
@@ -375,17 +442,17 @@ public class RedBlackTree {
 			this.RBT.root.color = "black";
 		}
 
-		private RedBlackNode findNode(RedBlackNode node, Edge e) {
+		private Edge findNode(RedBlackNode node, Edge e) {
 			while(true){
 				if( (node.value == null) && (node.RBT.root == null)){
-					return node;
+					return node.value;
 				}
 				else{
 					//Vertex 1 equal
 					if(node.value.getVertex1().getValue() == e.getVertex1().getValue()){
 						//Vertex 2 equal
 						if(node.value.getVertex2().getValue() == e.getVertex2().getValue()){
-							return node;
+							return node.getValue();
 						}
 						//Go Left
 						else if(node.value.getVertex2().getValue() > e.getVertex2().getValue()){
@@ -452,7 +519,7 @@ public class RedBlackTree {
 			}
 			return temp;
 		}
-		
+
 		private RedBlackNode successor(RedBlackNode node){
 			RedBlackNode temp = node.right;
 			while(!isLeaf(temp)){
@@ -460,7 +527,7 @@ public class RedBlackTree {
 			}
 			return temp;
 		}
-		
+
 		private void swapValues(RedBlackNode node1, RedBlackNode node2){
 			RedBlackNode temp = node1;
 			node1.value = node2.value;
@@ -479,42 +546,42 @@ public class RedBlackTree {
 		private void rotate(RedBlackNode node) {
 			RedBlackNode temp = node.parent;
 			//right rotate
-				if(temp.getLeft() == node){
-					//Grandchild A
-					//if(node.left != null){
-					//	node.left.setGrandparent(temp.parent);
+			if(temp.getLeft() == node){
+				//Grandchild A
+				//if(node.left != null){
+				//	node.left.setGrandparent(temp.parent);
+				//}
+				//Grandchild B
+				if(node.getRight() != null){
+					//if(node.right.right != null){
+					//	node.right.right.setGrandparent(temp);
 					//}
-					//Grandchild B
-					if(node.getRight() != null){
-						//if(node.right.right != null){
-						//	node.right.right.setGrandparent(temp);
-						//}
-						//if(node.right.left != null){
-						//	node.right.left.setGrandparent(temp);
-						//}
-						//node.right.setGrandparent(node);
-						node.right.parent = temp;
-					}
-					//Grandchild C
-					//if(temp.right != null){
-					//	temp.right.setGrandparent(node);
+					//if(node.right.left != null){
+					//	node.right.left.setGrandparent(temp);
 					//}
-					//node.setGrandparent(temp.getGrandparent());
-					node.parent = temp.parent;
-					temp.left = node.right;
-					temp.parent = node;
-					//temp.setGrandparent(node.parent);
-					node.right = temp;
-					if(node.parent != null){
-						if(node.parent.left == temp){
-							node.parent.left = node;
-						}
-						else{
-							node.parent.right = node;
-						}
-						node.RBT.resetRoot(node.RBT.root);
-					}
+					//node.right.setGrandparent(node);
+					node.right.parent = temp;
 				}
+				//Grandchild C
+				//if(temp.right != null){
+				//	temp.right.setGrandparent(node);
+				//}
+				//node.setGrandparent(temp.getGrandparent());
+				node.parent = temp.parent;
+				temp.left = node.right;
+				temp.parent = node;
+				//temp.setGrandparent(node.parent);
+				node.right = temp;
+				if(node.parent != null){
+					if(node.parent.left == temp){
+						node.parent.left = node;
+					}
+					else{
+						node.parent.right = node;
+					}
+					node.RBT.resetRoot(node.RBT.root);
+				}
+			}
 			//left rotate
 			else{
 				//Grandchild C
@@ -693,32 +760,35 @@ public class RedBlackTree {
 		}
 	}
 
-	public void deleteNode(Edge e){
+	public Edge deleteNode(Edge e){
 		if(this.root == null){
-
+			return null;
 		}
 		else{
 			RedBlackNode confirmDeletion = this.root.deleteNode(this.root,e);
 			this.resetRoot(this.root);
 			if(confirmDeletion != null){
 				//System.out.printf("Deleted Node: %s\nNew Node frequency: %d\n\n", confirmDeletion.getValue(),confirmDeletion.getFrequency());
+				return e;
 			}
 			else{
 				//System.err.printf("\nThe Node: '%s' was not found to delete\n\n", v);
+				return null;
+
 			}
 		}
 	}
-	
-	public void findNode(Edge e){
+
+	public Edge findNode(Edge e){
 		if(this.root == null){
 			System.out.printf("\n Find Result: 0\n");
-			return;
+			return null;
 		}
 		else{
-			this.root.findNode(this.root, e);
+			return this.root.findNode(this.root, e);
 		}
 	}
-	
+
 	public void printBreadthTraversal(RedBlackNode n){
 		BQueue<RedBlackNode> queue= new BQueue<RedBlackNode>();
 		int level = 1;

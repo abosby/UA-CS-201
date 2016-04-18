@@ -17,6 +17,7 @@ public class Kruscal {
 		weightArg = 0;
 		rootArg = 0;
 		String fileArg = "testGraph.txt";
+		//String fileArg = 
 		
 		readGraphFromFile(weightArg,fileArg);
 
@@ -53,17 +54,14 @@ public class Kruscal {
 			if(weight.equals(";")){
 				Edge e = new Edge(vertex1, vertex2);
 				EList.addItem(e);
-				ETree.insertNode(e);
 			}
 			else{
 				Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
 				EList.addItem(e);
-				ETree.insertNode(e);
 				@SuppressWarnings("unused")
 				String semiColon = descriptionQueue.dequeue();
 			}
 		}
-		ETree.printBreadthTraversal(ETree.root);
 		processKruskal();
 	}
 
@@ -84,12 +82,20 @@ public class Kruscal {
 			tempEdges.addItem(temp);
 			DisjointSet.Node vert1 = FList.getNode(temp.getVertex1());
 			DisjointSet.Node vert2 = FList.getNode(temp.getVertex2());
+			/**
+			if(ETree.findNode(temp) == temp){
+				FList.union(vert1, vert2);
+				ETree.deleteNode(temp);
+			}
+			*/
 			if(FList.findSet(vert1) != FList.findSet(vert2)){
 				FList.union(vert1,vert2);
+				ETree.insertNode(temp);
 			}
 		}
 		FList.printDisjointSet();
-		FList.printDisjointTree(rootArg,tempEdges);
+		ETree.printBreadthTraversal(ETree.root);
+		FList.printDisjointTree(rootArg,ETree,tempEdges);
 	}
 
 }

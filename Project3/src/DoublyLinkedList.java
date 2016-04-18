@@ -93,14 +93,46 @@ public class DoublyLinkedList{
 			while(temp != null){
 				if((temp.getValue().getVertex1().getValue() == v1.getValue()) && (temp.getValue().getVertex2().getValue() == v2.getValue()) ){
 					DoublyLinkedListNode temp2 = temp.next;
-					if(temp.prev != null){
-						temp.prev.next = temp2;
+					if(this.getSize() == 1){
+						front = null;
+						back = null;
+						size--;
+						return temp.getValue();
 					}
-					if(temp.next != null){
-						temp.next.prev = temp.prev;
+					else if (temp == front){
+						temp.next.prev = null;
+						front = temp.next;
+						size--;
+						return temp.getValue();
 					}
-					return temp.getValue();
+					else if(temp == back){
+						temp.prev.next = null;
+						back = temp.prev;
+						size--;
+						return temp.getValue();
+					}
+					else{
+						if(temp.prev != null){
+							if(temp2 != null){
+								temp.prev.next = temp2;
+							}
+							else{
+								temp.prev.next = null;
+							}
+						}
+						if(temp2 != null){
+							if(temp.prev != null){
+								temp.next.prev = temp.prev;
+							}
+							else{
+								temp.next.prev = null;
+							}
+						}
+						size--;
+						return temp.getValue();
+					}
 				}
+				/**
 				else if((temp.getValue().getVertex1().getValue() == v2.getValue()) && (temp.getValue().getVertex2().getValue() == v1.getValue())){
 					DoublyLinkedListNode temp2 = temp.next;
 					if(temp.prev != null){
@@ -111,6 +143,7 @@ public class DoublyLinkedList{
 					}
 					return temp.getValue();
 				}
+				*/
 				temp = temp.next;
 			}
 			return null;
@@ -164,7 +197,7 @@ public class DoublyLinkedList{
 	
 	public Edge getEdge(Vertex v1, Vertex v2){
 		if(size ==0){
-			System.out.println("GetEdge: The Doubly Linked-List is empty");
+			//System.out.println("GetEdge: The Doubly Linked-List is empty");
 			return null;
 		}
 		else{

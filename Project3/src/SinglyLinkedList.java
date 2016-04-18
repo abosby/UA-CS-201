@@ -7,20 +7,13 @@ public class SinglyLinkedList {
 	private int size;
 	
 	private class LinkedListNode{
-		private Vertex value;
-		private int weight;
+		private DisjointSet.Node value;
 		private LinkedListNode next;
-		public Vertex getValue() {
+		public DisjointSet.Node getValue() {
 			return value;
 		}
-		public void setValue(Vertex value) {
+		public void setValue(DisjointSet.Node value) {
 			this.value = value;
-		}
-		public int getWeight() {
-			return weight;
-		}
-		public void setWeight(int weight) {
-			this.weight = weight;
 		}
 		public LinkedListNode getNext() {
 			return next;
@@ -28,26 +21,19 @@ public class SinglyLinkedList {
 		public void setNext(LinkedListNode next) {
 			this.next = next;
 		}
-		private LinkedListNode(Vertex v, int w){
-			this.setValue(v);
-			this.setWeight(w);
+		
+		private LinkedListNode(DisjointSet.Node value){
+			this.setValue(value);
 			this.setNext(null);
 		}
 	}
 	
-	public SinglyLinkedList(int l){
-		this.label = l;
+	public SinglyLinkedList(){
 		this.front = null;
+		this.back = null;
 		this.size = 0;
 	}
-	public int getLabel(){
-		return label;
-	}
 	
-	public void setLabel(int L){
-		this.label = L;
-	}
-
 	public LinkedListNode getFront() {
 		return front;
 	}
@@ -72,11 +58,12 @@ public class SinglyLinkedList {
 		this.size = size;
 	}
 	
-	public void addItem(Vertex v, int w){
-		LinkedListNode newNode = new LinkedListNode(v,w);
+	public void addItem(DisjointSet.Node v){
+		LinkedListNode newNode = new LinkedListNode(v);
 		if(this.size == 0){
 			newNode.setNext(null);
 			this.front = newNode;
+			this.back = newNode;
 			this.size++;
 		}
 		else{
@@ -87,7 +74,7 @@ public class SinglyLinkedList {
 		}
 	}
 	
-	public LinkedListNode removeItem(){
+	public DisjointSet.Node removeItem(){
 		if(size ==0){
 			System.out.println("Remove: The Linked-List is empty");
 			return null;
@@ -97,13 +84,13 @@ public class SinglyLinkedList {
 			front = null;
 			back = null;
 			size--;
-			return temp;
+			return temp.getValue();
 		}
 		else{
 			LinkedListNode temp = front;
 			front = front.getNext();
 			size--;
-			return temp;
+			return temp.getValue();
 		}
 	}
 	
@@ -111,10 +98,10 @@ public class SinglyLinkedList {
 		if(front != null){
 			LinkedListNode temp = front;
 			while(temp != back){
-				System.out.printf("[V:"+temp.getValue()+"|W:"+temp.getWeight()+ "] -->");
+				System.out.printf("[V:"+temp.getValue()+"] -->");
 				temp = temp.getNext();
 			}
-			System.out.printf(temp.getValue().toString()+"\n");
+			System.out.printf(temp.value +"\n");
 		}
 		else{
 			System.out.println("PrintList: The Singly Linked-List is empty");
