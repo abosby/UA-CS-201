@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -29,7 +31,7 @@ public class Kruscal {
 
 	private static void readGraphFromFile(int weightArg, String fileArg) {
 		String filePath= new File(fileArg).getAbsolutePath();
-		Scanner sc = null;
+		//Scanner sc = null;
 		BQueue<String> descriptionQueue= new BQueue<String>();
 		try {
 			sc = new Scanner(new File(filePath));
