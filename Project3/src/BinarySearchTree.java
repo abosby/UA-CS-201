@@ -303,6 +303,10 @@ public class BinarySearchTree {
 		this.nodeCount = 0;
 	}
 
+	public int getSize() {
+		return nodeCount;
+	}
+
 	public int getMaxHeight() {
 		return maxHeight;
 	}

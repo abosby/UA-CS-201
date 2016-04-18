@@ -16,10 +16,14 @@ public class Kruscal {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		String fileArg = "testGraph.txt";
-		//String fileArg = 
+		//String fileArg = "testGraph.txt";
+		String fileArg = "g5";
 		
+		final float startTime = System.currentTimeMillis()/1000.0f;
 		readGraphFromFile(weightArg,fileArg);
+		final float endTime = System.currentTimeMillis()/1000.0f;
+		System.out.printf("\nTime: ");
+		System.out.format("%.3f",(endTime - startTime));
 
 	}
 
@@ -95,7 +99,7 @@ public class Kruscal {
 		}
 		FList.printDisjointSet();
 		ETree.printBreadthTraversal(ETree.root);
-		FList.printDisjointTree(rootArg,ETree,tempEdges);
+		FList.printDisjointTree(rootArg,ETree,VerticesList,tempEdges);
 	}
 
 }

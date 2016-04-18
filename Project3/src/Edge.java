@@ -59,5 +59,12 @@ public class Edge {
 		String s = "[("+this.getWeight()+") "+this.getVertex1() + "-" + this.getVertex2() + " ]";
 		return s;
 	}
+
+	//Reverses the two vertices so that that is it an undirected graph
+	public void reverse() {
+		Vertex temp = this.getVertex1();
+		this.setVertex1(getVertex2());
+		this.setVertex2(temp);
+	}
 	
 }

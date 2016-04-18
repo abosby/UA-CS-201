@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class DisjointSet {	
 
@@ -104,7 +105,7 @@ public class DisjointSet {
 		System.out.printf(temp.value.toString()+"\n");
 	}
 
-	public void printDisjointTree(int root, RedBlackTree eTree,DoublyLinkedList eList){
+	public void printDisjointTree(int root, RedBlackTree eTree,ArrayList<Integer> verticesList, DoublyLinkedList eList){
 		BQueue<Node> queue = new BQueue<Node>();
 		BQueue<Node> eQueue = new BQueue<Node>();
 		DoublyLinkedList sEdge = new DoublyLinkedList();
@@ -116,6 +117,7 @@ public class DisjointSet {
 		queue.enqueue(nRoot);
 		System.out.printf("0: %d;\n",root);
 		int v = 1;
+		int graphWeight = 0;
 		Node temp = null;
 		Node adjNode = null;
 		Node temp2;
@@ -123,157 +125,83 @@ public class DisjointSet {
 		Edge fEdge2;
 		Edge check1;
 		Edge check2;
-		while(queue.getSize() != 0){
-			System.out.printf("%d: ",v);
+		if(queue.getSize()!= 0){
 			while(queue.getSize() != 0){
-				//Each node in queue
-				temp = queue.dequeue();
-				if(temp.adjacencyList.getSize() != 0){
-					//add temp to used parent nodes
-					
-					while(temp.adjacencyList.getSize() != 0){
-						adjNode = temp.adjacencyList.removeItem();
-						if(temp.value != nRoot.value){
-							fEdge = eList.removeEdge(temp.value, adjNode.value);
-							fEdge2 = eList.removeEdge(adjNode.value, temp.value);
-							if(((fEdge != null) || (fEdge2 != null)) && (vTree.findNode(temp.value.getValue()) == null)){
-							//if((eTree.findNode(fEdge) != null) || (eTree.findNode(fEdge2) != null)){
-								if(fEdge != null){
-									//check to see if removed
-									check1 = eList.removeEdge(temp.value, adjNode.value);
-									eQueue.enqueue(adjNode);
-									sEdge.addItem(fEdge);
-									//eTree.deleteNode(fEdge);
-								}
-
-								else if(fEdge2 != null){
-									check2 = eList.removeEdge(adjNode.value, temp.value);
-									eQueue.enqueue(adjNode);
-									sEdge.addItem(fEdge2);
-									//eTree.deleteNode(fEdge2);
-								}
+				while(queue.getSize() != 0){
+					//Each node in queue
+					temp = queue.dequeue();
+					if(temp.adjacencyList.getSize() != 0){
+						//add temp to used parent nodes
+						
+						while(temp.adjacencyList.getSize() != 0){
+							adjNode = temp.adjacencyList.removeItem();
+							if(vTree.findNode(adjNode.value.getValue()) != null){
+								continue;
 							}
-						}
-						else{
-							if(vTree.findNode(adjNode.value.getValue()) == null){
+							if(temp.value != nRoot.value){
 								fEdge = eList.removeEdge(temp.value, adjNode.value);
-								if((fEdge != null) && (vTree.findNode(temp.value.getValue()) == null)){
-								//if(eTree.findNode(fEdge) != null){
+								fEdge2 = eList.removeEdge(adjNode.value, temp.value);
+								if(((fEdge != null) || (fEdge2 != null)) && (vTree.findNode(temp.value.getValue()) == null)){
+								//if((eTree.findNode(fEdge) != null) || (eTree.findNode(fEdge2) != null)){
 									if(fEdge != null){
+										//check to see if removed
+										check1 = eList.removeEdge(temp.value, adjNode.value);
 										eQueue.enqueue(adjNode);
 										sEdge.addItem(fEdge);
 										//eTree.deleteNode(fEdge);
 									}
+
+									else if(fEdge2 != null){
+										check2 = eList.removeEdge(adjNode.value, temp.value);
+										fEdge2.reverse();
+										eQueue.enqueue(adjNode);
+										sEdge.addItem(fEdge2);
+										//eTree.deleteNode(fEdge2);
+									}
 								}
 							}
+							else{
+								if(vTree.findNode(adjNode.value.getValue()) == null){
+									fEdge = eList.removeEdge(temp.value, adjNode.value);
+									if((fEdge != null) && (vTree.findNode(temp.value.getValue()) == null)){
+									//if(eTree.findNode(fEdge) != null){
+										if(fEdge != null){
+											eQueue.enqueue(adjNode);
+											sEdge.addItem(fEdge);
+											//eTree.deleteNode(fEdge);
+										}
+									}
+								}
+							}
+							//if((eList.getEdge(temp.value, adjNode.value) != null) || (eList.getEdge(adjNode.value, temp.value)!= null)){
 						}
-						//if((eList.getEdge(temp.value, adjNode.value) != null) || (eList.getEdge(adjNode.value, temp.value)!= null)){
+						vTree.insertNode(temp.value.getValue());
 					}
-					vTree.insertNode(temp.value.getValue());
+				}
+				if(eQueue.getSize() != 0){
+					System.out.printf("%d: ",v);
+					while(eQueue.getSize() != 0){
+						temp2 = eQueue.dequeue();
+						queue.enqueue(temp2);
+					}
+					sEdge.mergeSort(sEdge.getFront());
+					Edge tempPointer;
+					while(sEdge.getSize() != 0){
+						tempPointer = sEdge.removeItem();
+						graphWeight = graphWeight + tempPointer.getWeight();
+						System.out.printf("%d(%d)%d; ",tempPointer.getVertex2().getValue(),tempPointer.getVertex1().getValue(),tempPointer.getWeight());
+					}
+					System.out.println("");
+					v++;
 				}
 			}
-			//Pass next level edges from eQueue to the queue
-			/**
-			while(eQueue.getSize() != 0){
-				temp2 = eQueue.dequeue();
-				fEdge = eList.removeEdge(temp2.value, temp2.parent.value);
-				fEdge2 = eList.removeEdge(temp2.parent.value, temp2.value);
-				if(fEdge != null){
-					queue.enqueue(temp2);
-					sEdge.addItem(fEdge);
-				}
-				else if(fEdge2 != null){
-					queue.enqueue(temp2.parent);
-					sEdge.addItem(fEdge2);
-				}
-			}
-			*/
-			while(eQueue.getSize() != 0){
-				temp2 = eQueue.dequeue();
-				queue.enqueue(temp2);
-			}
-			sEdge.mergeSort(sEdge.getFront());
-			Edge tempPointer;
-			while(sEdge.getSize() != 0){
-				tempPointer = sEdge.removeItem();
-				System.out.printf("%d(%d)%d; ",tempPointer.getVertex2().getValue(),tempPointer.getVertex1().getValue(),tempPointer.getWeight());
-			}
-			System.out.println("");
-			v++;
+			System.out.printf("weight: %d\n", graphWeight);
+			System.out.printf("unreachable: %d\n", verticesList.size() - vTree.getSize());
+		}
+		//The Tree is empty
+		else{
+			System.out.printf("The Graph could not find a BFS from the selected Node");
 		}
 
 	}
-		/**
-		BQueue<Node> queue = new BQueue<Node>();
-		BQueue<Node> eQueue = new BQueue<Node>();
-		DoublyLinkedList sEdge = new DoublyLinkedList();
-		Node nRoot = front;
-		//Find Root
-		while(nRoot.value.getValue() != root){
-			nRoot = nRoot.next;
-		}
-		Node temp = null;
-		Node prev = nRoot;
-		queue.enqueue(nRoot);
-		System.out.printf("0: %d;\n",root);
-		int v = 1;
-		while(true){
-			System.out.printf("%d: ",v);
-			while(queue.getSize() != 0){
-				prev = temp;
-				temp = queue.dequeue();
-				Node tNode = front;
-				while(tNode != null){
-					//If temp is the parent
-					if(tNode.parent.value == temp.value){
-						tNode.level = temp.level++;
-						//queue.enqueue(tNode);
-						eQueue.enqueue(tNode);
-					}
-					//If temp is the child
-
-					else if(temp.parent.value == tNode.value){
-						//if((temp.parent.value != nRoot.value) && (tNode.value != nRoot.value)){
-						//if(eList.getEdge(tNode.value,temp.parent.value) != null){
-						tNode.level = temp.level++;
-						tNode.child = temp;
-						//Reset children
-						Node tTNode = tNode;
-						Node tempNode = temp;
-						Node advanceNode = tNode;
-						while(tTNode.parent != advanceNode){
-							advanceNode = tTNode.parent;
-							tTNode.parent = tempNode;
-							tempNode = tTNode;
-							tTNode = advanceNode;
-						}
-						//queue.enqueue(tNode);
-						eQueue.enqueue(tNode);
-					}
-					tNode = tNode.next;
-				}
-			}
-			//Pass next level edges from eQueue to the queue
-			Node temp2;
-			Edge fEdge;
-			while(eQueue.getSize() != 0){
-				temp2 = eQueue.dequeue();
-				fEdge = eList.removeEdge(temp2.value,temp2.parent.value);
-				//fEdge = eList.getEdge(temp2.value, temp.value);
-				if(fEdge != null){
-					queue.enqueue(temp2);
-					sEdge.addItem(fEdge);
-				}
-			}
-			sEdge.mergeSort(sEdge.getFront());
-			Edge tempPointer;
-			while(sEdge.getSize() != 0){
-				tempPointer = sEdge.removeItem();
-				System.out.printf("%d(%d)%d; ",tempPointer.getVertex2().getValue(),tempPointer.getVertex1().getValue(),tempPointer.getWeight());
-			}
-			System.out.println("");
-			v++;
-		}
-	}
-	*/
 }
