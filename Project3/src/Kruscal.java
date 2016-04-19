@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -18,9 +20,9 @@ public class Kruscal {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		//String fileArg = "testGraph.txt";
-		String fileArg = "g5";
-		
+		String fileArg = "testGraph.txt";
+		//String fileArg = "g5";
+
 		final float startTime = System.currentTimeMillis()/1000.0f;
 		readGraphFromFile(weightArg,fileArg);
 		final float endTime = System.currentTimeMillis()/1000.0f;
@@ -31,21 +33,35 @@ public class Kruscal {
 
 	private static void readGraphFromFile(int weightArg, String fileArg) {
 		String filePath= new File(fileArg).getAbsolutePath();
-		//Scanner sc = null;
+		BufferedReader br = null;
 		BQueue<String> descriptionQueue= new BQueue<String>();
+		String line;
 		try {
-			sc = new Scanner(new File(filePath));
+			br = new BufferedReader(new FileReader(filePath));
+			while((line = br.readLine()) != null){
+				//while(sc.hasNextLine()){
+				//sc = new Scanner(new File(filePath));
+				/**
+				Scanner sc2 = new Scanner(sc.nextLine());
+				while(sc2.hasNext()){
+					descriptionQueue.enqueue(sc2.next());
+				}
+				 */
+				String[] tokens = line.split(" ");
+				for (String token : tokens){
+					if(!token.equals("")){
+						descriptionQueue.enqueue(token);
+					}
+				}
+			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Corpus File not found");
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		while(sc.hasNextLine()){
-			Scanner sc2 = new Scanner(sc.nextLine());
-			while(sc2.hasNext()){
-				descriptionQueue.enqueue(sc2.next());
-			}
-		}
-		sc.close();
+
 
 		while(descriptionQueue.getSize()!=0){
 			String vertex1 = descriptionQueue.dequeue();
@@ -93,7 +109,7 @@ public class Kruscal {
 				FList.union(vert1, vert2);
 				ETree.deleteNode(temp);
 			}
-			*/
+			 */
 			if(FList.findSet(vert1) != FList.findSet(vert2)){
 				FList.union(vert1,vert2);
 				ETree.insertNode(temp);
