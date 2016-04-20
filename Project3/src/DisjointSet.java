@@ -10,6 +10,7 @@ public class DisjointSet {
 		private int rank;
 		private Vertex value;
 		private Node parent;
+		private EdgeRedBlackTree tTree;
 		private SinglyLinkedList adjacencyList;
 		private int level;
 		private Node next;
@@ -19,6 +20,7 @@ public class DisjointSet {
 		public Node(Vertex v){
 			value = v;
 			level = 0;
+			tTree = new EdgeRedBlackTree();
 			adjacencyList = new SinglyLinkedList();
 		}
 	}
@@ -91,7 +93,7 @@ public class DisjointSet {
 
 	public Node findSet(Node a){
 		if(a.parent != a){
-			return findSet(a.parent);
+			a.parent = findSet(a.parent);
 		}
 		return a.parent;
 	}
@@ -105,10 +107,10 @@ public class DisjointSet {
 		System.out.printf(temp.value.toString()+"\n");
 	}
 
-	public void printDisjointTree(int root, RedBlackTree eTree,ArrayList<Integer> verticesList, DoublyLinkedList eList){
+	public void printDisjointTree(int root, EdgeRedBlackTree eTree,ArrayList<Integer> verticesList, EdgeDoublyLinkedList eList){
 		BQueue<Node> queue = new BQueue<Node>();
 		BQueue<Node> eQueue = new BQueue<Node>();
-		DoublyLinkedList sEdge = new DoublyLinkedList();
+		EdgeDoublyLinkedList sEdge = new EdgeDoublyLinkedList();
 		BinarySearchTree vTree = new BinarySearchTree();
 		Node nRoot = front;
 		while(nRoot.value.getValue() != root){

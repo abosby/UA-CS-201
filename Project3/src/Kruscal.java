@@ -10,18 +10,18 @@ import java.util.Scanner;
 
 public class Kruscal {
 
-	static DoublyLinkedList EList = new DoublyLinkedList();
+	static EdgeDoublyLinkedList EList = new EdgeDoublyLinkedList();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
-	static RedBlackTree ETree = new RedBlackTree();
+	static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
 	static int weightArg;
 	static int rootArg;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		String fileArg = "testGraph.txt";
-		//String fileArg = "g5";
+		//String fileArg = "testGraph.txt";
+		String fileArg = "g3";
 
 		final float startTime = System.currentTimeMillis()/1000.0f;
 		readGraphFromFile(weightArg,fileArg);
@@ -90,29 +90,28 @@ public class Kruscal {
 	private static void processKruskal() {
 		Collections.sort(VerticesList);
 
-		EList.printList();
+		//EList.printList();
 		EList.mergeSort(EList.getFront());
-		EList.printList();
+		//EList.printList();
 		//Make Set for each vertices
+
 		for(int i = 0; i < VerticesList.size(); i++){
 			Vertex temp = new Vertex(VerticesList.get(i));
 			FList.makeSet(temp);
 		}
-		DoublyLinkedList tempEdges = new DoublyLinkedList();
+
+		EdgeDoublyLinkedList tempEdges = new EdgeDoublyLinkedList();
 		while(EList.getSize() != 0){
 			Edge temp = EList.removeItem();
 			tempEdges.addItem(temp);
-			DisjointSet.Node vert1 = FList.getNode(temp.getVertex1());
-			DisjointSet.Node vert2 = FList.getNode(temp.getVertex2());
-			/**
-			if(ETree.findNode(temp) == temp){
-				FList.union(vert1, vert2);
-				ETree.deleteNode(temp);
-			}
-			 */
-			if(FList.findSet(vert1) != FList.findSet(vert2)){
-				FList.union(vert1,vert2);
-				ETree.insertNode(temp);
+			if(ETree.findNode(temp) != null){
+				DisjointSet.Node vert1 = FList.getNode(temp.getVertex1());
+				DisjointSet.Node vert2 = FList.getNode(temp.getVertex2());
+
+				if(FList.findSet(vert1) != FList.findSet(vert2)){
+					FList.union(vert1,vert2);
+					ETree.insertNode(temp);
+				}
 			}
 		}
 		FList.printDisjointSet();

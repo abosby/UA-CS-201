@@ -1,19 +1,19 @@
 
-public class DoublyLinkedList{
+public class EdgeDoublyLinkedList{
 
-	private DoublyLinkedListNode front;
-	private DoublyLinkedListNode back;
+	private EdgeDoublyLinkedListNode front;
+	private EdgeDoublyLinkedListNode back;
 	private int size;
 
-	private class DoublyLinkedListNode{
+	private class EdgeDoublyLinkedListNode{
 
 		//Variables
 		private Edge value;
-		private DoublyLinkedListNode next;
-		private DoublyLinkedListNode prev;
+		private EdgeDoublyLinkedListNode next;
+		private EdgeDoublyLinkedListNode prev;
 
 		//Constructor
-		private DoublyLinkedListNode(Edge v){
+		private EdgeDoublyLinkedListNode(Edge v){
 			this.setValue(v);
 		}
 
@@ -25,26 +25,26 @@ public class DoublyLinkedList{
 			this.value = value;
 		}
 
-		public DoublyLinkedListNode getNext() {
+		public EdgeDoublyLinkedListNode getNext() {
 			return next;
 		}
 
-		public void setNext(DoublyLinkedListNode next) {
+		public void setNext(EdgeDoublyLinkedListNode next) {
 			this.next = next;
 		}
 
-		public DoublyLinkedListNode getPrev() {
+		public EdgeDoublyLinkedListNode getPrev() {
 			return prev;
 		}
 
-		public void setPrev(DoublyLinkedListNode prev) {
+		public void setPrev(EdgeDoublyLinkedListNode prev) {
 			this.prev = prev;
 		}
 
 	}
 	
 	//Constructor
-	public DoublyLinkedList(){
+	public EdgeDoublyLinkedList(){
 		this.front = null;
 		this.back = null;
 		this.size = 0;
@@ -53,11 +53,11 @@ public class DoublyLinkedList{
 		return this.size;
 	}
 	
-	public DoublyLinkedListNode getFront(){
+	public EdgeDoublyLinkedListNode getFront(){
 		return front;
 	}
 	
-	public DoublyLinkedListNode getBack(){
+	public EdgeDoublyLinkedListNode getBack(){
 		return back;
 	}
 
@@ -66,7 +66,7 @@ public class DoublyLinkedList{
 	}
 
 	public void addItem(Edge v){
-		DoublyLinkedListNode newNode = new DoublyLinkedListNode(v);
+		EdgeDoublyLinkedListNode newNode = new EdgeDoublyLinkedListNode(v);
 		if(this.size == 0){
 			newNode.setPrev(null);
 			newNode.setNext(null);
@@ -89,10 +89,10 @@ public class DoublyLinkedList{
 			return null;
 		}
 		else{
-			DoublyLinkedListNode temp = front;
+			EdgeDoublyLinkedListNode temp = front;
 			while(temp != null){
 				if((temp.getValue().getVertex1().getValue() == v1.getValue()) && (temp.getValue().getVertex2().getValue() == v2.getValue()) ){
-					DoublyLinkedListNode temp2 = temp.next;
+					EdgeDoublyLinkedListNode temp2 = temp.next;
 					if(this.getSize() == 1){
 						front = null;
 						back = null;
@@ -156,7 +156,7 @@ public class DoublyLinkedList{
 			return null;
 		}
 		else if(size == 1){
-			DoublyLinkedListNode temp = front;
+			EdgeDoublyLinkedListNode temp = front;
 			front = null;
 			back = null;
 			size--;
@@ -164,7 +164,7 @@ public class DoublyLinkedList{
 		}
 
 		else{
-			DoublyLinkedListNode temp = front;
+			EdgeDoublyLinkedListNode temp = front;
 			front = front.getNext();
 			size--;
 			return temp.getValue();
@@ -172,7 +172,7 @@ public class DoublyLinkedList{
 	}
 
 	public boolean contains(Edge x){
-		DoublyLinkedListNode temp = front;
+		EdgeDoublyLinkedListNode temp = front;
 		while(temp != back){
 			if(temp.value == x){
 				return true;
@@ -201,7 +201,7 @@ public class DoublyLinkedList{
 			return null;
 		}
 		else{
-			DoublyLinkedListNode temp = front;
+			EdgeDoublyLinkedListNode temp = front;
 			while(temp != null){
 				if((temp.getValue().getVertex1().getValue() == v1.getValue()) && (temp.getValue().getVertex2().getValue() == v2.getValue()) ){
 					return temp.getValue();
@@ -217,7 +217,7 @@ public class DoublyLinkedList{
 
 	public void printList() {
 		if(front != null){
-			DoublyLinkedListNode temp = front;
+			EdgeDoublyLinkedListNode temp = front;
 			while(temp != back){
 				System.out.printf(temp.getValue().toString() + "<-->");
 				temp = temp.getNext();
@@ -231,23 +231,23 @@ public class DoublyLinkedList{
 
 	// Inspired by C-Based code from
 	// http://www.geeksforgeeks.org/merge-sort-for-doubly-linked-list/ 
-	public DoublyLinkedListNode mergeSort(DoublyLinkedListNode node){
+	public EdgeDoublyLinkedListNode mergeSort(EdgeDoublyLinkedListNode node){
 
 		if(node == null || node.next == null){
 			return node;
 		}
 
-		DoublyLinkedListNode second = splitList(node);
+		EdgeDoublyLinkedListNode second = splitList(node);
 		node = mergeSort(node);
 		second = mergeSort(second);
-		DoublyLinkedListNode result = merge(node,second);
+		EdgeDoublyLinkedListNode result = merge(node,second);
 		//resetBackNode();
 		resetFrontNode();
 		return result;
 	}
 
 	private void resetBackNode() {
-		DoublyLinkedListNode temp = front;
+		EdgeDoublyLinkedListNode temp = front;
 		while(temp.getNext() != null){
 			temp = temp.getNext();
 		}
@@ -255,13 +255,13 @@ public class DoublyLinkedList{
 	}
 	
 	private void resetFrontNode(){
-		DoublyLinkedListNode temp = back;
+		EdgeDoublyLinkedListNode temp = back;
 		while(temp.getPrev() != null){
 			temp = temp.getPrev();
 		}
 		front = temp;
 	}
-	private DoublyLinkedListNode merge(DoublyLinkedListNode one, DoublyLinkedListNode two) {
+	private EdgeDoublyLinkedListNode merge(EdgeDoublyLinkedListNode one, EdgeDoublyLinkedListNode two) {
 		if(one == null){
 			return two;
 		}
@@ -283,14 +283,14 @@ public class DoublyLinkedList{
 		}
 	}
 
-	private DoublyLinkedListNode splitList(DoublyLinkedListNode head) {
-		DoublyLinkedListNode fast = head;
-		DoublyLinkedListNode slow = head;
+	private EdgeDoublyLinkedListNode splitList(EdgeDoublyLinkedListNode head) {
+		EdgeDoublyLinkedListNode fast = head;
+		EdgeDoublyLinkedListNode slow = head;
 		while((fast.next != null) && (fast.next.next != null)){
 			fast = fast.next.next;
 			slow = slow.next;
 		}
-		DoublyLinkedListNode temp = slow.next;
+		EdgeDoublyLinkedListNode temp = slow.next;
 		slow.next = null;
 		return temp;
 	}

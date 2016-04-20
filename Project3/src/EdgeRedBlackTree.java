@@ -1,6 +1,6 @@
 //RedBlackTree for Edges
 
-public class RedBlackTree {
+public class EdgeRedBlackTree {
 
 	RedBlackNode root;
 	RedBlackNode min;
@@ -10,7 +10,7 @@ public class RedBlackTree {
 		RedBlackNode parent;
 		RedBlackNode left;
 		RedBlackNode right;
-		RedBlackTree RBT;
+		EdgeRedBlackTree RBT;
 		Edge value;
 		String color;
 		int level;
@@ -130,7 +130,7 @@ public class RedBlackTree {
 		}
 		 */
 
-		private RedBlackNode(RedBlackTree rbt, Edge e){
+		private RedBlackNode(EdgeRedBlackTree rbt, Edge e){
 			parent = null;
 			left = null;
 			right = null;
@@ -726,7 +726,7 @@ public class RedBlackTree {
 
 
 
-	public RedBlackTree(){
+	public EdgeRedBlackTree(){
 		root = null;
 		size = 0;
 	}
