@@ -2,10 +2,9 @@ import java.util.ArrayList;
 
 public class DisjointSet {	
 
-	private Node front;
-	private Node back;
-	private int size;
+	private DSRBT rootList;
 
+	/**
 	public static class Node{
 		private int rank;
 		private Vertex value;
@@ -24,13 +23,15 @@ public class DisjointSet {
 			adjacencyList = new SinglyLinkedList();
 		}
 	}
+	*/
 
 	public DisjointSet(){
-		front = null;
-		back = null;
+		rootList = new DSRBT();
 	}
 
-	public Node getNode(Vertex v){
+	public DSRBT.RedBlackNode getNode(Vertex v){
+		return rootList.findNode(v);
+		/**
 		Node temp = front;
 		while(temp != null){
 			if(temp.value.getValue() == v.getValue()){
@@ -39,9 +40,15 @@ public class DisjointSet {
 			temp = temp.next;
 		}
 		return null;
+		*/
 	}
 
 	public void makeSet(Vertex v){
+		rootList.insertNode(v);
+		DSRBT.RedBlackNode temp = rootList.findNode(v);
+		temp.pParent = temp;
+		temp.rank = 0;
+		/**
 		Node temp = new Node(v);
 		temp.value.setParent(temp.value);
 		temp.parent = temp; 
@@ -57,6 +64,7 @@ public class DisjointSet {
 			back.next =temp;
 			back = temp;
 		}
+		*/
 	}
 
 	/** Merge Vertex b into a

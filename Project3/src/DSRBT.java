@@ -5,7 +5,7 @@ public class DSRBT{
 	RedBlackNode min;
 	int size;
 
-	private class RedBlackNode{
+	public class RedBlackNode{
 		RedBlackNode pParent;
 		int rank;
 		SinglyLinkedList adjacencyList;
@@ -332,7 +332,8 @@ public class DSRBT{
 			this.RBT.root.color = "black";
 		}
 
-		private Vertex findNode(RedBlackNode node, Vertex v) {
+		private RedBlackNode findNode(Vertex v) {
+			RedBlackNode node = root;
 			while(true){
 				if( (node.value == null) && (node.RBT.root == null)){
 					return null;
@@ -341,7 +342,7 @@ public class DSRBT{
 					//Vertex 1 equal
 					if(node.value.getValue() == v.getValue()){
 						//Vertex 2 equal
-						return node.getValue();
+						return node;
 					}
 					//Go Left
 					else if(node.value.getValue() > v.getValue()){
@@ -715,13 +716,13 @@ public class DSRBT{
 		}
 	}
 
-	public Vertex findNode(Vertex v){
+	public RedBlackNode findNode(Vertex v){
 		if(this.root == null){
 			System.out.printf("\n Find Result: 0\n");
 			return null;
 		}
 		else{
-			return this.root.findNode(this.root, v);
+			return this.root.findNode(v);
 		}
 	}
 
