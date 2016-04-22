@@ -3,16 +3,16 @@ public class SinglyLinkedList {
 
 	private LinkedListNode front;
 	private LinkedListNode back;
-	private int label;
 	private int size;
 	
 	private class LinkedListNode{
-		private DisjointSet.Node value;
+		private DSRBT.RedBlackNode value;
 		private LinkedListNode next;
-		public DisjointSet.Node getValue() {
+
+		public DSRBT.RedBlackNode getValue() {
 			return value;
 		}
-		public void setValue(DisjointSet.Node value) {
+		public void setValue(DSRBT.RedBlackNode value) {
 			this.value = value;
 		}
 		public LinkedListNode getNext() {
@@ -22,7 +22,7 @@ public class SinglyLinkedList {
 			this.next = next;
 		}
 		
-		private LinkedListNode(DisjointSet.Node value){
+		private LinkedListNode(DSRBT.RedBlackNode value){
 			this.setValue(value);
 			this.setNext(null);
 		}
@@ -58,7 +58,7 @@ public class SinglyLinkedList {
 		this.size = size;
 	}
 	
-	public void addItem(DisjointSet.Node v){
+	public void addItem(DSRBT.RedBlackNode v){
 		LinkedListNode newNode = new LinkedListNode(v);
 		if(this.size == 0){
 			newNode.setNext(null);
@@ -74,7 +74,7 @@ public class SinglyLinkedList {
 		}
 	}
 	
-	public DisjointSet.Node removeItem(){
+	public DSRBT.RedBlackNode removeItem(){
 		if(size ==0){
 			System.out.println("Remove: The Linked-List is empty");
 			return null;

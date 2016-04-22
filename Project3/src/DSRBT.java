@@ -135,6 +135,8 @@ public class DSRBT{
 		 */
 
 		private RedBlackNode(DSRBT rbt, Vertex e){
+			adjacencyList = new SinglyLinkedList();
+			pParent = null;
 			parent = null;
 			left = null;
 			right = null;
@@ -154,10 +156,8 @@ public class DSRBT{
 					//Vertex 1 equal
 					if(node.value.getValue() == v.getValue()){
 						//Vertex 2 equal
-						if(node.value.getValue() == v.getValue()){
-							System.out.println("InsertNode: Value should not be the same");
-						}
-
+						//System.out.println("InsertNode: Value should not be the same");
+						return;
 					}
 					//Go Left
 					else if(node.value.getValue() > v.getValue()){
@@ -332,7 +332,7 @@ public class DSRBT{
 			this.RBT.root.color = "black";
 		}
 
-		private RedBlackNode findNode(Vertex v) {
+		private RedBlackNode findNode(int v) {
 			RedBlackNode node = root;
 			while(true){
 				if( (node.value == null) && (node.RBT.root == null)){
@@ -340,12 +340,12 @@ public class DSRBT{
 				}
 				else{
 					//Vertex 1 equal
-					if(node.value.getValue() == v.getValue()){
+					if(node.value.getValue() == v){
 						//Vertex 2 equal
 						return node;
 					}
 					//Go Left
-					else if(node.value.getValue() > v.getValue()){
+					else if(node.value.getValue() > v){
 						if(node.left != null){
 							node = node.left;
 						}
@@ -354,7 +354,7 @@ public class DSRBT{
 						}
 					}
 					//Go Right
-					else if(node.value.getValue() > v.getValue()){
+					else if(node.value.getValue() < v){
 						if(node.right != null){
 							node = node.right;
 						}
@@ -716,9 +716,9 @@ public class DSRBT{
 		}
 	}
 
-	public RedBlackNode findNode(Vertex v){
+	public RedBlackNode findNode(int v){
 		if(this.root == null){
-			System.out.printf("\n Find Result: 0\n");
+			//System.out.printf("\n Find Result: 0\n");
 			return null;
 		}
 		else{

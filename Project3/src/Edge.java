@@ -1,3 +1,4 @@
+import java.util.Comparator;
 
 public class Edge {
 
@@ -66,5 +67,7 @@ public class Edge {
 		this.setVertex1(getVertex2());
 		this.setVertex2(temp);
 	}
+	
+
 	
 }

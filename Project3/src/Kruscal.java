@@ -3,14 +3,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class Kruscal {
 
-	static EdgeDoublyLinkedList EList = new EdgeDoublyLinkedList();
+	//static EdgeDoublyLinkedList EList = new EdgeDoublyLinkedList();
+	static ArrayList<Edge> EList = new ArrayList<Edge>();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
 	static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
@@ -20,8 +19,8 @@ public class Kruscal {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		//String fileArg = "testGraph.txt";
-		String fileArg = "g3";
+		String fileArg = "testGraph.txt";
+		//String fileArg = "g3";
 
 		final float startTime = System.currentTimeMillis()/1000.0f;
 		readGraphFromFile(weightArg,fileArg);
@@ -75,11 +74,11 @@ public class Kruscal {
 			}
 			if(weight.equals(";")){
 				Edge e = new Edge(vertex1, vertex2);
-				EList.addItem(e);
+				EList.add(e);
 			}
 			else{
 				Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
-				EList.addItem(e);
+				EList.add(e);
 				@SuppressWarnings("unused")
 				String semiColon = descriptionQueue.dequeue();
 			}
@@ -87,11 +86,13 @@ public class Kruscal {
 		processKruskal();
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void processKruskal() {
 		Collections.sort(VerticesList);
 
 		//EList.printList();
-		EList.mergeSort(EList.getFront());
+		ComparatorEdge comp = new ComparatorEdge();
+		Collections.sort(EList, comp);
 		//EList.printList();
 		//Make Set for each vertices
 
@@ -101,12 +102,12 @@ public class Kruscal {
 		}
 
 		EdgeDoublyLinkedList tempEdges = new EdgeDoublyLinkedList();
-		while(EList.getSize() != 0){
-			Edge temp = EList.removeItem();
+		while(EList.size() != 0){
+			Edge temp = EList.remove(0);
 			tempEdges.addItem(temp);
-			if(ETree.findNode(temp) != null){
-				DisjointSet.Node vert1 = FList.getNode(temp.getVertex1());
-				DisjointSet.Node vert2 = FList.getNode(temp.getVertex2());
+			if(ETree.findNode(temp) == null){
+				DSRBT.RedBlackNode vert1 = FList.getNode(temp.getVertex1());
+				DSRBT.RedBlackNode vert2 = FList.getNode(temp.getVertex2());
 
 				if(FList.findSet(vert1) != FList.findSet(vert2)){
 					FList.union(vert1,vert2);
@@ -114,8 +115,8 @@ public class Kruscal {
 				}
 			}
 		}
-		FList.printDisjointSet();
-		ETree.printBreadthTraversal(ETree.root);
+		//FList.printDisjointSet();
+		//ETree.printBreadthTraversal(ETree.root);
 		FList.printDisjointTree(rootArg,ETree,VerticesList,tempEdges);
 	}
 

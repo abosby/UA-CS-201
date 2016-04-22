@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DisjointSet {	
 
@@ -30,7 +31,7 @@ public class DisjointSet {
 	}
 
 	public DSRBT.RedBlackNode getNode(Vertex v){
-		return rootList.findNode(v);
+		return rootList.findNode(v.getValue());
 		/**
 		Node temp = front;
 		while(temp != null){
@@ -45,7 +46,7 @@ public class DisjointSet {
 
 	public void makeSet(Vertex v){
 		rootList.insertNode(v);
-		DSRBT.RedBlackNode temp = rootList.findNode(v);
+		DSRBT.RedBlackNode temp = rootList.findNode(v.getValue());
 		temp.pParent = temp;
 		temp.rank = 0;
 		/**
@@ -72,26 +73,26 @@ public class DisjointSet {
 	 * @param a
 	 * @param b
 	 */
-	public void union(Node a, Node b){
-		Node aRoot = findSet(a);
-		Node bRoot = findSet(b);
+	public void union(DSRBT.RedBlackNode a, DSRBT.RedBlackNode b){
+		DSRBT.RedBlackNode aRoot = findSet(a);
+		DSRBT.RedBlackNode bRoot = findSet(b);
 		if(aRoot.value != bRoot.value){
 			if(aRoot.rank < bRoot.rank){
 				//aRoot.parent  = bRoot;
-				a.parent = b;
+				a.pParent = b;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 			}
 			else if(aRoot.rank > bRoot.rank){
 				//bRoot.parent = aRoot;
-				b.parent = a;
+				b.pParent = a;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 
 			}
 			else{
 				//bRoot.parent = aRoot;
-				b.parent = a;
+				b.pParent = a;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 				aRoot.rank = aRoot.rank++;
@@ -99,38 +100,41 @@ public class DisjointSet {
 		}
 	}
 
-	public Node findSet(Node a){
-		if(a.parent != a){
-			a.parent = findSet(a.parent);
+	public DSRBT.RedBlackNode findSet(DSRBT.RedBlackNode a){
+		if(a.pParent != a){
+			return findSet(a.pParent);
 		}
-		return a.parent;
+		return a.pParent;
 	}
 
 	public void printDisjointSet() {
+		rootList.printBreadthTraversal(rootList.root);
+		/**
 		Node temp = front;
 		while(temp.next != null){
 			System.out.printf(temp.value.toString() + "-->");
 			temp = temp.next;
 		}
-		System.out.printf(temp.value.toString()+"\n");
+		*/
+		//System.out.printf(temp.value.toString()+"\n");
 	}
 
+	@SuppressWarnings("unchecked")
 	public void printDisjointTree(int root, EdgeRedBlackTree eTree,ArrayList<Integer> verticesList, EdgeDoublyLinkedList eList){
-		BQueue<Node> queue = new BQueue<Node>();
-		BQueue<Node> eQueue = new BQueue<Node>();
-		EdgeDoublyLinkedList sEdge = new EdgeDoublyLinkedList();
+		BQueue<DSRBT.RedBlackNode> queue = new BQueue<DSRBT.RedBlackNode>();
+		BQueue<DSRBT.RedBlackNode> eQueue = new BQueue<DSRBT.RedBlackNode>();
+		ArrayList <Edge> sEdge = new ArrayList<Edge>();
 		BinarySearchTree vTree = new BinarySearchTree();
-		Node nRoot = front;
-		while(nRoot.value.getValue() != root){
-			nRoot = nRoot.next;
-		}
+
+		DSRBT.RedBlackNode nRoot = rootList.findNode(root);
+
 		queue.enqueue(nRoot);
 		System.out.printf("0: %d;\n",root);
 		int v = 1;
 		int graphWeight = 0;
-		Node temp = null;
-		Node adjNode = null;
-		Node temp2;
+		DSRBT.RedBlackNode temp = null;
+		DSRBT.RedBlackNode adjNode = null;
+		DSRBT.RedBlackNode temp2;
 		Edge fEdge;
 		Edge fEdge2;
 		Edge check1;
@@ -149,15 +153,17 @@ public class DisjointSet {
 								continue;
 							}
 							if(temp.value != nRoot.value){
-								fEdge = eList.removeEdge(temp.value, adjNode.value);
-								fEdge2 = eList.removeEdge(adjNode.value, temp.value);
+								fEdge = eTree.deleteNode(temp.value, adjNode.value);
+								fEdge2 = eTree.deleteNode(adjNode.value, temp.value);
+								//fEdge = eList.removeEdge(temp.value, adjNode.value);
+								//fEdge2 = eList.removeEdge(adjNode.value, temp.value);
 								if(((fEdge != null) || (fEdge2 != null)) && (vTree.findNode(temp.value.getValue()) == null)){
 								//if((eTree.findNode(fEdge) != null) || (eTree.findNode(fEdge2) != null)){
 									if(fEdge != null){
 										//check to see if removed
 										check1 = eList.removeEdge(temp.value, adjNode.value);
 										eQueue.enqueue(adjNode);
-										sEdge.addItem(fEdge);
+										sEdge.add(fEdge);
 										//eTree.deleteNode(fEdge);
 									}
 
@@ -165,19 +171,20 @@ public class DisjointSet {
 										check2 = eList.removeEdge(adjNode.value, temp.value);
 										fEdge2.reverse();
 										eQueue.enqueue(adjNode);
-										sEdge.addItem(fEdge2);
+										sEdge.add(fEdge2);
 										//eTree.deleteNode(fEdge2);
 									}
 								}
 							}
 							else{
 								if(vTree.findNode(adjNode.value.getValue()) == null){
-									fEdge = eList.removeEdge(temp.value, adjNode.value);
+									fEdge = eTree.deleteNode(temp.value, adjNode.value);
+									//fEdge = eList.removeEdge(temp.value, adjNode.value);
 									if((fEdge != null) && (vTree.findNode(temp.value.getValue()) == null)){
 									//if(eTree.findNode(fEdge) != null){
 										if(fEdge != null){
 											eQueue.enqueue(adjNode);
-											sEdge.addItem(fEdge);
+											sEdge.add(fEdge);
 											//eTree.deleteNode(fEdge);
 										}
 									}
@@ -194,10 +201,11 @@ public class DisjointSet {
 						temp2 = eQueue.dequeue();
 						queue.enqueue(temp2);
 					}
-					sEdge.mergeSort(sEdge.getFront());
+					Collections.sort(sEdge, new ComparatorEdge());
+					//sEdge.mergeSort(sEdge.getFront());
 					Edge tempPointer;
-					while(sEdge.getSize() != 0){
-						tempPointer = sEdge.removeItem();
+					while(sEdge.size() != 0){
+						tempPointer = sEdge.remove(0);
 						graphWeight = graphWeight + tempPointer.getWeight();
 						System.out.printf("%d(%d)%d; ",tempPointer.getVertex2().getValue(),tempPointer.getVertex1().getValue(),tempPointer.getWeight());
 					}
