@@ -69,3 +69,57 @@ BQueue<Node> queue = new BQueue<Node>();
 			v++;
 		}
 	}
+	
+			/**
+		String filePath= new File(fileArg).getAbsolutePath();
+		BufferedReader br = null;
+		BQueue<String> descriptionQueue= new BQueue<String>();
+		String line;
+		try {
+			br = new BufferedReader(new FileReader(filePath));
+			while((line = br.readLine()) != null){
+				//while(sc.hasNextLine()){
+				//sc = new Scanner(new File(filePath));
+				/**
+				Scanner sc2 = new Scanner(sc.nextLine());
+				while(sc2.hasNext()){
+					descriptionQueue.enqueue(sc2.next());
+				}
+				String[] tokens = line.split(" ");
+				for (String token : tokens){
+					if(!token.equals("")){
+						descriptionQueue.enqueue(token);
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Corpus File not found");
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 */
+
+		/**
+			while(descriptionQueue.getSize()!=0){
+				String vertex1 = descriptionQueue.dequeue();
+				String vertex2 = descriptionQueue.dequeue();
+				String weight= descriptionQueue.dequeue();
+				if(!VerticesList.contains(Integer.valueOf(vertex1))){
+					VerticesList.add(Integer.valueOf(vertex1));
+				}
+				if(!VerticesList.contains(Integer.valueOf(vertex2))){
+					VerticesList.add(Integer.valueOf(vertex2));
+				}
+				if(weight.equals(";")){
+					Edge e = new Edge(vertex1, vertex2);
+					EList.add(e);
+				}
+				else{
+					Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
+					EList.add(e);
+					@SuppressWarnings("unused")
+					String semiColon = descriptionQueue.dequeue();
+				}
+			}
+		*/

@@ -394,12 +394,16 @@ public class EdgeRedBlackTree {
 								//should have red nephew now
 							}
 							else{
-								node.getSibling().color = "red";
+								if(node.getSibling() != null){
+									node.getSibling().color = "red";
+								}
 								node = node.parent;
 							}
 						}
 						else{
-							node.getSibling().color = "red";
+							if(node.getSibling()!= null){
+								node.getSibling().color = "red";
+							}
 							node = node.parent;
 						}
 					}
@@ -414,13 +418,17 @@ public class EdgeRedBlackTree {
 						
 						//sibling niece and nephew are black
 						else{
-							node.getSibling().color = "red";
+							if(node.getSibling() != null){
+								node.getSibling().color = "red";
+							}
 							node = node.parent;
 						}
 					}
 					//sibling niece and nephew are black
 					else{
-						node.getSibling().color = "red";
+						if(node.getSibling() != null){
+							node.getSibling().color = "red";
+						}
 						node = node.parent;
 					}
 				}
@@ -441,12 +449,16 @@ public class EdgeRedBlackTree {
 							//should have red nephew now
 						}
 						else{
-							node.getSibling().color = "red";
+							if(node.getSibling()!= null){
+								node.getSibling().color = "red";
+							}
 							node = node.parent;
 						}
 					}
 					else{
-						node.getSibling().color = "red";
+						if(node.getSibling() != null){
+							node.getSibling().color = "red";
+						}
 						node = node.parent;
 					}
 				}
@@ -459,13 +471,17 @@ public class EdgeRedBlackTree {
 						//should have red nephew now
 					}
 					else{
-						node.getSibling().color = "red";
+						if(node.getSibling() != null){
+							node.getSibling().color = "red";
+						}
 						node = node.parent;
 					}
 				}
 				//sibling niece and nephew are black
 				else{
-					node.getSibling().color = "red";
+					if(node.getSibling() != null){
+							node.getSibling().color = "red";
+					}
 					node = node.parent;
 				}
 			}

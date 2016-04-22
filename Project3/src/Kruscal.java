@@ -1,10 +1,13 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class Kruscal {
 
@@ -13,6 +16,7 @@ public class Kruscal {
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
 	static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
+	static HashSet<String> vSet = new HashSet<>();
 	static int weightArg;
 	static int rootArg;
 	public static void main(String[] args) {
@@ -20,75 +24,75 @@ public class Kruscal {
 		weightArg = 0;
 		rootArg = 0;
 		String fileArg = "testGraph.txt";
+		//String fileArg = "g5";
+		//String fileArg = "graph3.txt";
 		//String fileArg = "g3";
 
-		final float startTime = System.currentTimeMillis()/1000.0f;
 		readGraphFromFile(weightArg,fileArg);
-		final float endTime = System.currentTimeMillis()/1000.0f;
-		System.out.printf("\nTime: ");
-		System.out.format("%.3f",(endTime - startTime));
-
 	}
 
 	private static void readGraphFromFile(int weightArg, String fileArg) {
-		String filePath= new File(fileArg).getAbsolutePath();
+		long startTime = System.currentTimeMillis();
+
+		String filePath = new File(fileArg).getAbsolutePath();
 		BufferedReader br = null;
-		BQueue<String> descriptionQueue= new BQueue<String>();
-		String line;
+		BQueue<String> descriptionQueue = new BQueue<String>();
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		Scanner sc2 = null;
 		try {
-			br = new BufferedReader(new FileReader(filePath));
-			while((line = br.readLine()) != null){
-				//while(sc.hasNextLine()){
-				//sc = new Scanner(new File(filePath));
-				/**
-				Scanner sc2 = new Scanner(sc.nextLine());
-				while(sc2.hasNext()){
-					descriptionQueue.enqueue(sc2.next());
-				}
-				 */
-				String[] tokens = line.split(" ");
-				for (String token : tokens){
-					if(!token.equals("")){
-						descriptionQueue.enqueue(token);
-					}
-				}
-			}
-			br.close();
+			inputStream = new FileInputStream(filePath);
 		} catch (FileNotFoundException e) {
-			System.out.println("Corpus File not found");
-			e.printStackTrace();
-		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		sc = new Scanner(inputStream,"UTF-8");
+		while(sc.hasNextLine()){
+			sc2 = new Scanner(sc.nextLine());
+			while(sc2.hasNext()){
+				String v1 = sc2.next();
+				String v2 = sc2.next();
+				String w = sc2.next();
 
-
-		while(descriptionQueue.getSize()!=0){
-			String vertex1 = descriptionQueue.dequeue();
-			String vertex2 = descriptionQueue.dequeue();
-			String weight= descriptionQueue.dequeue();
-			if(!VerticesList.contains(Integer.valueOf(vertex1))){
-				VerticesList.add(Integer.valueOf(vertex1));
-			}
-			if(!VerticesList.contains(Integer.valueOf(vertex2))){
-				VerticesList.add(Integer.valueOf(vertex2));
-			}
-			if(weight.equals(";")){
-				Edge e = new Edge(vertex1, vertex2);
-				EList.add(e);
-			}
-			else{
-				Edge e = new Edge(vertex1, vertex2, Integer.valueOf(weight));
-				EList.add(e);
-				@SuppressWarnings("unused")
-				String semiColon = descriptionQueue.dequeue();
+				if(!vSet.contains(v1)){
+					vSet.add(v1);
+					VerticesList.add(Integer.valueOf(v1));
+				}
+				if(!vSet.contains(v2)){
+					vSet.add(v2);
+					VerticesList.add(Integer.valueOf(v2));
+				}
+				if(w.equals(";")){
+					Edge e = new Edge(v1, v2);
+					EList.add(e);
+				}
+				else{
+					Edge e = new Edge(v1, v2, Integer.valueOf(w));
+					EList.add(e);
+					String semiColon = sc2.next();
+				}
 			}
 		}
+		sc2.close();
+		sc.close();
+
+		long endTime = System.currentTimeMillis();
+		long result = endTime-startTime;
+		float fResult = (float) result;
+		System.out.printf("\nRead File Time: ");
+		System.out.format("%.3f\n",fResult/1000);
+
+
 		processKruskal();
 	}
 
 	@SuppressWarnings("unchecked")
 	private static void processKruskal() {
+
+
+		long startTime = System.currentTimeMillis();
 		Collections.sort(VerticesList);
+
 
 		//EList.printList();
 		ComparatorEdge comp = new ComparatorEdge();
@@ -115,9 +119,28 @@ public class Kruscal {
 				}
 			}
 		}
+		long endTime = System.currentTimeMillis();
+		long result = endTime-startTime;
+		float fResult = (float) result;
+		System.out.printf("\nKrusckal Process Time: ");
+		System.out.format("%.3f\n",fResult/1000);
+
+
 		//FList.printDisjointSet();
 		//ETree.printBreadthTraversal(ETree.root);
+
+		long sPTime = System.currentTimeMillis();
+
 		FList.printDisjointTree(rootArg,ETree,VerticesList,tempEdges);
+
+		long ePTime = System.currentTimeMillis();
+		long pResult = ePTime - sPTime;
+		float fPResult = (float) pResult;
+		System.out.printf("\nPrint BFS Time: ");
+		System.out.format("%.3f",fPResult/1000);
+
+
+
 	}
 
 }

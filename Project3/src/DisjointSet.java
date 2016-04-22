@@ -79,20 +79,23 @@ public class DisjointSet {
 		if(aRoot.value != bRoot.value){
 			if(aRoot.rank < bRoot.rank){
 				//aRoot.parent  = bRoot;
-				a.pParent = b;
+				a.pParent = bRoot;
+				//aRoot.pParent = bRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 			}
 			else if(aRoot.rank > bRoot.rank){
 				//bRoot.parent = aRoot;
-				b.pParent = a;
+				b.pParent = aRoot;
+				//bRoot.pParent = aRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 
 			}
 			else{
 				//bRoot.parent = aRoot;
-				b.pParent = a;
+				//bRoot.pParent = aRoot;
+				b.pParent = aRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 				aRoot.rank = aRoot.rank++;
@@ -102,7 +105,7 @@ public class DisjointSet {
 
 	public DSRBT.RedBlackNode findSet(DSRBT.RedBlackNode a){
 		if(a.pParent != a){
-			return findSet(a.pParent);
+			a.pParent = findSet(a.pParent);
 		}
 		return a.pParent;
 	}
@@ -153,8 +156,11 @@ public class DisjointSet {
 								continue;
 							}
 							if(temp.value != nRoot.value){
+								fEdge2 = null;
 								fEdge = eTree.deleteNode(temp.value, adjNode.value);
-								fEdge2 = eTree.deleteNode(adjNode.value, temp.value);
+								if(fEdge == null){
+									fEdge2 = eTree.deleteNode(adjNode.value, temp.value);
+								}
 								//fEdge = eList.removeEdge(temp.value, adjNode.value);
 								//fEdge2 = eList.removeEdge(adjNode.value, temp.value);
 								if(((fEdge != null) || (fEdge2 != null)) && (vTree.findNode(temp.value.getValue()) == null)){
