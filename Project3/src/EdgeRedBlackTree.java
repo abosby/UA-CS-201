@@ -284,7 +284,7 @@ public class EdgeRedBlackTree {
 								deletionFixUp(leaf);
 								node.RBT.size--;
 								prune(leaf);
-								return temp.value;
+								return leaf.value;
 							}
 							//If one child
 							else if((node.right != null) && (node.left == null)){
@@ -293,7 +293,7 @@ public class EdgeRedBlackTree {
 								deletionFixUp(leaf);
 								node.RBT.size--;
 								prune(leaf);
-								return temp.value;
+								return leaf.value;
 							}
 							else if((node.right == null) && (node.left != null)){
 								RedBlackNode temp = node;
@@ -301,7 +301,7 @@ public class EdgeRedBlackTree {
 								deletionFixUp(leaf);
 								node.RBT.size--;
 								prune(leaf);
-								return temp.value;
+								return leaf.value;
 							}
 							//If no child
 							else{
@@ -489,20 +489,20 @@ public class EdgeRedBlackTree {
 		}
 
 	
-		private Edge findNode(RedBlackNode node, Edge e) {
+		private Edge findNode(RedBlackNode node, Vertex v1, Vertex v2) {
 			while(true){
 				if( (node.value == null) && (node.RBT.root == null)){
 					return node.value;
 				}
 				else{
 					//Vertex 1 equal
-					if(node.value.getVertex1().getValue() == e.getVertex1().getValue()){
+					if(node.value.getVertex1().getValue() == v1.getValue()){
 						//Vertex 2 equal
-						if(node.value.getVertex2().getValue() == e.getVertex2().getValue()){
+						if(node.value.getVertex2().getValue() == v2.getValue()){
 							return node.getValue();
 						}
 						//Go Left
-						else if(node.value.getVertex2().getValue() > e.getVertex2().getValue()){
+						else if(node.value.getVertex2().getValue() > v2.getValue()){
 							if(node.left != null){
 								node = node.left;
 							}
@@ -510,7 +510,7 @@ public class EdgeRedBlackTree {
 								return null;
 							}
 						}
-						else if(node.value.getVertex2().getValue() < e.getVertex2().getValue()){
+						else if(node.value.getVertex2().getValue() < v2.getValue()){
 							if(node.right != null){
 								node = node.right;
 							}
@@ -520,7 +520,7 @@ public class EdgeRedBlackTree {
 						}
 					}
 					//Go Left
-					else if(node.value.getVertex1().getValue() > e.getVertex1().getValue()){
+					else if(node.value.getVertex1().getValue() > v1.getValue()){
 						if(node.left != null){
 							node = node.left;
 						}
@@ -529,7 +529,7 @@ public class EdgeRedBlackTree {
 						}
 					}
 					//Go Right
-					else if(node.value.getVertex1().getValue() < e.getVertex1().getValue()){
+					else if(node.value.getVertex1().getValue() < v1.getValue()){
 						if(node.right != null){
 							node = node.right;
 						}
@@ -858,13 +858,13 @@ public class EdgeRedBlackTree {
 		}
 	}
 
-	public Edge findNode(Edge e){
+	public Edge findNode(Vertex v1, Vertex v2){
 		if(this.root == null){
 			//System.out.printf("\n Find Result: 0\n");
 			return null;
 		}
 		else{
-			return this.root.findNode(this.root, e);
+			return this.root.findNode(this.root, v1,v2);
 		}
 	}
 

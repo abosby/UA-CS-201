@@ -79,14 +79,14 @@ public class DisjointSet {
 		if(aRoot.value != bRoot.value){
 			if(aRoot.rank < bRoot.rank){
 				//aRoot.parent  = bRoot;
-				a.pParent = bRoot;
+				a.pParent = b;
 				//aRoot.pParent = bRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 			}
 			else if(aRoot.rank > bRoot.rank){
 				//bRoot.parent = aRoot;
-				b.pParent = aRoot;
+				b.pParent = a;
 				//bRoot.pParent = aRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
@@ -95,7 +95,7 @@ public class DisjointSet {
 			else{
 				//bRoot.parent = aRoot;
 				//bRoot.pParent = aRoot;
-				b.pParent = aRoot;
+				b.pParent = a;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 				aRoot.rank = aRoot.rank++;
@@ -106,6 +106,7 @@ public class DisjointSet {
 	public DSRBT.RedBlackNode findSet(DSRBT.RedBlackNode a){
 		if(a.pParent != a){
 			a.pParent = findSet(a.pParent);
+			//return findSet(a.pParent);
 		}
 		return a.pParent;
 	}
@@ -127,14 +128,14 @@ public class DisjointSet {
 		BQueue<DSRBT.RedBlackNode> queue = new BQueue<DSRBT.RedBlackNode>();
 		BQueue<DSRBT.RedBlackNode> eQueue = new BQueue<DSRBT.RedBlackNode>();
 		ArrayList <Edge> sEdge = new ArrayList<Edge>();
-		BinarySearchTree vTree = new BinarySearchTree();
+		EdgeRedBlackTree vTree = new EdgeRedBlackTree();
 
 		DSRBT.RedBlackNode nRoot = rootList.findNode(root);
 
 		queue.enqueue(nRoot);
 		System.out.printf("0: %d;\n",root);
 		int v = 1;
-		int graphWeight = 0;
+		long graphWeight = 0;
 		DSRBT.RedBlackNode temp = null;
 		DSRBT.RedBlackNode adjNode = null;
 		DSRBT.RedBlackNode temp2;
@@ -152,7 +153,10 @@ public class DisjointSet {
 						
 						while(temp.adjacencyList.getSize() != 0){
 							adjNode = temp.adjacencyList.removeItem();
-							if(vTree.findNode(adjNode.value.getValue()) != null){
+							if(adjNode.value == nRoot.value){
+								continue;
+							}
+							if(vTree.findNode(temp.value,adjNode.value) != null){
 								continue;
 							}
 							if(temp.value != nRoot.value){
@@ -163,42 +167,55 @@ public class DisjointSet {
 								}
 								//fEdge = eList.removeEdge(temp.value, adjNode.value);
 								//fEdge2 = eList.removeEdge(adjNode.value, temp.value);
-								if(((fEdge != null) || (fEdge2 != null)) && (vTree.findNode(temp.value.getValue()) == null)){
+								if(((fEdge != null) || (fEdge2 != null))){
 								//if((eTree.findNode(fEdge) != null) || (eTree.findNode(fEdge2) != null)){
 									if(fEdge != null){
 										//check to see if removed
-										check1 = eList.removeEdge(temp.value, adjNode.value);
+										//check1 = eList.removeEdge(temp.value, adjNode.value);
 										eQueue.enqueue(adjNode);
 										sEdge.add(fEdge);
+										vTree.insertNode(fEdge);
 										//eTree.deleteNode(fEdge);
 									}
 
 									else if(fEdge2 != null){
-										check2 = eList.removeEdge(adjNode.value, temp.value);
+										//check2 = eList.removeEdge(adjNode.value, temp.value);
 										fEdge2.reverse();
 										eQueue.enqueue(adjNode);
 										sEdge.add(fEdge2);
+										vTree.insertNode(fEdge2);
 										//eTree.deleteNode(fEdge2);
 									}
 								}
 							}
 							else{
-								if(vTree.findNode(adjNode.value.getValue()) == null){
+								//if(vTree.findNode(adjNode.value.getValue()) == null){
+									fEdge2 = null;
 									fEdge = eTree.deleteNode(temp.value, adjNode.value);
-									//fEdge = eList.removeEdge(temp.value, adjNode.value);
-									if((fEdge != null) && (vTree.findNode(temp.value.getValue()) == null)){
-									//if(eTree.findNode(fEdge) != null){
-										if(fEdge != null){
+									if(fEdge == null){
+										fEdge2 = eTree.deleteNode(adjNode.value, temp.value);
+									}
+									if(((fEdge != null) || (fEdge2 != null))){
+										//fEdge = eList.removeEdge(temp.value, adjNode.value);
+										if((fEdge != null)){
+										//if(eTree.findNode(fEdge) != null){
 											eQueue.enqueue(adjNode);
 											sEdge.add(fEdge);
+											vTree.insertNode(fEdge);
 											//eTree.deleteNode(fEdge);
 										}
+										else if(fEdge2 != null){
+											fEdge2.reverse();
+											eQueue.enqueue(adjNode);
+											sEdge.add(fEdge2);
+											vTree.insertNode(fEdge2);
+										}
 									}
-								}
+								//}
 							}
 							//if((eList.getEdge(temp.value, adjNode.value) != null) || (eList.getEdge(adjNode.value, temp.value)!= null)){
 						}
-						vTree.insertNode(temp.value.getValue());
+						//vTree.insertNode(temp.value.getValue());
 					}
 				}
 				if(eQueue.getSize() != 0){
@@ -220,7 +237,7 @@ public class DisjointSet {
 				}
 			}
 			System.out.printf("weight: %d\n", graphWeight);
-			System.out.printf("unreachable: %d\n", verticesList.size() - vTree.getSize());
+			System.out.printf("unreachable: %d\n", verticesList.size() - (vTree.size+1));
 		}
 		//The Tree is empty
 		else{

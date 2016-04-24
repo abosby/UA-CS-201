@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -23,20 +20,20 @@ public class Kruscal {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		String fileArg = "testGraph.txt";
-		//String fileArg = "g5";
-		//String fileArg = "graph3.txt";
+		//String fileArg = "testGraph.txt";
+		//String fileArg = "g6";
+		//String fileArg = "graph2.txt";
 		//String fileArg = "g3";
+		String fileArg = "g5";
 
-		readGraphFromFile(weightArg,fileArg);
+		readGraphFromFile(fileArg);
 	}
 
-	private static void readGraphFromFile(int weightArg, String fileArg) {
+	private static void readGraphFromFile(String fileArg) {
 		long startTime = System.currentTimeMillis();
 
 		String filePath = new File(fileArg).getAbsolutePath();
-		BufferedReader br = null;
-		BQueue<String> descriptionQueue = new BQueue<String>();
+		//BQueue<String> descriptionQueue = new BQueue<String>();
 		FileInputStream inputStream = null;
 		Scanner sc = null;
 		Scanner sc2 = null;
@@ -69,6 +66,7 @@ public class Kruscal {
 				else{
 					Edge e = new Edge(v1, v2, Integer.valueOf(w));
 					EList.add(e);
+					@SuppressWarnings("unused")
 					String semiColon = sc2.next();
 				}
 			}
@@ -90,14 +88,21 @@ public class Kruscal {
 	private static void processKruskal() {
 
 
-		long startTime = System.currentTimeMillis();
 		Collections.sort(VerticesList);
 
 
 		//EList.printList();
 		ComparatorEdge comp = new ComparatorEdge();
 		Collections.sort(EList, comp);
-		//EList.printList();
+		long startTime = System.currentTimeMillis();
+		/**
+		Edge Temp = null;
+		for(int j = 0; j < EList.size(); j++){
+			Temp = EList.get(j);
+			System.out.print(Temp);
+		}
+		*/
+
 		//Make Set for each vertices
 
 		for(int i = 0; i < VerticesList.size(); i++){
@@ -106,10 +111,11 @@ public class Kruscal {
 		}
 
 		EdgeDoublyLinkedList tempEdges = new EdgeDoublyLinkedList();
-		while(EList.size() != 0){
+		//while(EList.size() != 0){
+		while(ETree.size < VerticesList.size()-1){
 			Edge temp = EList.remove(0);
 			tempEdges.addItem(temp);
-			if(ETree.findNode(temp) == null){
+			if(ETree.findNode(temp.getVertex1(),temp.getVertex2()) == null){
 				DSRBT.RedBlackNode vert1 = FList.getNode(temp.getVertex1());
 				DSRBT.RedBlackNode vert2 = FList.getNode(temp.getVertex2());
 

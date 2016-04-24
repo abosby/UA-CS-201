@@ -6,7 +6,7 @@ public class ComparatorEdge implements Comparator {
 		Edge e1 = (Edge) o1;
 		Edge e2 = (Edge) o2;
 
-		return Integer.compare(e1.getWeight(), e2.getWeight());
+		return Long.compare(e1.getWeight(), e2.getWeight());
 	}
 
 }

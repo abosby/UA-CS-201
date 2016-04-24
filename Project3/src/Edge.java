@@ -4,7 +4,7 @@ public class Edge {
 
 	private Vertex vertex1;
 	private Vertex vertex2;
-	private int weight;
+	private long weight;
 	private Edge parent;
 
 	public Edge getParent() {
@@ -15,11 +15,11 @@ public class Edge {
 		this.parent = parent;
 	}
 
-	public int getWeight() {
+	public long getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(long weight) {
 		this.weight = weight;
 	}
 
