@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class Kruscal {
+public class kruskal {
 
 	//static EdgeDoublyLinkedList EList = new EdgeDoublyLinkedList();
 	static ArrayList<Edge> EList = new ArrayList<Edge>();
@@ -15,26 +15,44 @@ public class Kruscal {
 	static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
 	static HashSet<String> vSet = new HashSet<>();
 	static int weightArg;
-	static int rootArg;
+	static String fileArg;
+	static String rootArg;
+
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		weightArg = 0;
-		rootArg = 0;
-		String fileArg = "testGraph.txt";
+		
+		//if argv[0] is r
+		if(args[0].equals("-r")){
+			//System.out.println("Given root");
+			rootArg = args[1];
+			fileArg = args[2];
+		}
+		else{
+			//System.out.println("Not given root");
+			fileArg = args[0];
+		}
+		//System.out.println("argv[0] = " + args[0]);
+		//System.out.println("argv[1] = " + args[1]);
+		//System.out.println("argv[2] = " + args[2]);
+		//weightArg = 0;
+		//rootArg = 0;
+		//String fileArg = "testGraph.txt";
 		//String fileArg = "g6";
 		//String fileArg = "graph2.txt";
 		//String fileArg = "g3";
-		//String fileArg = "g5";
+		//String fileArg = "g4";
 
-		readGraphFromFile(fileArg);
+		readGraphFromFile(rootArg, fileArg);
 	}
 
-	private static void readGraphFromFile(String fileArg) {
+	private static void readGraphFromFile(String rootArg, String fileArg) {
 		long startTime = System.currentTimeMillis();
 
 		String filePath = new File(fileArg).getAbsolutePath();
 		//BQueue<String> descriptionQueue = new BQueue<String>();
 		FileInputStream inputStream = null;
+		int readInt = 0;
 		Scanner sc = null;
 		Scanner sc2 = null;
 		try {
@@ -50,8 +68,12 @@ public class Kruscal {
 				String v1 = sc2.next();
 				String v2 = sc2.next();
 				String w = sc2.next();
-
+				if((readInt == 0) && (rootArg == null)){
+					//System.out.println("changed the rootarg "+ v1);
+					rootArg = v1;
+				}
 				if(!vSet.contains(v1)){
+						
 					vSet.add(v1);
 					VerticesList.add(Integer.valueOf(v1));
 				}
@@ -69,6 +91,7 @@ public class Kruscal {
 					@SuppressWarnings("unused")
 					String semiColon = sc2.next();
 				}
+				readInt++;
 			}
 		}
 		sc2.close();
@@ -77,15 +100,15 @@ public class Kruscal {
 		long endTime = System.currentTimeMillis();
 		long result = endTime-startTime;
 		float fResult = (float) result;
-		System.out.printf("\nRead File Time: ");
-		System.out.format("%.3f\n",fResult/1000);
+		//System.out.printf("\nRead File Time: ");
+		//System.out.format("%.3f\n",fResult/1000);
 
 
-		processKruskal();
+		processKruskal(rootArg);
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void processKruskal() {
+	private static void processKruskal(String rootArg2) {
 
 
 		Collections.sort(VerticesList);
@@ -96,8 +119,8 @@ public class Kruscal {
 		Collections.sort(EList, comp);
 		long startTime = System.currentTimeMillis();
 		/**
-		Edge Temp = null;
-		for(int j = 0; j < EList.size(); j++){
+			Edge Temp = null;
+		
 			Temp = EList.get(j);
 			System.out.print(Temp);
 		}
@@ -112,9 +135,9 @@ public class Kruscal {
 
 		EdgeDoublyLinkedList tempEdges = new EdgeDoublyLinkedList();
 		//while(EList.size() != 0){
-		//while(EList.size() < VerticesList.size()-1){
+		//while(ETree.size < VerticesList.size()-1){
 		int counter = 0;
-		while(counter < VerticesList.size()-1){
+		while(counter < VerticesList.size() -1){
 			Edge temp = EList.remove(0);
 			counter++;
 			tempEdges.addItem(temp);
@@ -122,7 +145,7 @@ public class Kruscal {
 				DSRBT.RedBlackNode vert1 = FList.getNode(temp.getVertex1());
 				DSRBT.RedBlackNode vert2 = FList.getNode(temp.getVertex2());
 
-				if(FList.findSet(vert1).value != FList.findSet(vert2).value){
+				if(FList.findSet(vert1) != FList.findSet(vert2)){
 					FList.union(vert1,vert2);
 					ETree.insertNode(temp);
 				}
@@ -131,8 +154,8 @@ public class Kruscal {
 		long endTime = System.currentTimeMillis();
 		long result = endTime-startTime;
 		float fResult = (float) result;
-		System.out.printf("\nKrusckal Process Time: ");
-		System.out.format("%.3f\n",fResult/1000);
+		//System.out.printf("\nKrusckal Process Time: ");
+		//System.out.format("%.3f\n",fResult/1000);
 
 
 		//FList.printDisjointSet();
@@ -140,13 +163,15 @@ public class Kruscal {
 
 		long sPTime = System.currentTimeMillis();
 
-		FList.printDisjointTree(rootArg,ETree,VerticesList,tempEdges);
+		Integer root;
+		root = Integer.valueOf(rootArg2);
+		FList.printDisjointTree(root,ETree,VerticesList,tempEdges);
 
 		long ePTime = System.currentTimeMillis();
 		long pResult = ePTime - sPTime;
 		float fPResult = (float) pResult;
-		System.out.printf("\nPrint BFS Time: ");
-		System.out.format("%.3f",fPResult/1000);
+		//System.out.printf("\nPrint BFS Time: ");
+		//System.out.format("%.3f",fPResult/1000);
 
 
 
