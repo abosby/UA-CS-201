@@ -595,6 +595,12 @@ public class DSRBT{
 			return null;
 		}
 
+		@Override
+		public String toString(){
+			String s = "[( " + this.value +" )]";
+			return s;
+		}
+
 		private RedBlackNode deleteNode(RedBlackNode node, Vertex v) {
 			while(true){
 				if(node.value == null){

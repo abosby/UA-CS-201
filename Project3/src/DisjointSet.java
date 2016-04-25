@@ -79,23 +79,23 @@ public class DisjointSet {
 		if(aRoot.value != bRoot.value){
 			if(aRoot.rank < bRoot.rank){
 				//aRoot.parent  = bRoot;
-				a.pParent = b;
-				//aRoot.pParent = bRoot;
+				//a.pParent = b;
+				aRoot.pParent = bRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 			}
 			else if(aRoot.rank > bRoot.rank){
 				//bRoot.parent = aRoot;
-				b.pParent = a;
-				//bRoot.pParent = aRoot;
+				//b.pParent = a;
+				bRoot.pParent = aRoot;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 
 			}
 			else{
 				//bRoot.parent = aRoot;
-				//bRoot.pParent = aRoot;
-				b.pParent = a;
+				bRoot.pParent = aRoot;
+				//b.pParent = a;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
 				aRoot.rank = aRoot.rank++;

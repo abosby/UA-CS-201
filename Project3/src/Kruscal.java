@@ -20,11 +20,11 @@ public class Kruscal {
 		// TODO Auto-generated method stub
 		weightArg = 0;
 		rootArg = 0;
-		//String fileArg = "testGraph.txt";
+		String fileArg = "testGraph.txt";
 		//String fileArg = "g6";
 		//String fileArg = "graph2.txt";
 		//String fileArg = "g3";
-		String fileArg = "g5";
+		//String fileArg = "g5";
 
 		readGraphFromFile(fileArg);
 	}
@@ -112,14 +112,17 @@ public class Kruscal {
 
 		EdgeDoublyLinkedList tempEdges = new EdgeDoublyLinkedList();
 		//while(EList.size() != 0){
-		while(ETree.size < VerticesList.size()-1){
+		//while(EList.size() < VerticesList.size()-1){
+		int counter = 0;
+		while(counter < VerticesList.size()-1){
 			Edge temp = EList.remove(0);
+			counter++;
 			tempEdges.addItem(temp);
 			if(ETree.findNode(temp.getVertex1(),temp.getVertex2()) == null){
 				DSRBT.RedBlackNode vert1 = FList.getNode(temp.getVertex1());
 				DSRBT.RedBlackNode vert2 = FList.getNode(temp.getVertex2());
 
-				if(FList.findSet(vert1) != FList.findSet(vert2)){
+				if(FList.findSet(vert1).value != FList.findSet(vert2).value){
 					FList.union(vert1,vert2);
 					ETree.insertNode(temp);
 				}

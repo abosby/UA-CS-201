@@ -40,6 +40,12 @@ public class EdgeDoublyLinkedList{
 		public void setPrev(EdgeDoublyLinkedListNode prev) {
 			this.prev = prev;
 		}
+		
+		@Override
+		public String toString(){
+			String s = "[("+this.value.getWeight()+") "+this.value.getVertex1() + "-" + this.value.getVertex2() + " ]";
+			return s;
+		}
 
 	}
 	

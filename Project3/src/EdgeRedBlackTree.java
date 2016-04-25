@@ -353,11 +353,13 @@ public class EdgeRedBlackTree {
 		}
 
 		private void prune(RedBlackNode node) {
-			if(node.parent.left == node){
-				node.parent.left = null;
-			}
-			else{
-				node.parent.right = null;
+			if(node.parent != null){
+				if(node.parent.left == node){
+					node.parent.left = null;
+				}
+				else{
+					node.parent.right = null;
+				}
 			}
 		}
 
