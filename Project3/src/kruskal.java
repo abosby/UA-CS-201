@@ -37,10 +37,10 @@ public class kruskal {
 		//For IDE
 		//weightArg = 0;
 		rootArg = "0";
-		String fileArg = "testGraph.txt";
+		//String fileArg = "testGraph.txt";
 		//String fileArg = "g6";
 		//String fileArg = "graph2.txt";
-		//String fileArg = "g3";
+		String fileArg = "g3";
 		//String fileArg = "g4";
 
 		readGraphFromFile(rootArg, fileArg);

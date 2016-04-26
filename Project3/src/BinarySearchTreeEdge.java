@@ -216,20 +216,42 @@ public class BinarySearchTreeEdge {
 							}
 						}
 						else{
-							if((node.getLeft() != null) && (node.getRight() != null)){
-								BinaryNode temp2 = new BinaryNode(node.BST,node.value);
-								BinaryNode temp = node.right.getMin();
-								node.setValue(temp.getValue());
-								this.BST.root.deleteNode(node.right, temp.getValue().getVertex1(), temp.getValue().getVertex2());
-								node.resetRoot();
-								return temp2;
+							//If no child
+							if((node.getLeft() == null) && (node.getRight() == null)){
+								if(node.getParent().getLeft() != null){
+									if(node.getParent().left.value == node.value){
+										node.getParent().setLeft(null);
+										node.resetRoot();
+										return node;
+									}
+									else if(node.getParent().getRight() != null){
+										if(node.getParent().right.value == node.value){
+											node.getParent().setRight(null);
+											node.resetRoot();
+											return node;
+										}
+									}
+								}
+								else{
+									if(node.getParent().getRight() != null){
+										if(node.getParent().right.value == node.value){
+											node.getParent().setRight(null);
+											node.resetRoot();
+											return node;
+										}
+									}
+									else{
+										return null;
+									}
+								}
 							}
+							//One Child
 							else if(node.left != null){
 								BinaryNode temp = new BinaryNode(node.BST,node.value);
 								node.setValue(node.left.value);
 								node.setRight(node.left.right);
 								node.setLeft(node.left.left);
-								node.resetRoot();
+								//node.resetRoot();
 								return temp;
 							}
 							else if(node.right != null){
@@ -237,111 +259,25 @@ public class BinarySearchTreeEdge {
 								node.setValue(node.right.value);
 								node.setLeft(node.right.getLeft());
 								node.setRight(node.right.right);
-								node.resetRoot();
+								//node.resetRoot();
 								return temp;
 							}
+							//Two children
 							else{
-								if(node.getParent() != null){
-									if(node.getParent().getLeft() != null){
-										if(node.getParent().left.value == node.value){
-											if(node.getParent().getValue() == node.BST.getRoot().value){
-												node.BST.getRoot().setLeft(null);
-												node.resetRoot();
-											}
-											else{
-												node.getParent().setLeft(null);
-												node.resetRoot();
-											}
-											return node;
-										}
-										else if(node.getParent().getRight() != null){
-											if(node.getParent().right.value == node.value){
-												if(node.getParent().getValue() == node.BST.getRoot().value){
-													node.BST.getRoot().setRight(null);
-												}
-												else{
-													node.getParent().setRight(null);
-													node.resetRoot();
-												}
-												return node;
-											}
-										}
-									}
-									if(node.getParent().getRight() != null){
-										if(node.getParent().right.value == node.value){
-											if(node.getParent().getValue() == node.BST.getRoot().value){
-												node.BST.getRoot().setRight(null);
-											}
-											else{
-												node.getParent().setRight(null);
-												node.resetRoot();
-											}
-											return node;
-										}
-									}
-								}
+								BinaryNode temp2 = new BinaryNode(node.BST,node.value);
+								BinaryNode temp = node.right.getMin();
+								node.setValue(temp.getValue());
+								this.BST.root.deleteNode(node.right, temp.getValue().getVertex1(), temp.getValue().getVertex2());
+								//node.resetRoot();
+								return temp2;
+
 							}
-
-
-							/**
-							if((node.getRight() != null ) && (node.getLeft() != null)){
-
-							//replace with inorder predecessor then remove the predecessor node
-								if(node.getParent().getRight() == node){
-									BinaryNode temp = new BinaryNode(node.getBST(),node.getValue());
-									node.setFrequency(node.getLeft().getFrequency());
-									node.setValue(node.getLeft().getValue());
-									node.setRight(node.getLeft().getRight());
-									node.setLeft(node.getLeft().getLeft());
-									return temp;
-								}
-								else{
-									BinaryNode temp = new BinaryNode(node.getBST(),node.getValue());
-									node.setFrequency(node.getRight().getFrequency());
-									node.setValue(node.getRight().getValue());
-									node.setLeft(node.getRight().getLeft());
-									node.setRight(node.getRight().getRight());
-									return temp;
-
-								}
-							}
-
-							//If one child
-							else if((node.getLeft() != null) && (node.getRight() == null)){
-
-								BinaryNode temp = new BinaryNode(node.getBST(),node.getValue());
-								node.setFrequency(node.getLeft().getFrequency());
-								node.setValue(node.getLeft().getValue());
-								node.setRight(node.getLeft().getRight());
-								node.setLeft(node.getLeft().getLeft());
-								return temp;						
-							}
-
-							else if((node.getLeft() == null) && (node.getRight() != null)){
-
-								BinaryNode temp = new BinaryNode(node.getBST(),node.getValue());
-								node.setFrequency(node.getRight().getFrequency());
-								node.setValue(node.getRight().getValue());
-								node.setLeft(node.getRight().getLeft());
-								node.setRight(node.getRight().getRight());
-								return temp;
-							}
-							//If no children
-							else{
-								if(node.getParent().getLeft() == node){
-									node.getParent().setLeft(null);
-								}
-								else{
-									node.getParent().setRight(null);
-								}
-								return this;
-							}
-							*/
 						}
 					}
 				}
 			}
 		}
+
 		private void resetRoot() {
 			BinaryNode temp = this;
 			while(temp.parent != null){
@@ -423,7 +359,7 @@ public class BinarySearchTreeEdge {
 				return false;
 			}
 		}
-		
+
 		public BinaryNode getMin(){
 			BinaryNode temp = this;
 			while(temp.left != null){
@@ -432,7 +368,6 @@ public class BinarySearchTreeEdge {
 			return temp;
 		}
 	}
-
 	//Private
 	private BinaryNode root;
 	private BinaryNode min;
@@ -578,6 +513,7 @@ public class BinarySearchTreeEdge {
 	 * 
 	 * @param bNode Node to Traverse
 	 */
+	/**
 	public void printBreadthTraversal(BinaryNode bNode){
 		BQueue<BinaryNode> queue= new BQueue<BinaryNode>();
 		int level = 1;
@@ -697,6 +633,7 @@ public class BinarySearchTreeEdge {
 		}
 		System.out.println();
 	}
+	 */
 
 	/** Prints the Statistics for the Binary Search Tree by reporting the number of nodes, Min-Height and Max-Height
 	 * 
