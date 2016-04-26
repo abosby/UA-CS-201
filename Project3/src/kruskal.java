@@ -12,7 +12,8 @@ public class kruskal {
 	static ArrayList<Edge> EList = new ArrayList<Edge>();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
-	static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
+	//static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
+	static BinarySearchTreeEdge ETree = new BinarySearchTreeEdge();
 	static HashSet<String> vSet = new HashSet<>();
 	static int weightArg;
 	static String fileArg;
@@ -22,22 +23,21 @@ public class kruskal {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		//if argv[0] is r
+		//For commandline
+		/**
 		if(args[0].equals("-r")){
-			//System.out.println("Given root");
 			rootArg = args[1];
 			fileArg = args[2];
 		}
 		else{
-			//System.out.println("Not given root");
 			fileArg = args[0];
 		}
-		//System.out.println("argv[0] = " + args[0]);
-		//System.out.println("argv[1] = " + args[1]);
-		//System.out.println("argv[2] = " + args[2]);
+		*/
+
+		//For IDE
 		//weightArg = 0;
-		//rootArg = 0;
-		//String fileArg = "testGraph.txt";
+		rootArg = "0";
+		String fileArg = "testGraph.txt";
 		//String fileArg = "g6";
 		//String fileArg = "graph2.txt";
 		//String fileArg = "g3";
@@ -137,11 +137,12 @@ public class kruskal {
 		//while(EList.size() != 0){
 		//while(ETree.size < VerticesList.size()-1){
 		int counter = 0;
-		while(counter < VerticesList.size() -1){
+		while(counter < VerticesList.size()){
 			Edge temp = EList.remove(0);
 			counter++;
 			tempEdges.addItem(temp);
 			if(ETree.findNode(temp.getVertex1(),temp.getVertex2()) == null){
+			//if(ETree.findNode(temp) == null){
 				DSRBT.RedBlackNode vert1 = FList.getNode(temp.getVertex1());
 				DSRBT.RedBlackNode vert2 = FList.getNode(temp.getVertex2());
 
@@ -154,12 +155,13 @@ public class kruskal {
 		long endTime = System.currentTimeMillis();
 		long result = endTime-startTime;
 		float fResult = (float) result;
+		//ETree.printBreadthTraversal(ETree.getRoot());
 		//System.out.printf("\nKrusckal Process Time: ");
 		//System.out.format("%.3f\n",fResult/1000);
 
 
 		//FList.printDisjointSet();
-		//ETree.printBreadthTraversal(ETree.root);
+		ETree.printBreadthTraversal(ETree.getRoot());
 
 		long sPTime = System.currentTimeMillis();
 

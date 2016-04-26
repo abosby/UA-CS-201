@@ -266,6 +266,12 @@ public class EdgeRedBlackTree {
 			this.RBT.resetRoot(this.RBT.root);
 			this.RBT.root.color = "black";
 		}
+		
+		@Override
+		public String toString(){
+			String s = "[("+this.value.getWeight()+") "+this.value.getVertex1() + "-" + this.value.getVertex2() + " ]";
+			return s;
+		}
 
 		private Edge deleteNode(RedBlackNode node, Vertex v1, Vertex v2) {
 			while(true){

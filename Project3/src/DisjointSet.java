@@ -98,7 +98,7 @@ public class DisjointSet {
 				//b.pParent = a;
 				a.adjacencyList.addItem(b);
 				b.adjacencyList.addItem(a);
-				aRoot.rank = aRoot.rank++;
+				aRoot.rank++;
 			}
 		}
 	}
@@ -124,11 +124,12 @@ public class DisjointSet {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void printDisjointTree(int root, EdgeRedBlackTree eTree,ArrayList<Integer> verticesList, EdgeDoublyLinkedList eList){
+	public void printDisjointTree(int root, BinarySearchTreeEdge eTree,ArrayList<Integer> verticesList, EdgeDoublyLinkedList eList){
 		BQueue<DSRBT.RedBlackNode> queue = new BQueue<DSRBT.RedBlackNode>();
 		BQueue<DSRBT.RedBlackNode> eQueue = new BQueue<DSRBT.RedBlackNode>();
 		ArrayList <Edge> sEdge = new ArrayList<Edge>();
-		EdgeRedBlackTree vTree = new EdgeRedBlackTree();
+		//EdgeRedBlackTree vTree = new EdgeRedBlackTree();
+		BinarySearchTreeEdge vTree = new BinarySearchTreeEdge();
 
 		DSRBT.RedBlackNode nRoot = rootList.findNode(root);
 
@@ -237,7 +238,7 @@ public class DisjointSet {
 				}
 			}
 			System.out.printf("weight: %d\n", graphWeight);
-			System.out.printf("unreachable: %d\n", verticesList.size() - (vTree.size+1));
+			System.out.printf("unreachable: %d\n", verticesList.size() - (vTree.getSize()+1));
 		}
 		//The Tree is empty
 		else{
