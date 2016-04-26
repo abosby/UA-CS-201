@@ -161,7 +161,7 @@ public class kruskal {
 
 
 		//FList.printDisjointSet();
-		ETree.printBreadthTraversal(ETree.getRoot());
+		//ETree.printBreadthTraversal(ETree.getRoot());
 
 		long sPTime = System.currentTimeMillis();
 

@@ -220,7 +220,8 @@ public class BinarySearchTreeEdge {
 								BinaryNode temp2 = new BinaryNode(node.BST,node.value);
 								BinaryNode temp = node.right.getMin();
 								node.setValue(temp.getValue());
-								node.right.deleteNode(node.right, temp.getValue().getVertex1(), temp.getValue().getVertex2());
+								this.BST.root.deleteNode(node.right, temp.getValue().getVertex1(), temp.getValue().getVertex2());
+								node.resetRoot();
 								return temp2;
 							}
 							else if(node.left != null){
@@ -228,6 +229,7 @@ public class BinarySearchTreeEdge {
 								node.setValue(node.left.value);
 								node.setRight(node.left.right);
 								node.setLeft(node.left.left);
+								node.resetRoot();
 								return temp;
 							}
 							else if(node.right != null){
@@ -235,17 +237,47 @@ public class BinarySearchTreeEdge {
 								node.setValue(node.right.value);
 								node.setLeft(node.right.getLeft());
 								node.setRight(node.right.right);
+								node.resetRoot();
 								return temp;
 							}
 							else{
 								if(node.getParent() != null){
-									if(node.getParent().left == node){
-										node.getParent().setLeft(null);
-										return node;
+									if(node.getParent().getLeft() != null){
+										if(node.getParent().left.value == node.value){
+											if(node.getParent().getValue() == node.BST.getRoot().value){
+												node.BST.getRoot().setLeft(null);
+												node.resetRoot();
+											}
+											else{
+												node.getParent().setLeft(null);
+												node.resetRoot();
+											}
+											return node;
+										}
+										else if(node.getParent().getRight() != null){
+											if(node.getParent().right.value == node.value){
+												if(node.getParent().getValue() == node.BST.getRoot().value){
+													node.BST.getRoot().setRight(null);
+												}
+												else{
+													node.getParent().setRight(null);
+													node.resetRoot();
+												}
+												return node;
+											}
+										}
 									}
-									else if(node.parent.right == node){
-										node.getParent().setRight(null);
-										return node;
+									if(node.getParent().getRight() != null){
+										if(node.getParent().right.value == node.value){
+											if(node.getParent().getValue() == node.BST.getRoot().value){
+												node.BST.getRoot().setRight(null);
+											}
+											else{
+												node.getParent().setRight(null);
+												node.resetRoot();
+											}
+											return node;
+										}
 									}
 								}
 							}
@@ -310,6 +342,14 @@ public class BinarySearchTreeEdge {
 				}
 			}
 		}
+		private void resetRoot() {
+			BinaryNode temp = this;
+			while(temp.parent != null){
+				temp = temp.parent;
+			}
+			this.BST.root = temp;
+		}
+
 		//public String determineValue(String v){
 		//	if
 
@@ -491,8 +531,9 @@ public class BinarySearchTreeEdge {
 			if(confirmDeletion != null){
 				//System.out.printf("\nDeleted Node: %s\nNew Node frequency: %d\n",confirmDeletion.getValue(),confirmDeletion.getFrequency());
 				resetLevels(this.root);
-				System.out.println("Removing :" + v1 + "-" + v2 );
-				this.printBreadthTraversal(getRoot());
+				//System.out.println("Removing :" + v1 + "-" + v2 );
+				//this.printBreadthTraversal(getRoot());
+				BinaryNode confirmDeletion2 = this.root.deleteNode(this.root, v1, v2);
 				return confirmDeletion.value;
 			}
 			else{
