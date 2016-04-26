@@ -12,8 +12,8 @@ public class kruskal {
 	static ArrayList<Edge> EList = new ArrayList<Edge>();
 	static ArrayList<Integer> VerticesList = new ArrayList<Integer>();
 	static DisjointSet FList = new DisjointSet();
-	//static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
-	static BinarySearchTreeEdge ETree = new BinarySearchTreeEdge();
+	static EdgeRedBlackTree ETree = new EdgeRedBlackTree();
+	//static BinarySearchTreeEdge ETree = new BinarySearchTreeEdge();
 	static HashSet<String> vSet = new HashSet<>();
 	static int weightArg;
 	static String fileArg;
@@ -37,10 +37,10 @@ public class kruskal {
 		//For IDE
 		//weightArg = 0;
 		rootArg = "0";
-		//String fileArg = "testGraph.txt";
-		//String fileArg = "g6";
-		//String fileArg = "graph2.txt";
-		String fileArg = "g3";
+		String fileArg = "testGraph.txt";
+		//String fileArg = "g5";
+		//String fileArg = "graph3.txt";
+		//String fileArg = "g3";
 		//String fileArg = "g4";
 
 		readGraphFromFile(rootArg, fileArg);

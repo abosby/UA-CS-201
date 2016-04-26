@@ -124,7 +124,7 @@ public class DisjointSet {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void printDisjointTree(int root, BinarySearchTreeEdge eTree,ArrayList<Integer> verticesList, EdgeDoublyLinkedList eList){
+	public void printDisjointTree(int root, EdgeRedBlackTree eTree,ArrayList<Integer> verticesList, EdgeDoublyLinkedList eList){
 		BQueue<DSRBT.RedBlackNode> queue = new BQueue<DSRBT.RedBlackNode>();
 		BQueue<DSRBT.RedBlackNode> eQueue = new BQueue<DSRBT.RedBlackNode>();
 		ArrayList <Edge> sEdge = new ArrayList<Edge>();

@@ -240,21 +240,18 @@ public class BinarySearchTreeEdge {
 											return node;
 										}
 									}
-									else{
-										return null;
-									}
 								}
 							}
 							//One Child
-							else if(node.left != null){
+							else if(node.left != null && node.right == null){
 								BinaryNode temp = new BinaryNode(node.BST,node.value);
 								node.setValue(node.left.value);
-								node.setRight(node.left.right);
+								node.setRight(node.left.getRight());
 								node.setLeft(node.left.left);
 								//node.resetRoot();
 								return temp;
 							}
-							else if(node.right != null){
+							else if(node.right != null && node.left == null){
 								BinaryNode temp = new BinaryNode(node.BST,node.value);
 								node.setValue(node.right.value);
 								node.setLeft(node.right.getLeft());
@@ -266,8 +263,8 @@ public class BinarySearchTreeEdge {
 							else{
 								BinaryNode temp2 = new BinaryNode(node.BST,node.value);
 								BinaryNode temp = node.right.getMin();
+								this.getBST().root.deleteNode(this.BST.root, temp.getValue().getVertex1(), temp.getValue().getVertex2());
 								node.setValue(temp.getValue());
-								this.BST.root.deleteNode(node.right, temp.getValue().getVertex1(), temp.getValue().getVertex2());
 								//node.resetRoot();
 								return temp2;
 
