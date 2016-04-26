@@ -76,7 +76,7 @@ public class DisjointSet {
 	public void union(DSRBT.RedBlackNode a, DSRBT.RedBlackNode b){
 		DSRBT.RedBlackNode aRoot = findSet(a);
 		DSRBT.RedBlackNode bRoot = findSet(b);
-		if(aRoot.value != bRoot.value){
+		if(aRoot.value.getValue() != bRoot.value.getValue()){
 			if(aRoot.rank < bRoot.rank){
 				//aRoot.parent  = bRoot;
 				//a.pParent = b;
@@ -105,8 +105,8 @@ public class DisjointSet {
 
 	public DSRBT.RedBlackNode findSet(DSRBT.RedBlackNode a){
 		if(a.pParent != a){
-			a.pParent = findSet(a.pParent);
-			//return findSet(a.pParent);
+			//a.pParent = findSet(a.pParent);
+			return findSet(a.pParent);
 		}
 		return a.pParent;
 	}
