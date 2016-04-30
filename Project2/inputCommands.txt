@@ -2,6 +2,15 @@
 d test
 i test
 f test
+d test
+d what
+d is
+d the
+d point
+d in 
+d a
+d a
+d a
 s
 r
 

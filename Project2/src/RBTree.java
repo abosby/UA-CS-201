@@ -307,7 +307,8 @@ public class RBTree {
 					//this subtree is BH balanced, but tree is not
 				}
 			}
-			this.getRBT().getRoot().setColor("black");
+			x.setColor("black");
+			//this.getRBT().getRoot().setColor("black");
 		}
 		public void findNode(String v) {
 
