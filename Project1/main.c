@@ -53,7 +53,6 @@ int main(int argc, char **argv)
 	/* Main Program */
 	
 	/*Read in values*/
-	printf("Made it here");
 	FILE *fFile;
 	//char ch;
 	//char word[255];
@@ -126,17 +125,20 @@ int main(int argc, char **argv)
 			int i;
 			while(sscanf(start, "%d%n", &field, &i) == 1){
 				n = newBinaryTreeNode();
-				printf("%d",field);
+				//printf("%d",field);
 				n->value = field;
+				push(holder,n,optionD);
 				start += i;
 			}
 			
-			puts("");
+			//puts("");
 		}
 		fclose(fFile);
 	}
+	printf("\n");
 
 	//Pop the nodes from the Holder stack, then enqueue them to recieve a Level-order heap
+	//
 	while(isStackEmpty(holder)==0){
 		enqueue(hQueue,hStack,pop(holder,optionD)->node,optionD);	
 	}
@@ -180,7 +182,8 @@ int ProcessOptions(int argc, char **argv)
 	int argIndex;
 	int argUsed;
 	int separateArg;
-	char *arg;
+	char *arg;	
+	(void) arg;
 
 	argIndex = 1;
 
@@ -200,7 +203,7 @@ int ProcessOptions(int argc, char **argv)
 		}
 		else
 			arg = argv[argIndex] + 2;
-			printf(arg);
+			//printf(arg);
 
 		switch (argv[argIndex][1])
 		{
@@ -244,3 +247,4 @@ int ProcessOptions(int argc, char **argv)
 
 	return argIndex;
 }
+
