@@ -1,7 +1,0 @@
-
-d test
-i test
-f test
-s
-r
-

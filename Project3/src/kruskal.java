@@ -24,7 +24,6 @@ public class kruskal {
 		// TODO Auto-generated method stub
 		
 		//For commandline
-		/**
 		if(args[0].equals("-r")){
 			rootArg = args[1];
 			fileArg = args[2];
@@ -32,9 +31,9 @@ public class kruskal {
 		else{
 			fileArg = args[0];
 		}
-		*/
 
 		//For IDE
+		/**
 		//weightArg = 0;
 		rootArg = "0";
 		String fileArg = "testGraph.txt";
@@ -42,6 +41,7 @@ public class kruskal {
 		//String fileArg = "graph3.txt";
 		//String fileArg = "g3";
 		//String fileArg = "g4";
+		*/
 
 		readGraphFromFile(rootArg, fileArg);
 	}
