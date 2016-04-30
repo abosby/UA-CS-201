@@ -6,44 +6,6 @@
 /*Structure for Stack Data Structure*/
 struct stack{
 
-<<<<<<< HEAD
-class Stack{
-
-    private:
-        node *front;
-        node *rear;
-    public:
-
-        void push(int value);
-        int pop();
-        int isEmpty();
-
-};
-
-void Stack::push(int value){
-    node *tNode = new Node;
-    tNode->value = value;
-    if (isEmpty()){
-        front = tNode;
-        rear = tNode;
-    }
-    else{
-        node temp = front;
-        tNode->next = front;
-        front = tNode;
-    }
-}
-
-int Stack::pop(){
-    node *tNode = front;
-    if (!isEmpty()){
-        front = front->next;
-    }
-    else{
-        //empty
-    }
-}
-=======
 	/*vars*/
 	struct stackNode *front;
 	struct stackNode *rear;
@@ -72,4 +34,3 @@ void printStack(struct stack *);
 
 
 #endif
->>>>>>> aa3cf8ad2fa2e73c989cfc9afb25d99700e90d21

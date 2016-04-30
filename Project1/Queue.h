@@ -11,25 +11,6 @@ struct queue{
 	struct queueNode *rear;
 	int size;
 
-<<<<<<< HEAD
-		void enqueue(int value);
-		int dequeue();
-        int isEmpty();
-};
-
-void Queue::enqueue(int value){
-	node *tNode = new node;
-	tNode->value = value;
-	if (isEmpty()){
-		front = tNode;
-		rear = tNode;
-	}
-	else{
-		rear->next = tNode;
-		rear = tNode;
-	}
-}
-=======
 };
 
 /*Methods*/
@@ -41,7 +22,6 @@ int isQueueEmpty(struct queue *);
 int isLastQueueNode(struct queueNode *);
 void printQueue(struct queue *);
 
->>>>>>> aa3cf8ad2fa2e73c989cfc9afb25d99700e90d21
 
 /*Structure for the Queue Node Structure
 	This is a Node that holds our Binary Tree Nodes*/

@@ -51,26 +51,20 @@ int main(int argc, char **argv)
 	}
 
 	/* Main Program */
-<<<<<<< HEAD
 	
 	/*Read in values*/
 	printf("Made it here");
 	FILE *fFile;
-	char ch;
-	char word[255];
+	//char ch;
+	//char word[255];
 	//fFile = fopen(argv[argIndex], "r");
 	fFile = fopen("test.txt", "r");
-=======
 
 	struct queue *hQueue = newQueue();
 	struct stack *hStack = newStack();
 	struct stack *holder = newStack();
 	struct binaryTreeNode *n;
 
-	FILE *fFile;
-	char ch[255];
-	char *last;
->>>>>>> aa3cf8ad2fa2e73c989cfc9afb25d99700e90d21
 
 	fFile = fopen(argv[argc-1], "r");
 	//fFile = fopen("test.txt", "r");
@@ -79,44 +73,41 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
-<<<<<<< HEAD
-	while ((fgets(ch, 255, fFile)) != NULL){
-		printf("%c", ch);
-=======
 	if(optionV == 1){
-		printf("\n		Empirical Evidence of Heapsort's O(n log(n)) runtime	\n\
-		_______________________________________________________	\n\
-		Heapsort is accomplished by performing the operation	\n\
-			'Heapify' on 'n' items.  The operation 'Heapify'\n\ 
-			runs in O(log n) time since it will, in		\n\
-			worst-case, 'sort-down' an item the height of 	\n\
-			the heap. The total run-time of heapsort then 	\n\
-			becomes = O(n log(n))				\n\
-									\n\ 
-		My Program's Input Size vs Time				\n\ 
-									\n\
-		n       |time						\n\ 
-		--------|-------------					\n\ 
-		1       |0.000003					\n\ 
-		10      |0.000012					\n\ 
-		100     |0.000114					\n\ 
-		1000    |0.001407					\n\ 
-		10000   |0.013912					\n\
-		100000  |0.180088					\n\ 
-		1000000 |2.490026					\n\ 
-									\n\ 
-		It is is clear to see that my program runs slightly	\n\
-			slower than linear time.  This is because of 	\n\ 
-			the factor of the log(n) 'Heapify' being run	\n\ 
-			'n' times.					\n\ 
-		For my entire program, it builds the Heap in O(n log(n),\n\
-			then extracts each of the max or min elements	\n\
-			in O(n log(n)) time. So the analysis of the 	\n\
-			entire program is O(n log(n)).			\n\
-									\n");
+		printf("\n		Empirical Evidence of Heapsort's O(n log(n)) runtime	"
+		"_______________________________________________________	" 
+		"Heapsort is accomplished by performing the operation	"
+		"	'Heapify' on 'n' items.  The operation 'Heapify'"
+		"	runs in O(log n) time since it will, in		"
+		"	worst-case, 'sort-down' an item the height of 	"
+		"	the heap. The total run-time of heapsort then 	"
+		"	becomes = O(n log(n))				"
+		"							"
+		"My Program's Input Size vs Time			" 
+		"							"
+		"n       |time						" 
+		"--------|-------------					" 
+		"1       |0.000003					"
+		"10      |0.000012					"
+		"100     |0.000114					"
+		"1000    |0.001407					" 
+		"10000   |0.013912					"
+		"100000  |0.180088					"
+		"1000000 |2.490026					" 
+		"							" 
+		"It is is clear to see that my program runs slightly	"	
+		"	slower than linear time.  This is because of 	" 
+		"	the factor of the log(n) 'Heapify' being run	"
+		"'n' times.					"
+		"For my entire program, it builds the Heap in O(n log(n),"
+		"	then extracts each of the max or min elements	"
+		"	in O(n log(n)) time. So the analysis of the 	"
+		"	entire program is O(n log(n)).			"
+		"							");
 		return 0;
 	}
 	//While file is good, add ints from the file into the stack holder
+	/**
 	while ((fgets(ch,255,fFile)) != NULL){
 		last = strtok(ch," ");
 		while(last != NULL){
@@ -125,7 +116,24 @@ int main(int argc, char **argv)
 			push(holder,n,optionD);
 			last = strtok(NULL," ");
 		}
->>>>>>> aa3cf8ad2fa2e73c989cfc9afb25d99700e90d21
+	}
+	*/
+	if(fFile != NULL){
+		char line[BUFSIZ];
+		while(fgets(line, sizeof line, fFile) != NULL){
+			char *start = line;
+			int field;
+			int i;
+			while(sscanf(start, "%d%n", &field, &i) == 1){
+				n = newBinaryTreeNode();
+				printf("%d",field);
+				n->value = field;
+				start += i;
+			}
+			
+			puts("");
+		}
+		fclose(fFile);
 	}
 
 	//Pop the nodes from the Holder stack, then enqueue them to recieve a Level-order heap
@@ -133,7 +141,7 @@ int main(int argc, char **argv)
 		enqueue(hQueue,hStack,pop(holder,optionD)->node,optionD);	
 	}
 	dequeueRest(hQueue,hStack,optionD);
-	
+	 
 	//Run Heapify on each node
 	struct stackNode *parse = newStackNode();
 	parse = hStack->front;	
@@ -148,11 +156,7 @@ int main(int argc, char **argv)
 		extractTop(hStack,optionD);
 	}
 
-<<<<<<< HEAD
-
-=======
 	fclose(fFile);
->>>>>>> aa3cf8ad2fa2e73c989cfc9afb25d99700e90d21
 	return 0;
 
 }
@@ -196,6 +200,7 @@ int ProcessOptions(int argc, char **argv)
 		}
 		else
 			arg = argv[argIndex] + 2;
+			printf(arg);
 
 		switch (argv[argIndex][1])
 		{
