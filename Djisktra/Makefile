@@ -17,4 +17,4 @@ clean:
 	rm -fr djisktra.dSYM
 
 run:	clean djikstra 
-	./djiksra.exe -d test.txt
+	./djiksra.exe test.txt

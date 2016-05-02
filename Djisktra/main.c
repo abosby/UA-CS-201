@@ -17,6 +17,8 @@
 
 /* options */
 int optionH = 0;
+int optionV = 0;
+int optionD = 0;
 
 int ProcessOptions(int, char **);
 void Fatal(char *, ...);
@@ -25,7 +27,7 @@ int main(int argc, char **argv)
 {
 	/* argument handler*/
 	int argIndex;
-	int rootArg;
+	//int rootArg;
 
 	if (argc == 1) Fatal("%d arguments!\n", argc - 1);
 
@@ -96,18 +98,21 @@ int main(int argc, char **argv)
 	}
 	//
 	//While file is good, add ints from the file into the stack holder
+	struct queue *edgesQueue;
+	edgesQueue = newQueue();
 	if(fFile != NULL){
+		struct djisktraNode *e;
 		int v1;
 		int v2;
 		int weight;
-		char semicolon;
-		while(fscanf(fFile, "%d %d %d %s", &v1, &v2, &weight, semicolon) != EOF){
-			e = newEdge();
+		char semi;
+		while(fscanf(fFile, "%d %d %d %c", &v1, &v2, &weight, &semi) != EOF){
+			e = newDjisktraNode();
 			//printf("%d",field);
 			e->v1 = v1;
 			e->v2 = v2;
 			e->weight = weight;
-			addEdge(e);
+			enqueue(edgesQueue, e);
 		}
 		fclose(fFile);
 		
@@ -117,7 +122,8 @@ int main(int argc, char **argv)
 		printf("This file is incorrect or corrupted");
 	}
 	printf("\n");
-	printStack();
+	printQueue(edgesQueue);
+	//printStack();
 	//processDjikstra(rootArg);	
 
 	return 0;

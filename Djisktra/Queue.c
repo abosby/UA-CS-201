@@ -5,16 +5,18 @@
 /* Constructor for the Queue data structure*/
 struct queue *newQueue(){
 	struct queue *q = malloc(sizeof(struct queue));
-	q->front = newQueueNode();
-	q->rear  = newQueueNode();
+	q->front = newDjisktraNode();
+	q->rear  = newDjisktraNode();
 	q->size = 0;
 	return q;
 }
 
 /* Constructor for the Queue Node Structure*/
-struct queueNode *newQueueNode(){
-	struct queueNode *q = malloc(sizeof(struct queueNode));
-	q->node = NULL;
+struct djisktraNode *newDjisktraNode(){
+	struct djisktraNode *q = malloc(sizeof(struct djisktraNode));
+	q->v1 = (int) NULL;
+	q->v2 = (int) NULL;
+	q->weight = (int) NULL;
 	q->next = NULL;
 	return q;
 }
@@ -25,14 +27,14 @@ void
 enqueue(struct queue *q, struct djisktraNode *n){
 	//Add node to the Queue
         if (isQueueEmpty(q) == 1){
-		q->front->node = n;
+		q->front = n;
 		q->front->next = NULL;
 		q->rear = q->front;
         }
         else{
-		struct queueNode *temp = malloc(sizeof(struct queueNode));
+		struct djisktraNode *temp = malloc(sizeof(struct djisktraNode));
 		temp->next = NULL;
-		temp->node = n;
+		temp = n;
                 q->rear->next = temp;
                 q->rear = temp;
         }
@@ -42,19 +44,18 @@ enqueue(struct queue *q, struct djisktraNode *n){
 
 /*'Removes' the Node that has 'Waited' the Longest in the Queue
 	Also pushes the Node to our Stack Structure*/
-struct djisktraNode * 
-dequeue(struct queue *q){
+struct djisktraNode * dequeue(struct queue *q){
         struct djisktraNode *temp = malloc(sizeof(struct djisktraNode));
 	if (isQueueEmpty(q) == 0){
 		if (q->front == q->rear){
-			temp = q->front->node->value;
-			q->front->node = NULL;
+			temp = q->front;
+			q->front = NULL;
 			q->front->next = NULL;
-			q->rear->node = NULL;
+			q->rear = NULL;
 			q->rear->next = NULL;
 		}
 		else{
-			temp = q->front->node->value;
+			temp = q->front;
 			q->front = q->front->next;
 		}
 		q->size -= 1;
@@ -91,7 +92,7 @@ isQueueEmpty(struct queue *q){
 
 /*Helper method that determines if the Node parameter is the last Node in the Structure*/
 int
-isLastQueueNode(struct queueNode *tNode){
+isLastQueueNode(struct djisktraNode *tNode){
 	if(tNode->next == NULL){
 		return 1;
 	}
@@ -105,14 +106,14 @@ isLastQueueNode(struct queueNode *tNode){
 void 
 printQueue(struct queue *q){
         if(isQueueEmpty(q) == 0){
-                struct queueNode *tNode = malloc(sizeof(struct queueNode));
+                struct djisktraNode *tNode = malloc(sizeof(struct djisktraNode));
 		tNode = q->front;
                 printf("\nQueue Structure is \n");
 		while(tNode->next != NULL){
-                        printf("%s->",printDjistraNode(tNode->node->value));
+                        printf("[(%d) %d-%d] -> ",tNode->weight,tNode->v1,tNode->v2);
                         tNode = tNode->next;
                 }
-                printf("%d\n",printDjisktraNode(tNode->node->value));
+                printf("[(%d) %d-%d]\n",tNode->weight,tNode->v1,tNode->v2);
         }
 	return;
 }

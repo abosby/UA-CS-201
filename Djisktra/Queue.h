@@ -1,4 +1,3 @@
-#include "Djisktra.h"
 #ifndef Queue
 #define Queue
 
@@ -6,8 +5,8 @@
 struct queue{
 
 	/*vars*/
-	struct queueNode *front;
-	struct queueNode *rear;
+	struct djisktraNode *front;
+	struct djisktraNode *rear;
 	int size;
 
 };
@@ -15,21 +14,27 @@ struct queue{
 /*Methods*/
 struct queueNode *newQueueNode();
 void enqueue(struct queue *,struct djisktraNode *);
-struct djiskstraNode *dequeue(struct queue *);
+struct djisktraNode *dequeue(struct queue *);
 void dequeueRest(struct queue *);
 int isQueueEmpty(struct queue *);
-int isLastQueueNode(struct queueNode *);
+int isLastQueueNode(struct djisktraNode *);
 void printQueue(struct queue *);
 
 
-/*Structure for the Queue Node Structure
-	This is a Node that holds our Binary Tree Nodes*/
-struct queueNode{
+/*Structure for Djisktra Edge*/
+struct djisktraNode{
 
 	/*vars*/
-	struct djisktraNode *node;
-	struct queueNode *next;
+	int v1;
+	int v2;
+	int weight;
+	struct djisktraNode *next;
+
 };
+
+/*Methods*/
+struct djisktraNode *newDjisktraNode();
+void printNode();
 
 /*methods*/
 struct queue *newQueue();
